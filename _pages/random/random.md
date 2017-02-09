@@ -1,0 +1,1 @@
+RANDOM is "Unexpected, unpredictable"

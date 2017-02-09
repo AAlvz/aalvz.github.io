@@ -1,1 +1,4 @@
 theme: jekyll-theme-minimal
+category-list: [random]
+include: ["_pages"]
+permalink: /:title/
