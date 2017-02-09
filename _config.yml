@@ -1,4 +1,4 @@
 theme: jekyll-theme-minimal
-category-list: [Random]
+category-list: [Random, DevOps]
 include: ["_pages"]
 permalink: /:title/
