@@ -1,4 +1,15 @@
-theme: jekyll-theme-minimal
-category-list: [Random, DevOps, Companies]
+ntheme: jekyll-theme-minimal
+category-list:
+  Random:
+    - Random1
+    - Random2
+  DevOps:
+    Nginx:
+      - Cheatsheets
+    Ansible:
+      - Configs
+  Startups:
+   - Mailing
+   - Marketing
 include: ["_pages"]
 permalink: /:title/
