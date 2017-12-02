@@ -1,7 +1,7 @@
 ---
 resource: true
 categories: [DevOps]
-title: Nginx Cheat Sheet
+title: Nginx Test Page
 description: A compendium of basic & useful NGINX configurations
 ---
 
