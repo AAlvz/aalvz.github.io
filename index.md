@@ -2,7 +2,6 @@
 ### {{ cat }}
 <ul>
   {% for page in site.pages %}
-  "{{page}}"
     {% if page.resource == true %}
       {% for pc in page.categories %}
         {% if pc == cat %}
