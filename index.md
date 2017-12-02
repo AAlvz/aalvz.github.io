@@ -2,6 +2,7 @@
 ### {{ cat }}
 <ul>
   {% for page in site.pages %}
+  ## Hola
     {% if page.resource == true %}
       {% for pc in page.categories %}
         {% if pc == cat %}
