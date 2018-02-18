@@ -1,6 +1,6 @@
 ---
 resource: true
-categories: [@eyeo]
+categories: [@Eyeo]
 title: What is this all about?
 description: The begining of a sequence of experiences in Eyeo - AdBlockPlus. Thoughts, stories and ideas from Germany by @_aalvz [In the nights of germany or the evenings in America...] CV - https://careers.stackoverflow.com/aalvz
 date: 2014-08-27

@@ -1,6 +1,6 @@
 ---
 resource: true
-categories: [@eyeo]
+categories: [@Eyeo, Daily-Work]
 title: Keep Learning
 description: Third day at AdblockPlus
 date: 2014-09-03

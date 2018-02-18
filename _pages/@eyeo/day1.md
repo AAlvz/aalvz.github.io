@@ -1,6 +1,6 @@
 ---
 resource: true
-categories: [@eyeo]
+categories: [@Eyeo]
 title: Day 1
 description: First day at AdBlockPlus!
 date: 2014-09-01

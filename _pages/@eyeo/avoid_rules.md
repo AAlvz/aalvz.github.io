@@ -1,6 +1,6 @@
 ---
 resource: true
-categories: [@eyeo, Daily_work]
+categories: [@Eyeo, Daily-Work]
 title: Avoid Rules. 
 description: Adaptations on workflows
 date: 2014-09-21
