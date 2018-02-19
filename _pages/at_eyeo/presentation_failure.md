@@ -1,6 +1,6 @@
 ---
 resource: true
-categories: [@Eyeo]
+categories: [At-Eyeo]
 title: How my last presentation was a complete failure
 description: I presented my work so far to the people in ABP
 date: 2015-02-27

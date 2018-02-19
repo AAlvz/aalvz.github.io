@@ -1,6 +1,6 @@
 ---
 resource: true
-categories: [@Eyeo, Daily-Work]
+categories: [At-Eyeo, Daily-Work]
 title: How to make a presentaion
 description: Workflow to make a great presentation
 date: 2015-02-28

@@ -1,6 +1,6 @@
 ---
 resource: true
-categories: [@Eyeo]
+categories: [At-Eyeo]
 title: The first week
 description: First week learnings
 date: 2014-09-07

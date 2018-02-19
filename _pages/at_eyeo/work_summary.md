@@ -1,6 +1,6 @@
 ---
 resource: true
-categories: [@Eyeo]
+categories: [At-Eyeo]
 title: Work Summary
 description: What happened after 6 months at AdBlockPlus?
 date: 2015-03-15
