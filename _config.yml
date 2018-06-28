@@ -1,4 +1,4 @@
 theme: jekyll-theme-minimal
-category-list: [Random, DevOps, Companies, Emacs, At-Eyeo, Daily-Work, Elasticsearch, Cool-Code]
+category-list: [Random, DevOps, Companies, Emacs, At-Eyeo, Daily-Work, Elasticsearch, Cool-Code, Aws]
 include: ["_pages"]
 permalink: /:title/
