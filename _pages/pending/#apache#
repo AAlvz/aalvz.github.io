@@ -1,0 +1,47 @@
+apache
+===
+
+important stuff
+
+/etc/apache2/ports.conf, change the port as
+Listen 8079
+<VirtualHost *: 8079>
+
+apache2.conf. To Override .htaccess  Setting Up .htaccess
+
+<Directory /opt/>
+           Options Indexes FollowSymLinks
+           AllowOverride All
+           Require all granted
+           Allow from all 
+</Directory>
+
+Cannot write on folder
+
+sudo chgrp www-data ./assets 
+sudo chmod g+w ./assets/
+
+Set Up mod_rewrite
+sudo a2enmod rewrite
+
+Install with php
+sudo apt-get install apache2
+sudo apt-get install mysql-server
+debian
+sudo apt-get install php5 libapache2-mod-php5
+ubuntu
+php libapache2-mod-php php-mcrypt php-mysql
+
+upgrade to mysql6 from official myssql deb package
+wget https://dev.mysql.com/get/mysql-apt-config_0.8.5-1_all.deb
+sudo dpkg -i mysql-apt-config_0.8.5-1_all.deb
+sudo apt-get update
+sudo apt-get install mysql-community-server
+
+Upgrade git to git.11
+RUN echo "deb http://ftp.us.debian.org/debian testing main contrib non-free" >> /etc/apt/sources.list \
+         &&      apt-get update              \
+                  &&      apt-get install -y git      \
+                           &&      apt-get clean all
+
+git config receive.denyCurrentBranch updateInstead

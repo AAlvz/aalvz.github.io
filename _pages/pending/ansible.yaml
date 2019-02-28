@@ -1,0 +1,65 @@
+---
+
+I need to think of a better name for this
+=========================================
+
+Apply Playbook in a host asking for sudo password to apply everything that is new.
+
+ansible-playbook playbook.yml -i inventory.ini --user=username --ask-sudo-pass
+
+http://stackoverflow.com/questions/21870083/specify-sudo-password-for-ansible
+
+http://stackoverflow.com/questions/21870083/specify-sudo-password-for-ansible
+http://docs.ansible.com/ansible/playbooks_vault.html
+
+ansible-vault create provisioning/host_vars/secret
+
+```
+ansible_ssh_pass: vagrant
+```
+
+cat provisioning/host_vars/secret
+
+```
+$ANSIBLE_VAULT;1.1;AES256
+64313463303632373764656131616536346435363931393361646263646265346463306536303366
+6339306239383536613834383661343965616432366230610a666532346436396463393365646533
+64663634616533353466303931656531373264623563326365633031313731653536313038306666
+3164663763336234300a313861363833623831666663343565666265643261326563653435336538
+31383636663236656535383735343564386264386133343036343166343831616532
+```
+
+cat vault.txt
+pass
+
+cat provisioning/test_servers.yml
+---
+- hosts: test
+  roles:
+    - web_role
+    - { role: nginx, sudo: yes }
+  vars_files:
+    - host_vars/secret
+
+
+ansible-playbook provisioning/test_servers.yml -i provisioning/hosts -c ssh -U vagrant --vault-password-file vault.txt
+
+ansible-playbook provisioning/test_servers.yml -i provisioning/hosts -c ssh -U vagrant --extra-vars "ansible_ssh_pass=vagrant"
+
+sudo ansible-playbook provisioning/site.yml -i provisioning/hosts -c ssh --vault-password-file .vault_pass.txt
+
+create passwords for user method:
+  mkpasswd --method=SHA-512
+
+concatenate variables
+moustaches don't stack and concatenation (+) does not work outside moustaches: 
+  
+"{{ lookup('file', (inventory_dir + '/' + inventory_hostname + '/' + item.value.authorized_keys_file ) }}"
+
+
+
+Concatenate string and var to get a new dynamic variable
+    content="{{ hostvars[inventory_hostname][item.key + '_production_file'] }}"
+
+ansible-playbook provisioning/tinkerware.yml --limit=tinkerware.provision -i provisioning/hosts -u root --vault-password-file local_files/.vault_pass.txt --tags "services"
+ansible-playbook provisioning/tinkerware.yml -i provisioning/hosts -u root --limit=tinkerware.provision --vault-password-file local_files/.vault_pass.txt --tags=react

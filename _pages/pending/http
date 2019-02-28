@@ -1,0 +1,20 @@
+        location /buildbot/ {
+          proxy_pass          http://127.0.0.1:8010/;
+            proxy_set_header    Host $http_host;
+              proxy_set_header    X-Real-IP $remote_addr;
+                proxy_http_version 1.1;
+                  proxy_set_header Upgrade $http_upgrade;
+                    proxy_set_header Connection "upgrade";
+                    }
+
+    }
+
+
+HTTP REF
+https://tools.ietf.org/html/rfc2616#section-14.10   CONNECTION
+https://tools.ietf.org/html/rfc2616#section-14.42   UPGRADE
+
+WEBSOCKETS
+
+WEBSOCKET PROXYING
+http://nginx.org/en/docs/http/websocket.html

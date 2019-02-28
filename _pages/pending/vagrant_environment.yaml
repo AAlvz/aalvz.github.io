@@ -1,0 +1,43 @@
+---
+Requirements
+============
+
+Virtualbox.
+
+One of the magical things of Vagrant is that you can run it no matter
+what operating system you\'re using.
+
+Nevertheless we can (at this moment) fully support any question about
+Linux systems.
+Here you will find the [download page](https://www.virtualbox.org/wiki/Downloads)
+
+
+**Virtualbox guest additions** in order to share folders with the guest machine
+
+This is a [useful plugin](https://github.com/dotless-de/vagrant-vbguest) which
+automatically installs the host\'s VirtualBox Guest Additions on the guest system.
+
+
+Strange things
+==============
+
+I haven\'t run into this but apparently sometimes the shared folder is applied
+with a missing symlink that doesn\'t allow folders to be shared. There are a few
+things to do.
+
+First, fix a virtualbox bug making the symlink by hand.
+`vagrant up; vagrant ssh -c 'sudo ln -s /opt/VBoxGuestAdditions-4.3.10/lib/VBoxGuestAdditions /usr/lib/VBoxGuestAdditions'; vagrant reload`
+
+Another solution would be to shared the folder as NFS with the guest. 
+
+Mount manually
+==============
+
+sudo mount -t vboxsf -o uid=`id -u vagrant`,gid=`getent group vagrant | cut -d: -f3` vagrant /vagrant
+sudo mount -t vboxsf -o uid=`id -u vagrant`,gid=`getent group vagrant | cut -d: -f3` vagrant /vagrant
+
+sudo mount -t vboxsf -o uid=`id -u jenkins`,gid=`getent group jenkins | cut -d: -f3` var_lib_jenkins /var/lib/jenkins
+sudo mount -t vboxsf -o uid=`id -u jenkins`,gid=`id -g jenkins` var_lib_jenkins /var/lib/jenkins
+
+sudo mount -t vboxsf -o uid=`id -u tinker`,gid=`getent group tinker | cut -d: -f3` opt_tinker_shared_files /opt/tinker/shared_files
+sudo mount -t vboxsf -o uid=`id -u tinker`,gid=`id -g tinker` opt_tinker_shared_files /opt/tinker/shared_files

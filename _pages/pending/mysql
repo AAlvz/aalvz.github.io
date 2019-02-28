@@ -1,0 +1,3 @@
+grant all privileges on pyrosmartprod.* to ticonsul_psmart@'%' identified by '2q#W4e%R';
+SELECT User FROM mysql.user;
+show grants for ruvun;

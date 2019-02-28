@@ -1,0 +1,4 @@
+--max_old_space_size=4096 --optimize_for_size --max_executable_size=4096 --stack_size=4096
+
+The one that worked decently:
+--max_old_space_size=512

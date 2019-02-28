@@ -1,0 +1,55 @@
+---
+
+Update and upgrade packages
+`apt-get update && apt-get upgrade -y`
+
+Install sudo
+`apt-get install sudo`
+
+Install an editor
+`apt-get install emacs24-nox -y`
+
+Create group for user
+groupadd ${GROUP}
+
+Create user. Define shell, create-home, define home-dir
+`useradd -s /bin/bash -m -d /home/${USER} -g ${GROUP} -G ${EXTRA_GROUPS} ${USER}
+
+Edit /etc/ssh/sshd_config
+PermitRootLogin no
+PasswordAuthentication no
+Protocol 2
+AllowUsers ${USER}
+
+Define Password for new user
+`passwd ${USER}`
+
+Login as user
+`su - ${USER}`
+`mkdir $HOME/.ssh`
+`touch $HOME/.ssh/authorized_keys`
+Add public key to authorized_keys
+
+restart ssh service
+`sudo service ssh restart`
+
+install firewall
+`install ufw`
+
+open specific ports
+`ufw allow 22`
+`ufw allow ${port}`
+
+`ufw enable`
+
+TODO
+====
+
+I need to add important features that appear here
+http://ryaneschinger.com/blog/securing-a-server-with-ansible/
+
+Recover a compromised server
+https://www.digitalocean.com/community/tutorials/how-to-recover-from-a-compromised-droplet-sending-an-outgoing-flood-or-ddos
+
+
+http://www.tricksofthetrades.net/2015/07/04/notes-pass-unix-password-manager/

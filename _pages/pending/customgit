@@ -1,0 +1,7 @@
+enable access via user/password on ssh daemon or add sshkeys. 
+
+git remote add test root@67.207.92.176:/opt/tinker/shared_files/yii_project/yii2-crud.git
+git push test master
+
+
+still to do. Push from one branch local to different branch remote?? how? 

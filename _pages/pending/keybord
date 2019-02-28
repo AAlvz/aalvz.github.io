@@ -1,0 +1,6 @@
+man xkeyboard-config
+show all possible combinations of keyboard for example grp:alt_shift_toggle = alt + shift
+
+setxkbmap -option grp:alt_shift_toggle us,il
+cat /etc/locale.alias
+show all available keyboard layouts

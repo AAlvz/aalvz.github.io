@@ -1,0 +1,8 @@
+https://github.com/yiisoft/yii2-app-advanced/blob/master/docs/guide/start-installation.md
+http://www.yiiframework.com/download/
+https://wiki.alpinelinux.org/wiki/Nginx_with_PHP
+https://github.com/mickgeek/yii2-advanced-one-domain-config
+http://www.yiiframework.com/doc-2.0/guide-start-installation.html
+
+Remove token:
+composer config --global --auth --unset github-oauth.github.com

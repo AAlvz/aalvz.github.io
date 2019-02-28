@@ -1,0 +1,2 @@
+ssh-keyscan -t rsa github.com'
+to add a key to known_hosts file and be able to connect via ssh without problems

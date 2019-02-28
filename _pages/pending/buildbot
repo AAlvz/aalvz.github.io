@@ -1,0 +1,128 @@
+http://stackoverflow.com/questions/22310452/how-do-i-trigger-a-build-from-a-script-with-no-sc
+
+https://pypi.python.org/pypi/buildbot-waterfall-view/0.9.0b1
+https://pypi.python.org/pypi/buildbot-www/0.9.0b1
+https://pypi.python.org/pypi/buildbot-console-view/0.9.0b1
+
+sudo pip install buildbot_waterfall_view-0.9.0b1-py2-none-any.whl
+sudo pip install buildbot_www-0.9.0b1-py2-none-any.whl
+sudo pip install buildbot_console_view-0.9.0b1-py2-none-any.whl
+
+# Version
+# Buildbot version: 0.9.0b1
+# Twisted version: 14.0.2
+
+c['change_source'].append(changes.PBChangeSource(port=9999, user='example-user', passwd='pass'))
+
+c['schedulers'].append(schedulers.SingleBranchScheduler(
+                             name="waiter",
+                             builderNames=["runtests"],
+                             change_filter=util.ChangeFilter(category='default')))
+
+# Version
+# Buildbot 0.8.9
+
+from buildbot.changes import pb
+c['change_source'].append(pb.PBChangeSource(port=9999, user='example-user', passwd='pass'))
+from buildbot.changes import filter
+c['schedulers'].append(SingleBranchScheduler(
+                             name="waiter",
+                             builderNames=["runtests"],
+                             change_filter=filter.ChangeFilter(category='default')))
+
+buildbot restart master
+buildslave restart slave
+buildbot sendchange -m localhost:9999 -a example-user:pass -W me -C default
+
+
+
+c['www'] = {'change_hook_dialects': {'base': True}}
+12:40 PM each key in change_hook_dialects is the dialect to enable
+12:41 PM the value can be either True, or a dict of options
+ then just call it to mybuildbot/change_hook/base
+
+I think it is probably designed for when you control the other end, and adapt to buildbot, rather than having to adapt to existing senders
+s/adapt/can adapt/
+
+
+c['www'] = {'change_hook_dialects': {'base': True}}
+curl ... -X POST -d '{"files":[...list of files...], "author": "aalvz", "comments": "testing"}'
+skelly>
+tomprince> 
+
+
+WORKING STUFF
+56 c['schedulers'].append(schedulers.SingleBranchScheduler(
+57                             name="waiter",
+58                             builderNames=["runtests"],
+59                             change_filter=util.ChangeFilter(category='default')))
+104 c['www'] = dict(port=8020,
+105                 plugins=dict(waterfall_view={}, console_view={}),
+106                 change_hook_dialects={
+107                                       'base': True,
+108                                       'somehook': {'option1':True,
+109                                                    'option2':False}})
+
+CALL
+curl -X POST -d author=aalvz -d comments=mycomment -d project=my -d category=default -d repository=some http://192.168.33.20:8020/change_hook/base
+
+
+
+REMEMBER to create /home/buildbot/.ssh
+to add keys to clone private stuff!!!
+
+pip download --no-deps buildbot==0.9.0rc1
+https://pypi.io/packages/source/b/buildbot/buildbot-0.9.0rc1.tar.gz
+https://bitbucket.org/pypa/pypi/issues/438/backwards-compatible-un-hashed-package#comment-27243225
+
+
+HTTP PROXY
+http://docs.buildbot.net/latest/manual/cfg-www.html
+
+
+http://nginx.org/en/docs/http/websocket.html
+
+===
+
+        location /buildbot/ {
+          proxy_pass          http://127.0.0.1:8010/;
+            proxy_set_header    Host $http_host;
+              proxy_set_header    X-Real-IP $remote_addr;
+                proxy_http_version 1.1;
+                  proxy_set_header Upgrade $http_upgrade;
+                    proxy_set_header Connection "upgrade";
+                    }
+
+    }
+
+
+
+## WORKING STEPS FOR ANSIBLE
+=========================
+
+factory.addStep(steps.Git(repourl='git@github.com:Tinker-Ware/infrastructure.git', mode='full', workdir='tinker', branch='full_integration', submodules=True, clobberOnFailure=True))
+factory.addStep(steps.ShellCommand(command=["ansible-playbook", "provisioning/test_servers.yml", "-i","provisioning/vagrant_hosts", "--vault-password-file=../vault.txt", "-u", "tinkerware", "-U", "root"],workdir='tinker'))
+
+REQUIREMENTS:
+
+# SOLVE ASK NO SUDO PASS
+ - Include public key in working server (The one to be provisioned)
+ - Modify /etc/sudoers to permit a user to run with privileges and no password.
+
+
+/etc/sudoers (visudo)
+-----
+
+```
+%tinkerware ALL= NOPASSWD: ALL
+```
+
+ansible.cfg
+-----
+
+```
+[defaults]
+private_key_file = /home/tinkerware/.ssh/ansible_id_rsa
+ask_sudo_pass = No
+host_key_checking = No
+```

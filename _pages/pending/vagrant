@@ -1,0 +1,17 @@
+For symlinks activation
+vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/vagrant", "1"]
+
+NODE Shared folders:
+config.vm.synced_folder "tinker", "/opt/tinker/shared_files",
+      owner: "tinkerware",
+            group: "tinkerware"
+
+ shell: "npm install --no-bin-links"
+
+
+
+https://github.com/mitchellh/vagrant/issues/936
+
+
+    config.vm.synced_folder "tinker", "/opt/tinker/shared_files", mount_options: ["uid=1010,gid=1010"]
+    config.vm.provision "shell", inline: "sudo groupadd -g 1010 tinkerware || true && sudo useradd -u 1010 tinkerware -g tinkerware -m -d /home/tinkerware/ ||  true"

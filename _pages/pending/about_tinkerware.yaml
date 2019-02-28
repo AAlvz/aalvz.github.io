@@ -1,0 +1,131 @@
+Introducing Tinkerware - Agile is Better.
+===
+
+Every time you waste time on things that should be automated,
+a Unicorn dies. True story.
+
+Why? Because it means you're wasting LIFE on things you souldn't
+You need to be more efficient.
+
+For companies it's the same, and here's the solution for any company that
+develops software somehow. 
+
+Evolve software delivery now.
+With extra efficient developers. 
+
+Use our platform to apply DevOps principles in seconds. 
+
+Following these priciples companies will improve **productivity up to 80%** with:
+
+|   In Business                             | In Numbers                          |
+|-------------------------------------------|-------------------------------------|
+|   **Finish projects** so much faster      | 2555x **Lead times reduction**      |
+|   **Don't worry** if something goes wrong | 24x **Faster** failure **recovery** |
+|   Fail Quickly, **Improve quickly**       | 3x **Less failures** on change      |
+|   Users can see **constant updates**      | 200x More frequent **deploys**      |
+
+
+Don't waste time installing and configuring stuff. Cut to the chase and start giving value.
+
+To achieve this, there are some things that should be done. 
+
+1. Improve IT Department.
+## Basic structured steps
+Develop locally, Test, Deploy.
+
+2. ## Automate
+Repetitive tasks and unplanned work take normally more than 80% of the time.
+
+3. ## Learn and evolve
+
+4. ## Focus on your tasks. Code hapily and freely
+
+# They take at least a year to apply them from scratch and being productive.
+Why not make it in 5 minutes? 
+
+
+
+# Here's MyDevOp platform for you.
+
+  - Provide automatic software development environments in seconds. Dev/Test/Prod 
+    to connect your repos or start from scratch
+  - Powerful and easy to use infrastructure according to your needs. 
+  - Automatic tools and integrations to your projects. DBs, CIs, Security, Frameworks and more...
+  
+You're done. 
+
+Download a working project to improve it. Once it's better, Deploy it again... 
+
+Now you can keep track of your projects, the services they have on them and how halthy are they. 
+Improve it at any time, and deploy it anytime to any server.
+
+You don't need an expert anymore, or become super efficient if you're the expert. 
+
+
+----------------------------------------------------------------------------------------------------
+
+
+  - Choose between server providers
+  - Configure your server
+  - Secure your server
+  - Deploy your code
+  - Keep an eye on your server
+  - Hope that nothing will break.
+
+...a lot of times it's hard to find the time to do all this.
+
+## choose between
+## server providers, configuring your server, deploying your code and keeping
+## an eye on your server to keep your stuff available.
+
+This "small" step is the difference between (hopefully) *creating a great
+service used by a lot of people* and  - forgetting about that cool small project
+you once did in the past...
+
+Other times, paying third parties to perform all these tasks is not an option
+since it gets expensive, so why not making these configurations easy for you
+and let you handle your own server with freedom with the posibility of growth?
+
+*You can achieve this* with *environments*.
+That project you created in your computer is your developent stage and we can
+sync it to your production server replicating the environment. That way, any time
+you want to add more functionality, it won't be a problem. The deploy will
+be transparent and easy by then and you will have your own server at your
+disposal at any time if you need it.
+
+But how does it work?
+---
+
+You'd basically do the following:
+
+  - Log in with your account.
+  - Select what you want to be installed in your server.
+  - Upload to the server the code you want to deploy there.
+  - Add your ssh-keys to access.
+  - Enjoy! Your code should be working now.
+
+After that you'll get:
+
+  - A development environment to work with. (Using [Vagrant](www.vagrant.com))
+    ( Your vagrant will be just as your production server to avoid compatibility issues)
+  - Access to your server.
+  - Access to a dashboard to make all the steps easily.
+  - A full list of your projects to manage.
+  - Access to modules to complement your server.
+
+Some of the modules to complement your server would include:
+
+  - Basic security
+  - Advanced security
+  - Load balancers
+  - Monitoring
+  - Concurrency/Requests control.
+
+We're cururrently developing the base of all this functionality but we're
+glad to say that it is coming soon.
+All of this gets automated for your easier management (and ours too), that's
+why we will be adding more modules, features and cool stuff depending on how
+the users guide us.
+
+Feel free to contact us at hello@tinkerware.io and subscribe to our waiting list
+We're releasing Beta soon for you to manage your servers without headaches.

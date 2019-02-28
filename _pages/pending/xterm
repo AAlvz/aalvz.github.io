@@ -1,0 +1,6 @@
+xterm*metaSendsEscape:  true    # To enable alt commands like alt . to iterate last argument and more
+/etc/X11/Xresources/x11-common
+
+xrdb /etc/X11/Xresources/x11-common # To load configs for xterm from file
+
+xfontsel

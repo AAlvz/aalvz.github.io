@@ -1,0 +1,26 @@
+https://atlas.hashicorp.com/maier/boxes/alpine-3.4-x86_64/
+
+#private network
+/etc/network/interfaces
+
+auto eth1
+iface eth1 inet static
+        address 192.168.33.30
+        netmask 255.255.255.0
+
+#NGINX
+https://wiki.alpinelinux.org/wiki/Nginx
+
+
+delgroup ping # remove group ping
+addgroup -g 999 docker # create group docker with gid 999
+addgroup jenkins docker # add user jenkins to group docker
+groups jenkins # groups for user jenkins
+id -Gn docker # info about the users groups
+getent group docker # info about the group docker
+
+
+Tips
+https://wiki.alpinelinux.org/wiki/Tutorials_and_Howtos
+https://wiki.alpinelinux.org/wiki/Nginx_with_PHP
+http://blog.zot24.com/tips-tricks-with-alpine-docker/
