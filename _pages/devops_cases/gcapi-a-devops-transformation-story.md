@@ -30,8 +30,16 @@ OK. This was happening:
 | Create new Dev Environment | 4 hours | 5 days |
 | Production deployments | 4 features/ 2 weeks | 5 days |
 
+And we turned that into:
 
-Why was this happening? 
+|    Task     | Besct Case Scenario  | Worst Case Scenario |
+|-------------|----------------------|---------------------|
+| Create new Dev Environment | 35 mins | 1 hour |
+| Production deployments | 6 features every day | 1 feature every day |
+
+Awesome. But how?
+
+First. Why was this happening? 
 
     - Duplicated Scripts
     - Gaps in communication
