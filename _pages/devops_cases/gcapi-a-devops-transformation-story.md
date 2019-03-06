@@ -25,10 +25,10 @@ Why?
 
 OK. This was happening:
 
-    |    Task     | Besct Case Scenario  | Worst Case Scenario |
-    |-------------|----------------------|---------------------|
-    | Create new Dev Environment | 4 hours | 5 days |
-    | Production deployments | 4 features/ 2 weeks | 5 days |
+|    Task     | Besct Case Scenario  | Worst Case Scenario |
+|-------------|----------------------|---------------------|
+| Create new Dev Environment | 4 hours | 5 days |
+| Production deployments | 4 features/ 2 weeks | 5 days |
 
 
 Why was this happening? 
