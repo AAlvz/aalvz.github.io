@@ -2,8 +2,7 @@
 resource: true
 categories: [DevOps-Cases]
 title: GCAPI. A DevOps Transformation Story Pt. 1
-description: Improvements in the team and the workflow since I
-joined
+description: Improvements in the team.
 date: 2019-03-06
 ---
 
