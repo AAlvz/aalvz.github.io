@@ -1,12 +1,13 @@
 I'm an SRE that optimize processes also in life and help teams to be more efficient with DevOps practices.
 Reach out if you think I can help out. alfonso@tinkerware.io
+
 I like learning new human languages, playing any musical instrument and competitive ssmb.
 
-Engineering Posts: https://medium.com/@alfonso_17637
-Tribu Posts: https://medium.com/@alfonso_91284
-Personal Posts: https://medium.com/@aalvz
-Github: https://github.com/AAlvz
-Linkedin: https://www.linkedin.com/in/aalvz
+Engineering Posts <a href="https://medium.com/@alfonso_17637">here</a>.
+Tribu Posts <a href="https://medium.com/@alfonso_91284">here</a>.
+Personal Posts <a href="https://medium.com/@aalvz">here</a>.
+Github <a href="https://github.com/AAlvz">here</a>.
+Linkedin <a href="https://www.linkedin.com/in/aalvz">here</a>.
 
 More Posts:
 
