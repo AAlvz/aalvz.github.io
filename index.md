@@ -4,9 +4,11 @@ Reach out if you think I can help out. alfonso@tinkerware.io
 I like learning new human languages, playing any musical instrument and competitive ssmb.
 
 Engineering Posts <a href="https://medium.com/@alfonso_17637">here</a>.
+
 Tribu Posts <a href="https://medium.com/@alfonso_91284">here</a>.
+
 Personal Posts <a href="https://medium.com/@aalvz">here</a>.
-Github <a href="https://github.com/AAlvz">here</a>.
+
 Linkedin <a href="https://www.linkedin.com/in/aalvz">here</a>.
 
 More Posts:
