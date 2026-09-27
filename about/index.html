@@ -1,0 +1,46 @@
+---
+title: About
+description: Who Alfonso is, how he works, his skills and his (estimated) Big 5 personality profile.
+---
+{% assign pr = site.data.profile %}
+<header class="page-head">
+  <p class="eyebrow">$ about</p>
+  <h1>{{ pr.name }}</h1>
+  <p class="lede">{{ pr.tagline }}</p>
+</header>
+
+<section class="prose">
+  {% for para in pr.bio %}<p>{{ para }}</p>{% endfor %}
+</section>
+
+<section class="block" id="big5">
+  <h2>Big 5 personality</h2>
+  <p class="note">⚠ {{ pr.big5.note }} <a href="{{ pr.big5.test_url }}">What is the Big 5?</a></p>
+  <div class="big5">
+    {% for t in pr.big5.traits %}
+    <div class="trait">
+      <div class="trait-head"><strong>{{ t.name }}</strong><span class="score">{{ t.score }}/100</span></div>
+      <div class="bar" role="img" aria-label="{{ t.name }} {{ t.score }} out of 100"><span style="width: {{ t.score }}%; background: {{ t.color }};"></span></div>
+      <p>{{ t.meaning }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="block">
+  <h2>How I work</h2>
+  <ul class="ticks">{% for w in pr.how_i_work %}<li>{{ w }}</li>{% endfor %}</ul>
+</section>
+
+<section class="block">
+  <h2>Skills</h2>
+  <dl class="skills">
+    {% for s in pr.skills %}<div><dt>{{ s.area }}</dt><dd>{{ s.items }}</dd></div>{% endfor %}
+  </dl>
+</section>
+
+<section class="block callout" id="cofounder">
+  <h2>Looking for a co-founder</h2>
+  <p>{{ pr.cofounder }}</p>
+  <p><a class="btn" href="{{ '/contact/' | relative_url }}">Get in touch</a> <a class="btn ghost" href="https://www.ycombinator.com/cofounder-matching">YC Co-founder Matching</a></p>
+</section>

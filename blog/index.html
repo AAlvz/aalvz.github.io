@@ -1,0 +1,33 @@
+---
+title: Blog
+description: Notes, cheat sheets and stories. DevOps, AWS, Emacs, the eyeo diaries, sales and marketing.
+---
+<header class="page-head">
+  <p class="eyebrow">$ ls blog/</p>
+  <h1>Blog</h1>
+  <p class="lede">Notes I wrote for future me and for anyone who finds them useful. Newer essays live on Medium: <a href="https://medium.com/@alfonso_17637">engineering</a>, <a href="https://medium.com/@alfonso_91284">Tribu</a>, <a href="https://medium.com/@aalvz">personal</a>.</p>
+</header>
+
+<nav class="cat-jump" aria-label="Categories">
+  {% for cat in site.category-list %}{% assign n = 0 %}{% for pg in site.pages %}{% if pg.resource == true and pg.categories contains cat %}{% assign n = n | plus: 1 %}{% endif %}{% endfor %}{% if n > 0 %}<a href="#{{ cat | slugify }}">{{ cat | replace: '-', ' ' }} <span>{{ n }}</span></a>{% endif %}{% endfor %}
+</nav>
+
+{% for cat in site.category-list %}
+  {% assign items = "" | split: "" %}
+  {% for pg in site.pages %}{% if pg.resource == true and pg.categories contains cat %}{% assign items = items | push: pg %}{% endif %}{% endfor %}
+  {% if items.size > 0 %}
+  <section class="cat" id="{{ cat | slugify }}">
+    <h2>{{ cat | replace: '-', ' ' }}</h2>
+    <ul class="post-list">
+      {% assign sorted = items | sort: 'title' %}
+      {% for pg in sorted %}
+      <li>
+        <a href="{{ pg.url | relative_url }}"><strong>{{ pg.title }}</strong></a>
+        {% if pg.description %}<span class="desc">{{ pg.description }}</span>{% endif %}
+        {% if pg.date %}<time>{{ pg.date | date: '%b %Y' }}</time>{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+{% endfor %}

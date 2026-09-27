@@ -1,0 +1,14 @@
+---
+title: Contact
+description: Where to find Alfonso. GitHub, LinkedIn, Medium, the projects dashboard and YC co-founder matching.
+---
+{% assign pr = site.data.profile %}
+<header class="page-head">
+  <p class="eyebrow">$ contact</p>
+  <h1>Let's talk</h1>
+  <p class="lede">Hiring, consulting, a co-founder conversation, or you just liked a post. LinkedIn is the fastest way to reach me.</p>
+</header>
+
+<ul class="link-list">
+  {% for l in pr.links %}<li><a href="{{ l.url }}">{{ l.label }} <span>{{ l.url | remove: 'https://' | remove: 'www.' }}</span></a></li>{% endfor %}
+</ul>

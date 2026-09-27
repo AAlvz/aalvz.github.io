@@ -1,0 +1,13 @@
+---
+layout: default
+---
+{% assign slug = page.path | remove_first: '_pages/' | remove: '.md' %}
+<article class="post">
+  <p class="crumbs"><a href="{{ '/blog/' | relative_url }}">← Blog</a>{% for c in page.categories %} · <a href="{{ '/blog/' | relative_url }}#{{ c | slugify }}">{{ c }}</a>{% endfor %}</p>
+  <h1>{{ page.title }}</h1>
+  {% if page.description %}<p class="lede">{{ page.description }}</p>{% endif %}
+  <p class="meta">{% if page.date %}<time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%B %-d, %Y' }}</time> · {% endif %}<span class="term-hint">In the terminal: <a href="{{ '/' | relative_url }}?cmd={{ 'cat ' | append: slug | uri_escape }}"><code>cat {{ slug }}</code></a></span></p>
+  <div class="post-body" data-post-body>
+    {{ content }}
+  </div>
+</article>

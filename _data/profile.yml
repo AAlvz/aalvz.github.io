@@ -1,0 +1,107 @@
+# Single source of truth: the About/Projects/Contact pages AND the terminal (via /profile.json) read this.
+name: Alfonso Álvarez
+handle: aalvz
+tagline: Platform engineer & builder. I automate processes, in infrastructure and in life.
+bio:
+  - I'm an SRE / platform engineer who optimizes processes, in systems and in life, and helps teams get more done with DevOps practices.
+  - By day I run platform and AI-ops work at scale (Kubernetes, AWS, Terraform, observability). On the side I build ventures, mostly team-wellness SaaS and local services in Mexico.
+  - I work almost entirely in the terminal (Emacs, tmux, Claude Code), which is why this site is one.
+  - Off the keyboard I learn human languages, play any musical instrument I can get my hands on, and play competitive Smash Bros.
+
+big5:
+  note: Estimated. The proper test is coming, and these numbers will be replaced with real results.
+  test_url: https://bettertogetherframework.org/big5/
+  traits:
+    - key: openness
+      name: Openness
+      score: 85
+      color: "#9B59B6"
+      meaning: Always exploring. New tools, new markets, new languages. I start many experiments and keep the ones that work.
+    - key: conscientiousness
+      name: Conscientiousness
+      score: 65
+      color: "#2ECC71"
+      meaning: Structured where it matters (automation, checklists, tracked tasks) and flexible elsewhere. I ship first and polish second.
+    - key: extraversion
+      name: Extraversion
+      score: 50
+      color: "#F1C40F"
+      meaning: Balanced. Happy presenting and selling, and just as happy with deep solo terminal sessions.
+    - key: agreeableness
+      name: Agreeableness
+      score: 65
+      color: "#3498DB"
+      meaning: Collaborative and team-first (I literally build team-wellness products), but I'll push back when the data says so.
+    - key: neuroticism
+      name: Neuroticism
+      score: 35
+      color: "#E74C3C"
+      meaning: Calm under pressure. Useful when you're on call and something is burning at 3 a.m.
+
+skills:
+  - area: Platform / DevOps
+    items: Kubernetes (EKS), Terraform/Terragrunt, AWS, GitLab CI/CD, Datadog, MCP servers
+  - area: Data & AI
+    items: Data pipelines, analytics engineering, LLM apps, FinOps / cost intelligence, A/B testing, GA4
+  - area: Full-stack
+    items: Firebase, Python, JavaScript/TypeScript, REST APIs, WhatsApp/Twilio, HubSpot
+  - area: Entrepreneurship
+    items: Multiple products shipped, GTM planning, conversion optimization, local services to SaaS
+  - area: Languages
+    items: Spanish (native), English (professional), always learning another
+
+how_i_work:
+  - Terminal-first. If I do it twice, I script it.
+  - Ship small, measure, iterate (YC style).
+  - Write things down. Docs are how teams (and future me) scale.
+  - AI as a pair. I work with Claude daily, the same way this site will answer questions one day.
+
+cofounder: I'm looking for a sales/BD co-founder to take Tribu (Slack-native team wellness) to its first paying clients. I bring product, engineering and infrastructure. If closing deals with People/HR leaders excites you, let's talk.
+
+projects:
+  - name: Tribu
+    phase: Pre-launch
+    pitch: Slack-native team wellness. Automated pulses, AI reports and HRIS integrations.
+    url: https://tribu.management
+  - name: Better Together Framework
+    phase: Live
+    pitch: A free, science-backed methodology for team health. The open layer behind Tribu.
+    url: https://bettertogetherframework.org
+  - name: Try Tribu
+    phase: Live
+    pitch: A free 5-minute team wellness check across the 5 radars.
+    url: https://try.tribu.management
+  - name: Maleta Nido
+    phase: Live
+    pitch: Hospital bag concierge for expecting parents in Guadalajara. WhatsApp-first.
+    url: https://maletanido.com
+  - name: Post Mortem
+    phase: Building
+    pitch: End-of-life platform for Spanish-speaking LatAm. Paperwork, digital legacy and support circles.
+    url: https://tribu-dtech.web.app
+  - name: Renta Médica
+    phase: Pre-launch
+    pitch: Medical equipment rental in Zacatecas, by WhatsApp. Zero paperwork.
+    url: https://tribu-renta-medica.web.app
+  - name: AI-ops tooling
+    phase: In production
+    pitch: An oncall autopilot that investigates alerts in Slack, and a FinOps MCP that answers cost questions in plain English.
+    url: https://tribu-dash.web.app
+
+dashboard: https://tribu-dash.web.app
+
+links:
+  - label: GitHub
+    url: https://github.com/AAlvz
+  - label: LinkedIn
+    url: https://www.linkedin.com/in/aalvz
+  - label: Projects dashboard
+    url: https://tribu-dash.web.app
+  - label: YC Co-founder Matching
+    url: https://www.ycombinator.com/cofounder-matching
+  - label: Engineering posts (Medium)
+    url: https://medium.com/@alfonso_17637
+  - label: Tribu posts (Medium)
+    url: https://medium.com/@alfonso_91284
+  - label: Personal posts (Medium)
+    url: https://medium.com/@aalvz

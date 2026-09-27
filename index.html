@@ -1,0 +1,63 @@
+---
+title: Alfonso Álvarez
+description: Platform engineer and builder. Terminal-first. Get to know me by typing, or by clicking.
+main_class: home
+---
+<section class="hero">
+  <h1>Hi, I'm Alfonso. <span class="muted">I work in the terminal, so my website is one.</span></h1>
+  <p class="sub">Platform engineer and builder of ventures. You don't need to know any commands: <strong>click any button</strong>. Curious? Type one and press <kbd>Enter</kbd>.</p>
+</section>
+
+<section class="term-wrap" aria-label="Interactive terminal">
+  <div class="term" id="term">
+    <div class="term-bar">
+      <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="term-title">alfonso@aalvz: ~</span>
+    </div>
+    <div class="term-screen" id="term-screen" tabindex="-1">
+      <div class="term-out" id="term-out" aria-live="polite">
+        <noscript><p>The terminal needs JavaScript. Everything is also on the regular pages: <a href="{{ '/blog/' | relative_url }}">Blog</a>, <a href="{{ '/about/' | relative_url }}">About</a>, <a href="{{ '/projects/' | relative_url }}">Projects</a>, <a href="{{ '/contact/' | relative_url }}">Contact</a>.</p></noscript>
+      </div>
+      <form class="term-line" id="term-form" autocomplete="off">
+        <label for="term-input" class="prompt"><span class="p-host"><span class="p-user">alfonso@aalvz</span>:</span><span class="p-path">~</span>$</label>
+        <input id="term-input" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" enterkeyhint="go" aria-label="Type a command, then press Enter" placeholder="type a command, or click a button below">
+      </form>
+    </div>
+  </div>
+
+  <div class="chips" id="chips" aria-label="Quick commands">
+    <span class="chips-label">Click to run:</span>
+    <button type="button" data-run="whoami">whoami</button>
+    <button type="button" data-run="about">about</button>
+    <button type="button" data-run="projects">projects</button>
+    <button type="button" data-run="blog">blog</button>
+    <button type="button" data-run="big5">big5</button>
+    <button type="button" data-run="contact">contact</button>
+    <button type="button" data-run="cofounder">cofounder</button>
+    <button type="button" data-run="help">help</button>
+  </div>
+
+  <details class="howto" id="howto">
+    <summary>New to terminals? How to use this one</summary>
+    <ul>
+      <li><strong>Click</strong> any button or <span class="cmdlike">underlined command</span> and it types itself, so you can see what the command looks like.</li>
+      <li><strong>Type</strong> a command such as <code>help</code> and press <kbd>Enter</kbd> to run it.</li>
+      <li>Press <kbd>Tab</kbd> to auto-complete. Type <code>pro</code> then <kbd>Tab</kbd> and you get <code>projects</code>.</li>
+      <li>Press <kbd>↑</kbd> / <kbd>↓</kbd> to go through commands you already ran.</li>
+      <li>Type <code>clear</code> (or press <kbd>Ctrl</kbd>+<kbd>L</kbd>) to wipe the screen.</li>
+      <li>You can also just ask something in plain English, like <em>"what do you do?"</em></li>
+    </ul>
+  </details>
+</section>
+
+<section class="cards" aria-label="Prefer clicking? Everything is here too">
+  <h2 class="section-h">Prefer normal pages?</h2>
+  <div class="card-grid">
+    <a class="card" href="{{ '/blog/' | relative_url }}"><span class="card-cmd">$ blog</span><strong>Blog</strong><span>DevOps notes, cheat sheets, the eyeo diaries, sales and marketing playbooks.</span></a>
+    <a class="card" href="{{ '/about/' | relative_url }}"><span class="card-cmd">$ about</span><strong>About</strong><span>Who I am, how I work, my skills and my Big 5 personality.</span></a>
+    <a class="card" href="{{ '/projects/' | relative_url }}"><span class="card-cmd">$ projects</span><strong>Projects</strong><span>Tribu, BTF, Maleta Nido and more. Live status on the dashboard.</span></a>
+    <a class="card" href="{{ '/contact/' | relative_url }}"><span class="card-cmd">$ contact</span><strong>Contact</strong><span>GitHub, LinkedIn, Medium, and co-founder matching.</span></a>
+  </div>
+</section>
+
+<script src="{{ '/assets/js/terminal.js' | relative_url }}" defer></script>

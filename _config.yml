@@ -1,4 +1,23 @@
-theme: jekyll-theme-minimal
-category-list: [Random, DevOps, DevOps-Cases, Companies, Emacs, At-Eyeo, Daily-Work, Elasticsearch, Cool-Code, Aws, Sales, Pending]
+title: Alfonso Álvarez
+description: Platform engineer and builder. Terminal-first. Get to know me by typing, or by clicking.
+url: https://aalvz.github.io
+ga4: G-S6H9N90CG5
+clarity: w7jrpitobm
+
+category-list: [DevOps, DevOps-Cases, Aws, Elasticsearch, Emacs, Cool-Code, At-Eyeo, Daily-Work, Companies, Sales, Random]
+
+# _pages keeps its original paths, so every old URL (/_pages/<dir>/<note>/) still works.
+# Drafts live in _pending/ (underscore dir, never built).
 include: ["_pages"]
+exclude: ["README.md", "Gemfile", "Gemfile.lock", "vendor", ".bundle", "LICENSE"]
 permalink: /:title/
+
+defaults:
+  - scope:
+      path: "_pages"
+    values:
+      layout: post
+  - scope:
+      path: ""
+    values:
+      layout: default

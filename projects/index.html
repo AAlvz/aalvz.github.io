@@ -1,0 +1,20 @@
+---
+title: Projects
+description: Ventures and tools Alfonso is building. Tribu, Better Together Framework, Maleta Nido and more.
+---
+{% assign pr = site.data.profile %}
+<header class="page-head">
+  <p class="eyebrow">$ projects</p>
+  <h1>Projects</h1>
+  <p class="lede">What I'm building right now. For live metrics, goals and what's next on each one, open the <a href="{{ pr.dashboard }}">projects dashboard ↗</a>.</p>
+</header>
+
+<div class="proj-grid">
+  {% for p in pr.projects %}
+  <article class="proj">
+    <div class="proj-top"><h2>{{ p.name }}</h2><span class="phase">{{ p.phase }}</span></div>
+    <p>{{ p.pitch }}</p>
+    <p class="proj-links"><a href="{{ p.url }}">Visit ↗</a> <a href="{{ pr.dashboard }}">Status on dashboard ↗</a></p>
+  </article>
+  {% endfor %}
+</div>

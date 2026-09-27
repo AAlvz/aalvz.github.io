@@ -1,0 +1,5 @@
+---
+layout: null
+permalink: /profile.json
+---
+{{ site.data.profile | jsonify }}

@@ -1,0 +1,7 @@
+---
+layout: null
+permalink: /posts.json
+---
+[{% assign first = true %}{% for pg in site.pages %}{% if pg.resource == true %}{% assign slug = pg.path | remove_first: '_pages/' | remove: '.md' %}{% unless first %},{% endunless %}{% assign first = false %}
+  {"slug": {{ slug | jsonify }}, "title": {{ pg.title | jsonify }}, "description": {{ pg.description | default: "" | jsonify }}, "categories": {{ pg.categories | jsonify }}, "date": {{ pg.date | date: '%Y-%m-%d' | default: "" | jsonify }}, "url": {{ pg.url | relative_url | jsonify }}}{% endif %}{% endfor %}
+]
