@@ -186,6 +186,24 @@ main.page { max-width: 780px; }
 .principles li { padding: .6rem .85rem; background: var(--bg-2); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 8px; color: var(--text-2); }
 .principles strong { color: var(--text); }
 
+.lf-tagline { margin: -.6rem 0 .8rem; color: var(--accent); font: .9rem var(--mono); }
+.lf-row { display: grid; grid-template-columns: 7rem 1fr; gap: .6rem; align-items: start; margin: 1rem 0; }
+.lf-label { font: 600 .75rem var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--text-3); padding-top: .35rem; }
+.lf-chips { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .4rem; }
+.lf-chips li { padding: .3rem .7rem; border-radius: 999px; background: var(--bg-2); border: 1px solid var(--line); font-size: .9rem; }
+.lf-chips.alt li { font-family: var(--mono); font-size: .82rem; color: var(--text-2); }
+.lf-few { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; margin: 1.2rem 0; }
+.lf-few-item { background: var(--bg-2); border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line)); border-radius: 12px; padding: .9rem 1rem; }
+.lf-letter { display: block; font: 700 2rem var(--mono); color: var(--accent); line-height: 1; margin-bottom: .3rem; }
+.lf-few-item p { margin: .3rem 0 0; color: var(--text-2); font-size: .9rem; }
+.lf-checkin { margin: 1rem 0; padding: .9rem 1rem; border-radius: 12px; background: var(--bg-3); }
+.lf-checkin ol { margin: .5rem 0 0; padding-left: 1.3rem; color: var(--text-2); }
+.lf-checkin li { margin: .2rem 0; }
+@media (max-width: 640px) {
+  .lf-row { grid-template-columns: 1fr; gap: .3rem; }
+  .lf-few { grid-template-columns: 1fr; }
+}
+
 .shelf { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: .9rem; }
 .shelf-group { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 1rem 1.1rem; }
 .shelf-group h3 { margin: 0 0 .5rem; font: 600 .78rem var(--mono); color: var(--accent); text-transform: uppercase; letter-spacing: .06em; }

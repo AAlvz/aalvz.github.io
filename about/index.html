@@ -32,6 +32,31 @@ description: Who Alfonso is, how he leads and works, his skills, bookshelf and B
   <ul class="ticks">{% for w in pr.how_i_work %}<li>{{ w }}</li>{% endfor %}</ul>
 </section>
 
+{% assign lf = pr.life %}
+<section class="block" id="life">
+  <h2>How I live: {{ lf.name }}</h2>
+  <p class="lf-tagline">{{ lf.tagline }}</p>
+  <p>{{ lf.intro }}</p>
+
+  <div class="lf-row"><span class="lf-label">Principles</span>
+    <ul class="lf-chips">{% for p in lf.principles %}<li>{{ p }}</li>{% endfor %}</ul></div>
+
+  <div class="lf-few">
+    {% for x in lf.few %}<div class="lf-few-item"><span class="lf-letter">{{ x.letter }}</span><strong>{{ x.name }}</strong><p>{{ x.text }}</p></div>{% endfor %}
+  </div>
+
+  <div class="lf-row"><span class="lf-label">Goals</span>
+    <ul class="lf-chips">{% for g in lf.goals %}<li>{{ g }}</li>{% endfor %}</ul></div>
+  <div class="lf-row"><span class="lf-label">Systems</span>
+    <ul class="lf-chips alt">{% for s in lf.systems %}<li>{{ s }}</li>{% endfor %}</ul></div>
+
+  <div class="lf-checkin">
+    <span class="lf-label">Regular check-in</span>
+    <ol>{% for q in lf.checkin %}<li>{{ q }}</li>{% endfor %}</ol>
+  </div>
+  <p class="small muted"><em>{{ lf.closing }}</em> · <a href="{{ lf.original | relative_url }}">Original graphic (Spanish) ↗</a></p>
+</section>
+
 <section class="block" id="management">
   <h2>Leading teams</h2>
   <p>{{ pr.management.intro }}</p>

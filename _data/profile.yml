@@ -12,7 +12,7 @@ bio:
 management:
   intro: I've built and led teams for over a decade, and I've spent years studying what makes them work. That became the Better Together Framework (the open method) and Tribu (the product that runs it).
   experience:
-    - Built Tinkerware from zero into a 15-person company specialized in DevOps, one of the first in Mexico (2015). We ran it for about ten years and consulted for companies around the globe.
+    - Built Tinkerware from zero into a 15-person company specialized in DevOps, probably the first in Mexico (2015). We ran it for about ten years and consulted for companies around the globe.
     - Team lead at Discovery, and DevOps lead on multiple teams since.
     - "Designed the Better Together Framework, a 5-radar method for team health: burnout, psychological safety, goal clarity, productivity and work-life balance."
     - Built Tribu to run that framework automatically inside Slack, with pulses, reports and AI insights.
@@ -132,6 +132,31 @@ how_i_work:
   - Write things down. Docs are how teams (and future me) scale.
   - Safe teams, clear goals, candid feedback. That's the management I practice and build tools for.
   - AI as a pair. I work with Claude daily, the same way this site will answer questions one day.
+
+life:
+  name: Life Framework v1
+  tagline: A compass for living with intention.
+  intro: The same idea as the Better Together Framework, pointed at my own life. A fixed structure, with content that changes as I do.
+  original: /assets/img/life-framework-v1-es.jpg
+  principles: [Freedom, Curiosity, Family & people, Competence, Integrity, Create more than I consume]
+  few:
+    - letter: F
+      name: Fun
+      text: Live, learn, create, connect, experience.
+    - letter: E
+      name: Exercise
+      text: Keep a body that is healthy, strong, capable and skilled.
+    - letter: W
+      name: Work
+      text: Produce value, grow capability and build freedom.
+  goals: [Smart / always learning, Fit, Market-valuable, Musician, Connected, Financially free]
+  systems: [Money, Organization, Home, Projects, Calendar, Admin]
+  checkin:
+    - Am I living by my principles?
+    - Is F, E or W being neglected?
+    - Do my current goals still matter?
+    - Is any system getting in my way instead of helping?
+  closing: The structure stays. The content evolves with me.
 
 cofounder: I'm looking for a sales/BD co-founder to take Tribu (Slack-native team wellness) to its first paying clients. I bring product, engineering and infrastructure. If closing deals with People/HR leaders excites you, let's talk.
 

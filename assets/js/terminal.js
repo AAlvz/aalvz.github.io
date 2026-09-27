@@ -82,7 +82,7 @@
 
   // ---------- commands ----------
   var HELP = [
-    ['Get to know me', [['whoami', 'the one-line version'], ['about', 'bio, and how I work'], ['management', 'how I lead teams'], ['big5', 'my personality profile'], ['skills', 'what I work with'], ['books', 'books that shaped me'], ['offline', 'music, languages, economics'], ['cofounder', 'what I\'m looking for']]],
+    ['Get to know me', [['whoami', 'the one-line version'], ['about', 'bio, and how I work'], ['management', 'how I lead teams'], ['life', 'my life framework'], ['big5', 'my personality profile'], ['skills', 'what I work with'], ['books', 'books that shaped me'], ['offline', 'music, languages, economics'], ['cofounder', 'what I\'m looking for']]],
     ['See my work', [['projects', 'what I\'m building now'], ['blog', 'notes and cheat sheets'], ['cat <post>', 'read a post right here'], ['dashboard', 'live project status']]],
     ['Go somewhere', [['open <page>', 'open blog, about, projects, contact'], ['contact', 'where to reach me'], ['github', 'my GitHub'], ['linkedin', 'my LinkedIn']]],
     ['Terminal basics', [['tutorial', 'how this terminal works'], ['history', 'commands you ran'], ['theme', 'switch light / dark'], ['clear', 'wipe the screen']]]
@@ -163,6 +163,26 @@
       blank();
       print('Full page: ' + link('/about/#books', 'about'));
       tryNext(['management', 'offline', 'blog']);
+    },
+
+    life: function () {
+      var l = (profile && profile.life) || null;
+      if (!l) return;
+      print('<span class="h">' + esc(l.name) + '</span>  <span class="dim">' + esc(l.tagline) + '</span>');
+      print(esc(l.intro));
+      blank();
+      print('<span class="ok">Principles</span>  ' + l.principles.map(esc).join(' · '));
+      blank();
+      l.few.forEach(function (x) { print('  <span class="h">' + esc(x.letter) + '</span> <span class="ok">' + esc(x.name) + '</span>  ' + esc(x.text)); });
+      blank();
+      print('<span class="ok">Goals</span>    ' + l.goals.map(esc).join(' · '));
+      print('<span class="ok">Systems</span>  ' + l.systems.map(esc).join(' · '));
+      blank();
+      print('<span class="ok">Check-in</span>');
+      l.checkin.forEach(function (q, i) { print('  ' + (i + 1) + '. ' + esc(q)); });
+      blank();
+      print('<span class="dim">' + esc(l.closing) + '</span>  ' + link('/about/#life', 'visual version'));
+      tryNext(['management', 'books', 'big5']);
     },
 
     offline: function () {
@@ -323,6 +343,8 @@
   };
   C.cv = C.skills;
   C.leadership = C.management;
+  C.framework = C.life;
+  C.values = C.life;
   C.library = C.books;
   C.reading = C.books;
   C.hobbies = C.offline;
@@ -346,6 +368,7 @@
       print('<span class="dim">And the buttons are there so nobody has to learn commands to use it.</span>');
       tryNext(['tutorial', 'about']);
     }],
+    [/\blife\b|values|purpose|intention|what matters|priorit/, function () { C.life(); }],
     [/manag|lead(er|ing)?\b|\bteams?\b|people|feedback|psycholog|culture/, function () { C.management(); }],
     [/\bbooks?\b|author|reading list|recommend|economic|hayek|mises|adam smith|phoenix project/, function () { C.books(); }],
     [/music|drum|guitar|bass|piano|instrument|hobb|free time|language|italian|german|japanese|smash/, function () { C.offline(); }],
