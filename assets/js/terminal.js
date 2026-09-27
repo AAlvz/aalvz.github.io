@@ -177,6 +177,7 @@
       });
       blank();
       print('<span class="ok">' + esc(m.daytoday.title) + '</span>');
+      print('  ' + esc(m.daytoday.intro));
       m.daytoday.items.forEach(function (it, i) { print('  ' + (i + 1) + '. ' + esc(it)); });
       blank();
       print('<span class="ok">' + esc(m.people.title) + '</span>');
@@ -184,7 +185,7 @@
       print('  ' + esc(m.people.closing));
       blank();
       print('<span class="ok">' + esc(m.cofounder.complement_intro) + '</span>');
-      m.cofounder.complement.forEach(function (c) { print('  <span class="dim">me:</span> ' + esc(c.mine) + '  <span class="ok">→ you:</span> ' + esc(c.yours)); });
+      m.cofounder.complement.forEach(function (c) { print('  <span class="ok">▸</span> ' + esc(c)); });
       blank();
       m.summary.forEach(function (l) { print('<span class="h">' + esc(l) + '</span>'); });
       blank();

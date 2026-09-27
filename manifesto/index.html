@@ -32,7 +32,7 @@ description: What drives Alfonso, how he works with people day to day, what he l
 <section class="block" id="daytoday">
   <h2>{{ m.daytoday.title }}</h2>
   <p>{{ m.daytoday.intro }}</p>
-  <ol class="mf-steps">{% for it in m.daytoday.items %}{% assign parts = it | split: ': ' %}<li>{% if parts.size > 1 %}<strong>{{ parts[0] }}</strong> {{ parts[1] }}{% else %}<strong>{{ it }}</strong>{% endif %}</li>{% endfor %}</ol>
+  <ol class="mf-steps">{% for it in m.daytoday.items %}{% assign parts = it | split: ': ' %}<li>{% if parts.size > 1 %}<strong>{{ parts[0] }}.</strong> {{ it | remove_first: parts[0] | remove_first: ': ' }}{% else %}<strong>{{ it }}</strong>{% endif %}</li>{% endfor %}</ol>
 </section>
 
 <section class="block" id="people">
@@ -45,11 +45,8 @@ description: What drives Alfonso, how he works with people day to day, what he l
 <section class="block callout" id="cofounder">
   <h2>{{ m.cofounder.title }}</h2>
   <ul class="ticks">{% for it in m.cofounder.items %}<li>{{ it }}</li>{% endfor %}</ul>
-  <p class="mf-comp-intro">{{ m.cofounder.complement_intro }}</p>
-  <div class="mf-comp">
-    <span class="lf-label">Me</span><span class="lf-label">You</span>
-    {% for c in m.cofounder.complement %}<p class="mine">{{ c.mine }}</p><p class="yours">{{ c.yours }}</p>{% endfor %}
-  </div>
+  <h3>{{ m.cofounder.complement_intro }}</h3>
+  <ul class="mf-comp-list">{% for it in m.cofounder.complement %}{% assign parts = it | split: ': ' %}<li><strong>{{ parts[0] }}.</strong> {{ it | remove_first: parts[0] | remove_first: ': ' }}</li>{% endfor %}</ul>
   <p>{{ pr.cofounder }}</p>
   <p><a class="btn" href="{{ '/contact/' | relative_url }}">Get in touch</a> <a class="btn ghost" href="https://www.ycombinator.com/cofounder-matching">YC Co-founder Matching</a></p>
 </section>

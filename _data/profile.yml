@@ -167,12 +167,13 @@ manifesto:
         - A mistake is different. It's something you could have seen coming. If there was no way to be prepared, it wasn't a mistake. It was a failure, and a lesson.
   daytoday:
     title: Day to day
-    intro: How a normal week of building with me looks.
+    intro: The user is our north star. Everything we build needs evidence behind it, and the evidence is the pain we're solving.
     items:
-      - "Build: the smallest thing that can test the idea."
-      - "Get out of the building: talk to users before we build and after we ship."
-      - "Sync: short, honest, frequent. Decisions get written down."
-      - "Pivot: when the data says so, not when it gets uncomfortable."
+      - "Listen first: Lots of interviews with lots of users. We let them tell us their pains, in their own words."
+      - "Evidence before code: We only build what solves a pain we've heard again and again."
+      - "Then build: The smallest thing that solves that pain, and back to the users to see if it did."
+      - "Sync: Short, honest, frequent. Decisions get written down."
+      - "Pivot: When the evidence says so, not when it gets uncomfortable."
       - "Move fast, break fast, fix fast."
   people:
     title: Who I want around me
@@ -184,14 +185,12 @@ manifesto:
     items:
       - "Wisdom: someone who has studied how to build a startup, a company and a product launch."
       - High emotional intelligence.
-    complement_intro: "Where I need a complement. My weak spots, and what fills them:"
+    complement_intro: What I bring, and what I'm looking for in a partner
     complement:
-      - mine: I'd rather build than sell.
-        yours: You love talking to customers and closing deals.
-      - mine: I start more things than I finish. Focus is a discipline I keep working on.
-        yours: You keep us on one thing until it works.
-      - mine: My standards and directness can feel like a lot.
-        yours: You read the room, and you make hard conversations land well.
+      - "Building: It comes naturally to me, and I'm fast at it. I can sell too, but I'd love a partner whose main strength and focus is selling: living in customer conversations and closing deals, and able to build when it's needed."
+      - "Focus: Ideas come easily to me, so the next one is always tempting. A partner who keeps us on one thing until it works makes us both better."
+      - "Directness: I'm direct and my standards are high. A partner who reads the room helps hard conversations land well."
+      - "Above all: We both do whatever the company needs, even when it's not our most developed skill yet."
   summary:
     - "Life's short."
     - "Let's enjoy it."
