@@ -5,8 +5,20 @@ description: Notes, cheat sheets and stories. DevOps, AWS, Emacs, the eyeo diari
 <header class="page-head">
   <p class="eyebrow">$ ls blog/</p>
   <h1>Blog</h1>
-  <p class="lede">Notes I wrote for future me and for anyone who finds them useful. Newer essays live on Medium: <a href="https://medium.com/@alfonso_17637">engineering</a>, <a href="https://medium.com/@alfonso_91284">Tribu</a>, <a href="https://medium.com/@aalvz">personal</a>.</p>
+  <p class="lede">Notes I wrote for future me and for anyone who finds them useful.</p>
 </header>
+
+<aside class="medium-box" aria-label="Newer writing on Medium">
+  <div class="medium-head">
+    <strong>My newer writing is on Medium</strong>
+    <span>Essays, lessons learned, and my summaries of every YC Startup School course.</span>
+  </div>
+  <div class="medium-links">
+    <a href="https://medium.com/@alfonso_17637" target="_blank" rel="noopener"><strong>Engineering ↗</strong><span>DevOps, platform, AI-ops</span></a>
+    <a href="https://medium.com/@alfonso_91284" target="_blank" rel="noopener"><strong>Tribu ↗</strong><span>Startups, teams, building Tribu</span></a>
+    <a href="https://medium.com/@aalvz" target="_blank" rel="noopener"><strong>Personal ↗</strong><span>Everything else</span></a>
+  </div>
+</aside>
 
 <nav class="cat-jump" aria-label="Categories">
   {% for cat in site.category-list %}{% assign n = 0 %}{% for pg in site.pages %}{% if pg.resource == true and pg.categories contains cat %}{% assign n = n | plus: 1 %}{% endif %}{% endfor %}{% if n > 0 %}<a href="#{{ cat | slugify }}">{{ cat | replace: '-', ' ' }} <span>{{ n }}</span></a>{% endif %}{% endfor %}

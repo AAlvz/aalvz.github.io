@@ -1,6 +1,6 @@
 ---
 title: About
-description: Who Alfonso is, how he works, his skills and his (estimated) Big 5 personality profile.
+description: Who Alfonso is, how he leads and works, his skills, bookshelf and Big 5 personality profile.
 ---
 {% assign pr = site.data.profile %}
 <header class="page-head">
@@ -15,7 +15,7 @@ description: Who Alfonso is, how he works, his skills and his (estimated) Big 5 
 
 <section class="block" id="big5">
   <h2>Big 5 personality</h2>
-  <p class="note">⚠ {{ pr.big5.note }} <a href="{{ pr.big5.test_url }}">What is the Big 5?</a></p>
+  <p class="big5-what"><a href="{{ pr.big5.test_url }}">What is the Big 5? ↗</a></p>
   <div class="big5">
     {% for t in pr.big5.traits %}
     <div class="trait">
@@ -32,10 +32,40 @@ description: Who Alfonso is, how he works, his skills and his (estimated) Big 5 
   <ul class="ticks">{% for w in pr.how_i_work %}<li>{{ w }}</li>{% endfor %}</ul>
 </section>
 
+<section class="block" id="management">
+  <h2>Leading teams</h2>
+  <p>{{ pr.management.intro }}</p>
+  <ul class="ticks">{% for e in pr.management.experience %}<li>{{ e }}</li>{% endfor %}</ul>
+  <h3>What I believe about managing people</h3>
+  <ul class="principles">{% for p in pr.management.principles %}<li><strong>{{ p.head }}</strong> {{ p.text }}</li>{% endfor %}</ul>
+  <p class="small muted">{{ pr.management.research }} <a href="https://bettertogetherframework.org/radars/">Explore the 5 radars ↗</a></p>
+</section>
+
 <section class="block">
   <h2>Skills</h2>
   <dl class="skills">
     {% for s in pr.skills %}<div><dt>{{ s.area }}</dt><dd>{{ s.items }}</dd></div>{% endfor %}
+  </dl>
+</section>
+
+<section class="block" id="books">
+  <h2>Bookshelf</h2>
+  <p class="muted">Books and authors that shaped how I build, lead and think.</p>
+  <div class="shelf">
+    {% for g in pr.books %}
+    <div class="shelf-group">
+      <h3>{{ g.area }}</h3>
+      {% if g.note %}<p class="small muted">{{ g.note }}</p>{% endif %}
+      <ul>{% for b in g.items %}<li><strong>{{ b.title }}</strong><span>{{ b.author }}</span></li>{% endfor %}</ul>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="block" id="offkeyboard">
+  <h2>Off the keyboard</h2>
+  <dl class="skills">
+    {% for o in pr.offkeyboard %}<div><dt>{{ o.label }}</dt><dd>{{ o.text }}</dd></div>{% endfor %}
   </dl>
 </section>
 

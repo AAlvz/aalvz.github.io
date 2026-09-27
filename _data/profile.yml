@@ -4,12 +4,78 @@ handle: aalvz
 tagline: Platform engineer & builder. I automate processes, in infrastructure and in life.
 bio:
   - I'm an SRE / platform engineer who optimizes processes, in systems and in life, and helps teams get more done with DevOps practices.
-  - By day I run platform and AI-ops work at scale (Kubernetes, AWS, Terraform, observability). On the side I build ventures, mostly team-wellness SaaS and local services in Mexico.
+  - By day I run platform and AI-ops work at scale (Kubernetes, AWS, Terraform, observability), and I build the AI tooling teams share. On the side I build ventures, mostly team-wellness SaaS and local services in Mexico.
+  - I've also led people. I had my own team at Tinkerware, and I turned what I learned about healthy teams into the Better Together Framework and Tribu.
   - I work almost entirely in the terminal (Emacs, tmux, Claude Code), which is why this site is one.
-  - Off the keyboard I learn human languages, play any musical instrument I can get my hands on, and play competitive Smash Bros.
+  - Off the keyboard I'm a drummer (and I'll get a sound out of any instrument), I learn human languages, I read economics, and I play competitive Smash Bros.
+
+management:
+  intro: I've managed my own team, and I've spent years studying what makes teams work. That became the Better Together Framework (the open method) and Tribu (the product that runs it).
+  experience:
+    - Built and led my own team at Tinkerware.
+    - "Designed the Better Together Framework, a 5-radar method for team health: burnout, psychological safety, goal clarity, productivity and work-life balance."
+    - Built Tribu to run that framework automatically inside Slack, with pulses, reports and AI insights.
+  principles:
+    - head: Psychological safety first.
+      text: People do their best work when it's safe to speak up and to fail.
+    - head: Care personally, challenge directly.
+      text: Candid feedback is a form of respect.
+    - head: Clear goals beat motivation speeches.
+      text: Specific, shared goals are what move a team.
+    - head: Emotions are data.
+      text: How people feel at work is information, not noise.
+    - head: Measure team health like uptime.
+      text: What gets measured regularly gets fixed early.
+  research: "The science behind BTF: Maslach (burnout), Edmondson and Google's Project Aristotle (psychological safety), Gallup Q12 and Locke & Latham (goals), Self-Determination Theory and Csikszentmihalyi (motivation and flow), WHO and Sonnentag (recovery and balance)."
+
+books:
+  - area: Management & people
+    items:
+      - title: The Fearless Organization
+        author: Amy Edmondson
+      - title: Radical Candor
+        author: Kim Scott
+  - area: Psychology
+    items:
+      - title: How Emotions Are Made
+        author: Lisa Feldman Barrett
+      - title: On Becoming a Person
+        author: Carl Rogers
+  - area: Entrepreneurship
+    items:
+      - title: The Four Steps to the Epiphany
+        author: Steve Blank
+      - title: The Startup Owner's Manual
+        author: Steve Blank & Bob Dorf
+      - title: YC Startup School (every course, with my summaries on Medium)
+        author: Y Combinator
+  - area: DevOps
+    items:
+      - title: The Phoenix Project (where it all started for me)
+        author: Gene Kim, Kevin Behr & George Spafford
+      - title: The Unicorn Project
+        author: Gene Kim
+      - title: The DevOps Handbook
+        author: Gene Kim, Jez Humble, Patrick Debois & John Willis
+  - area: Economics
+    note: My current rabbit hole. It helps me understand the world and the debates around it.
+    items:
+      - title: Adam Smith · David Hume · David Ricardo
+        author: the classical economists
+      - title: Carl Menger · Ludwig von Mises · Friedrich Hayek · Murray Rothbard
+        author: the Austrian school
+
+offkeyboard:
+  - label: Music
+    text: Drums are my main instrument. I also play bass, guitar and piano, and I can get a sound out of any instrument I get my hands on.
+  - label: Languages
+    text: Spanish (native), English, Italian and German. I studied Japanese for two years, though not much of it stayed.
+  - label: Economics
+    text: Classical and Austrian economics, from Adam Smith and Hume to Mises and Hayek.
+  - label: Games
+    text: Competitive Smash Bros.
 
 big5:
-  note: Estimated. The proper test is coming, and these numbers will be replaced with real results.
   test_url: https://bettertogetherframework.org/big5/
   traits:
     - key: openness
@@ -41,19 +107,26 @@ big5:
 skills:
   - area: Platform / DevOps
     items: Kubernetes (EKS), Terraform/Terragrunt, AWS, GitLab CI/CD, Datadog, MCP servers
-  - area: Data & AI
-    items: Data pipelines, analytics engineering, LLM apps, FinOps / cost intelligence, A/B testing, GA4
+  - area: AI
+    items: Claude everywhere (Claude Code in the terminal, browser and apps), plus Cursor and Codex. MCP servers, shared AI skills across teams, AI-ops agents
+  - area: Machine learning
+    items: Statistics, Gaussian methods, linear regression through neural networks (MIT Professional Education, Data Science program). Building models, putting them in production and tuning them
+  - area: Data
+    items: Data pipelines, analytics engineering, FinOps / cost intelligence, A/B testing, GA4
+  - area: Management
+    items: Led my own team at Tinkerware. Psychological safety, candid feedback, goal setting, team-health measurement (Better Together Framework)
   - area: Full-stack
     items: Firebase, Python, JavaScript/TypeScript, REST APIs, WhatsApp/Twilio, HubSpot
   - area: Entrepreneurship
-    items: Multiple products shipped, GTM planning, conversion optimization, local services to SaaS
+    items: Customer development (Steve Blank), YC Startup School, multiple products shipped, GTM planning, conversion optimization
   - area: Languages
-    items: Spanish (native), English (professional), always learning another
+    items: Spanish (native), English, Italian, German. Some Japanese (studied 2 years)
 
 how_i_work:
   - Terminal-first. If I do it twice, I script it.
-  - Ship small, measure, iterate (YC style).
+  - Ship small, measure, iterate (YC style, customer development first).
   - Write things down. Docs are how teams (and future me) scale.
+  - Safe teams, clear goals, candid feedback. That's the management I practice and build tools for.
   - AI as a pair. I work with Claude daily, the same way this site will answer questions one day.
 
 cofounder: I'm looking for a sales/BD co-founder to take Tribu (Slack-native team wellness) to its first paying clients. I bring product, engineering and infrastructure. If closing deals with People/HR leaders excites you, let's talk.
@@ -86,6 +159,10 @@ projects:
   - name: AI-ops tooling
     phase: In production
     pitch: An oncall autopilot that investigates alerts in Slack, and a FinOps MCP that answers cost questions in plain English.
+    url: https://tribu-dash.web.app
+  - name: AI skills marketplace
+    phase: In production
+    pitch: Shared AI guidelines and skills, organized for org, team and project, so big and small teams reuse what works and spend less on AI.
     url: https://tribu-dash.web.app
 
 dashboard: https://tribu-dash.web.app

@@ -178,6 +178,29 @@ main.page { max-width: 780px; }
 .block h2, .cat h2 { font-size: 1.3rem; letter-spacing: -.01em; margin: 0 0 1rem; }
 .prose p { color: var(--text-2); }
 .note { color: var(--warn); font-size: .9rem; background: color-mix(in srgb, var(--warn) 10%, transparent); border: 1px solid color-mix(in srgb, var(--warn) 30%, transparent); border-radius: 8px; padding: .55rem .8rem; }
+.block h3 { font-size: 1rem; margin: 1.5rem 0 .6rem; }
+.small { font-size: .88rem; }
+.big5-what { margin: -.4rem 0 1rem; font-size: .92rem; }
+
+.principles { list-style: none; padding: 0; margin: 0; display: grid; gap: .55rem; }
+.principles li { padding: .6rem .85rem; background: var(--bg-2); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 8px; color: var(--text-2); }
+.principles strong { color: var(--text); }
+
+.shelf { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: .9rem; }
+.shelf-group { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 1rem 1.1rem; }
+.shelf-group h3 { margin: 0 0 .5rem; font: 600 .78rem var(--mono); color: var(--accent); text-transform: uppercase; letter-spacing: .06em; }
+.shelf-group ul { list-style: none; padding: 0; margin: 0; display: grid; gap: .55rem; }
+.shelf-group li strong { display: block; font-size: .95rem; }
+.shelf-group li span { color: var(--text-3); font-size: .85rem; }
+
+.medium-box { margin: 0 0 2rem; padding: 1.1rem 1.2rem; border-radius: 14px; border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line)); background: color-mix(in srgb, var(--accent) 8%, var(--bg-2)); }
+.medium-head strong { display: block; font-size: 1.1rem; }
+.medium-head span { color: var(--text-2); font-size: .92rem; }
+.medium-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: .6rem; margin-top: .9rem; }
+.medium-links a { display: block; padding: .7rem .85rem; border-radius: 10px; background: var(--bg-2); border: 1px solid var(--line); color: var(--text); text-decoration: none; transition: border-color .15s, transform .15s; }
+.medium-links a:hover { border-color: var(--accent); transform: translateY(-1px); }
+.medium-links strong { display: block; color: var(--accent); }
+.medium-links span { color: var(--text-3); font-size: .85rem; }
 
 .big5 { display: grid; gap: 1.1rem; }
 .trait-head { display: flex; justify-content: space-between; align-items: baseline; }

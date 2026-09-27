@@ -82,7 +82,7 @@
 
   // ---------- commands ----------
   var HELP = [
-    ['Get to know me', [['whoami', 'the one-line version'], ['about', 'bio, and how I work'], ['big5', 'my personality profile'], ['skills', 'what I work with'], ['cofounder', 'what I\'m looking for']]],
+    ['Get to know me', [['whoami', 'the one-line version'], ['about', 'bio, and how I work'], ['management', 'how I lead teams'], ['big5', 'my personality profile'], ['skills', 'what I work with'], ['books', 'books that shaped me'], ['offline', 'music, languages, economics'], ['cofounder', 'what I\'m looking for']]],
     ['See my work', [['projects', 'what I\'m building now'], ['blog', 'notes and cheat sheets'], ['cat <post>', 'read a post right here'], ['dashboard', 'live project status']]],
     ['Go somewhere', [['open <page>', 'open blog, about, projects, contact'], ['contact', 'where to reach me'], ['github', 'my GitHub'], ['linkedin', 'my LinkedIn']]],
     ['Terminal basics', [['tutorial', 'how this terminal works'], ['history', 'commands you ran'], ['theme', 'switch light / dark'], ['clear', 'wipe the screen']]]
@@ -125,7 +125,6 @@
     big5: function () {
       var b = (profile && profile.big5) || { traits: [] };
       print('<span class="h">Big 5 personality</span>');
-      print('<span class="warn">⚠ ' + esc(b.note || '') + '</span>');
       blank();
       b.traits.forEach(function (t) {
         var n = Math.round(t.score / 5);
@@ -136,6 +135,43 @@
       blank();
       print('What is the Big 5? ' + link(b.test_url, 'bettertogetherframework.org/big5') + '  ·  Visual version: ' + link('/about/#big5', 'about page'));
       tryNext(['about', 'skills']);
+    },
+
+    management: function () {
+      var m = (profile && profile.management) || { experience: [], principles: [] };
+      print('<span class="h">Leading teams</span>');
+      print(esc(m.intro || ''));
+      blank();
+      (m.experience || []).forEach(function (e) { print('  <span class="ok">▸</span> ' + esc(e)); });
+      blank();
+      print('<span class="h">What I believe about managing people</span>');
+      (m.principles || []).forEach(function (p) { print('  <span class="ok">' + esc(p.head) + '</span> ' + esc(p.text)); });
+      blank();
+      print('<span class="dim">' + esc(m.research || '') + '</span>');
+      print('The framework: ' + link('https://bettertogetherframework.org', 'bettertogetherframework.org') + '  ·  Full page: ' + link('/about/#management', 'about'));
+      tryNext(['books', 'big5', 'projects']);
+    },
+
+    books: function () {
+      var g = (profile && profile.books) || [];
+      print('<span class="h">Bookshelf</span>  <span class="dim">books and authors that shaped how I build, lead and think</span>');
+      g.forEach(function (x) {
+        blank();
+        print('<span class="ok">' + esc(x.area) + '</span>' + (x.note ? '  <span class="dim">' + esc(x.note) + '</span>' : ''));
+        x.items.forEach(function (b) { print('  ' + esc(b.title) + '  <span class="dim">· ' + esc(b.author) + '</span>'); });
+      });
+      blank();
+      print('Full page: ' + link('/about/#books', 'about'));
+      tryNext(['management', 'offline', 'blog']);
+    },
+
+    offline: function () {
+      var o = (profile && profile.offkeyboard) || [];
+      print('<span class="h">Off the keyboard</span>');
+      print('<div class="grid">' + o.map(function (x) {
+        return '<span class="ok">' + esc(x.label) + '</span><span>' + esc(x.text) + '</span>';
+      }).join('') + '</div>');
+      tryNext(['books', 'big5', 'about']);
     },
 
     skills: function () {
@@ -286,6 +322,11 @@
     }
   };
   C.cv = C.skills;
+  C.leadership = C.management;
+  C.library = C.books;
+  C.reading = C.books;
+  C.hobbies = C.offline;
+  C.music = C.offline;
   C.man = C.help;
   C.guide = C.tutorial;
   C.cls = C.clear;
@@ -304,6 +345,14 @@
       print('Because that\'s where I live. Emacs + tmux + Claude Code is my whole workflow, so it felt honest to make the site feel the same.');
       print('<span class="dim">And the buttons are there so nobody has to learn commands to use it.</span>');
       tryNext(['tutorial', 'about']);
+    }],
+    [/manag|lead(er|ing)?\b|\bteams?\b|people|feedback|psycholog|culture/, function () { C.management(); }],
+    [/\bbooks?\b|author|reading list|recommend|economic|hayek|mises|adam smith|phoenix project/, function () { C.books(); }],
+    [/music|drum|guitar|bass|piano|instrument|hobb|free time|language|italian|german|japanese|smash/, function () { C.offline(); }],
+    [/machine learning|\bml\b|statistic|neural|regression|data scien|\bmodels?\b/, function () {
+      print('I studied data science and machine learning with MIT Professional Education: statistics, Gaussian methods, linear regression up to neural networks.');
+      print('I\'ve built models, put them in production and tuned them. These days most of my AI work is with Claude.');
+      tryNext(['skills', 'projects']);
     }],
     [/project|building|startup|venture|product|tribu/, function () { C.projects(); }],
     [/big ?5|big five|personality|ocean/, function () { C.big5(); }],
