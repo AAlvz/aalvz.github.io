@@ -133,6 +133,53 @@ how_i_work:
   - Safe teams, clear goals, candid feedback. That's the management I practice and build tools for.
   - AI as a pair. I work with Claude daily, the same way this site will answer questions one day.
 
+manifesto:
+  intro: This is what guides how I act. I first wrote it for the people I build with, so they'd know what to expect from me. It's still true.
+  sections:
+    - title: What moves me
+      items:
+        - I trust the people I build with.
+        - I want to see them succeed, and I want to see us succeed as a team. I'll do my best to make that happen, and if I do, feeling successful comes on its own.
+        - Congruence, excellence and constant learning.
+        - Some tension early in a collaboration is normal. It's just ideas syncing.
+    - title: How I work and decide
+      items:
+        - I don't lie, even when the truth is hard to say. And I don't want to be lied to.
+        - I question every idea, my own included. I'm always looking for inconsistencies.
+        - I aim for perfection, knowing imperfection is part of it. That means the best I can do with the resources I have right now.
+        - I'm open to change. Show me real evidence, like data, books or results, and I'll listen.
+        - Building is expensive in time and money, so I validate before I build.
+    - title: What I've learned by building
+      items:
+        - I've built and launched many times. I've been accepted by accelerators and rejected by users. I've built a lot, and discarded a lot.
+        - I've studied the method deeply. That means all the YC material and Startup School, working with YC alumni, The Four Steps to the Epiphany, Lean Canvas, and getting out of the building to talk to users.
+        - So I can usually tell when a startup is on the right track, and when a mistake could have been avoided. Show me a different route you've validated, and I'm all ears.
+    - title: What I call a truth
+      items:
+        - A truth applies everywhere under a given set of circumstances. Follow it, and the outcome is predictable, even when the result isn't what you expected. That surprise only tunes the truth and makes it more solid.
+        - I'm closest to a truth when I can't find a single situation where it wouldn't apply.
+    - title: Failure is not a mistake
+      items:
+        - Being wrong is fine. Failing is fine. It's even what you aim for, because failing means learning, learning makes you wiser, and wiser people make fewer mistakes.
+        - A mistake is different. It's something you could have seen coming. If there was no way to be prepared, it wasn't a mistake. It was a failure, and a lesson.
+  people:
+    title: Who I want around me
+    intro: People who want to be better, and who work at it. People who
+    traits: [tell the truth, are committed, work hard, are congruent, complement my weaknesses, make my strengths stronger, share their wisdom, think of what's best for others, embrace failure, embrace fear and uncertainty, ask questions, set goals, listen and challenge with respect, are willing to change]
+    closing: People who won't let me down, and who know I'll do the same for them.
+  cofounder:
+    title: What I look for in a co-founder
+    items:
+      - "Wisdom: someone who has studied how to build a startup, a company and a product launch."
+      - High emotional intelligence.
+      - "Strengths that complement mine, above all communicating with people."
+  summary:
+    - "Life's short."
+    - "Let's enjoy it."
+    - "Let's build something people want, because it solves a problem and makes someone's life better."
+    - "Even if we fail, we'll learn."
+    - "And that's already winning."
+
 life:
   name: Life Framework v1
   tagline: A compass for living with intention.

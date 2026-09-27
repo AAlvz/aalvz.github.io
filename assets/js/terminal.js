@@ -71,7 +71,7 @@
     return posts.filter(function (p) { return p.slug.toLowerCase().indexOf(q) !== -1 || p.title.toLowerCase().indexOf(q) !== -1; });
   }
 
-  var SECTIONS = { blog: '/blog/', about: '/about/', projects: 'https://tribu-dash.web.app', contact: '/contact/', home: '/' };
+  var SECTIONS = { blog: '/blog/', about: '/about/', manifesto: '/what-drives-me/', projects: 'https://tribu-dash.web.app', contact: '/contact/', home: '/' };
   var EXTERNAL = {
     dashboard: 'https://tribu-dash.web.app',
     github: 'https://github.com/AAlvz',
@@ -82,7 +82,7 @@
 
   // ---------- commands ----------
   var HELP = [
-    ['Get to know me', [['whoami', 'the one-line version'], ['about', 'bio, and how I work'], ['management', 'how I lead teams'], ['life', 'my life framework'], ['big5', 'my personality profile'], ['skills', 'what I work with'], ['books', 'books that shaped me'], ['offline', 'music, languages, economics'], ['cofounder', 'what I\'m looking for']]],
+    ['Get to know me', [['whoami', 'the one-line version'], ['about', 'bio, and how I work'], ['management', 'how I lead teams'], ['manifesto', 'what drives me, working with me'], ['life', 'my life framework'], ['big5', 'my personality profile'], ['skills', 'what I work with'], ['books', 'books that shaped me'], ['offline', 'music, languages, economics'], ['cofounder', 'what I\'m looking for']]],
     ['See my work', [['projects', 'what I\'m building now'], ['blog', 'notes and cheat sheets'], ['cat <post>', 'read a post right here'], ['dashboard', 'live project status']]],
     ['Go somewhere', [['open <page>', 'open blog, about, projects, contact'], ['contact', 'where to reach me'], ['github', 'my GitHub'], ['linkedin', 'my LinkedIn']]],
     ['Terminal basics', [['tutorial', 'how this terminal works'], ['history', 'commands you ran'], ['theme', 'switch light / dark'], ['clear', 'wipe the screen']]]
@@ -165,6 +165,27 @@
       tryNext(['management', 'offline', 'blog']);
     },
 
+    manifesto: function () {
+      var m = (profile && profile.manifesto) || null;
+      if (!m) return;
+      print('<span class="h">What drives me</span>');
+      print(esc(m.intro));
+      m.sections.forEach(function (s) {
+        blank();
+        print('<span class="ok">' + esc(s.title) + '</span>');
+        s.items.forEach(function (it) { print('  <span class="ok">▸</span> ' + esc(it)); });
+      });
+      blank();
+      print('<span class="ok">' + esc(m.people.title) + '</span>');
+      print('  ' + esc(m.people.intro) + ' ' + m.people.traits.map(esc).join(', ') + '.');
+      print('  ' + esc(m.people.closing));
+      blank();
+      m.summary.forEach(function (l) { print('<span class="h">' + esc(l) + '</span>'); });
+      blank();
+      print('Full page: ' + link('/what-drives-me/', 'what drives me'));
+      tryNext(['life', 'cofounder', 'management']);
+    },
+
     life: function () {
       var l = (profile && profile.life) || null;
       if (!l) return;
@@ -181,7 +202,7 @@
       print('<span class="ok">Check-in</span>');
       l.checkin.forEach(function (q, i) { print('  ' + (i + 1) + '. ' + esc(q)); });
       blank();
-      print('<span class="dim">' + esc(l.closing) + '</span>  ' + link('/about/#life', 'visual version'));
+      print('<span class="dim">' + esc(l.closing) + '</span>  ' + link('/what-drives-me/#life', 'visual version'));
       tryNext(['management', 'books', 'big5']);
     },
 
@@ -344,7 +365,8 @@
   C.cv = C.skills;
   C.leadership = C.management;
   C.framework = C.life;
-  C.values = C.life;
+  C.values = C.manifesto;
+  C.principles = C.manifesto;
   C.library = C.books;
   C.reading = C.books;
   C.hobbies = C.offline;
@@ -368,7 +390,8 @@
       print('<span class="dim">And the buttons are there so nobody has to learn commands to use it.</span>');
       tryNext(['tutorial', 'about']);
     }],
-    [/\blife\b|values|purpose|intention|what matters|priorit/, function () { C.life(); }],
+    [/\blife\b|purpose|intention|priorit/, function () { C.life(); }],
+    [/values|what drives|motivat|what matters|truth|honest|\blie\b|fail|mistake|trust|work(ing)? with (you|alfonso)|expect from/, function () { C.manifesto(); }],
     [/manag|lead(er|ing)?\b|\bteams?\b|people|feedback|psycholog|culture/, function () { C.management(); }],
     [/\bbooks?\b|author|reading list|recommend|economic|hayek|mises|adam smith|phoenix project/, function () { C.books(); }],
     [/music|drum|guitar|bass|piano|instrument|hobb|free time|language|italian|german|japanese|smash/, function () { C.offline(); }],
