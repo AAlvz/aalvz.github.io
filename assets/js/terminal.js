@@ -158,7 +158,7 @@
       g.forEach(function (x) {
         blank();
         print('<span class="ok">' + esc(x.area) + '</span>' + (x.note ? '  <span class="dim">' + esc(x.note) + '</span>' : ''));
-        x.items.forEach(function (b) { print('  ' + esc(b.title) + '  <span class="dim">· ' + esc(b.author) + '</span>'); });
+        x.items.forEach(function (b) { print('  ' + esc(b.title) + (b.author ? '  <span class="dim">· ' + esc(b.author) + '</span>' : '')); });
       });
       blank();
       print('Full page: ' + link('/about/#books', 'about'));

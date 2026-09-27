@@ -56,17 +56,10 @@ description: Who Alfonso is, how he leads and works, his skills, bookshelf and B
     <div class="shelf-group">
       <h3>{{ g.area }}</h3>
       {% if g.note %}<p class="small muted">{{ g.note }}</p>{% endif %}
-      <ul>{% for b in g.items %}<li><strong>{{ b.title }}</strong><span>{{ b.author }}</span></li>{% endfor %}</ul>
+      <ul>{% for b in g.items %}<li><strong>{{ b.title }}</strong>{% if b.author %}<span>{{ b.author }}</span>{% endif %}</li>{% endfor %}</ul>
     </div>
     {% endfor %}
   </div>
-</section>
-
-<section class="block" id="offkeyboard">
-  <h2>Off the keyboard</h2>
-  <dl class="skills">
-    {% for o in pr.offkeyboard %}<div><dt>{{ o.label }}</dt><dd>{{ o.text }}</dd></div>{% endfor %}
-  </dl>
 </section>
 
 <section class="block callout" id="cofounder">
