@@ -71,7 +71,7 @@
     return posts.filter(function (p) { return p.slug.toLowerCase().indexOf(q) !== -1 || p.title.toLowerCase().indexOf(q) !== -1; });
   }
 
-  var SECTIONS = { blog: '/blog/', about: '/about/', projects: '/projects/', contact: '/contact/', home: '/' };
+  var SECTIONS = { blog: '/blog/', about: '/about/', projects: 'https://tribu-dash.web.app', contact: '/contact/', home: '/' };
   var EXTERNAL = {
     dashboard: 'https://tribu-dash.web.app',
     github: 'https://github.com/AAlvz',

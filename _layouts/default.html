@@ -43,7 +43,7 @@
       <a href="{{ '/' | relative_url }}" {% if p == '/' %}aria-current="page"{% endif %}>Terminal</a>
       <a href="{{ '/blog/' | relative_url }}" {% if p contains '/blog/' or p contains '/_pages/' %}aria-current="page"{% endif %}>Blog</a>
       <a href="{{ '/about/' | relative_url }}" {% if p contains '/about/' %}aria-current="page"{% endif %}>About</a>
-      <a href="{{ '/projects/' | relative_url }}" {% if p contains '/projects/' %}aria-current="page"{% endif %}>Projects</a>
+      <a href="https://tribu-dash.web.app" target="_blank" rel="noopener">Projects ↗</a>
       <a href="{{ '/contact/' | relative_url }}" {% if p contains '/contact/' %}aria-current="page"{% endif %}>Contact</a>
     </nav>
     <button class="theme-toggle" type="button" aria-label="Toggle light/dark theme" onclick="window.toggleTheme && toggleTheme()">
