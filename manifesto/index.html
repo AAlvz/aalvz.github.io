@@ -1,25 +1,38 @@
 ---
-title: What drives me
-description: How Alfonso works with people, how he decides, what he calls a truth, what he looks for in a co-founder, and his Life Framework.
+title: Manifesto
+description: What drives Alfonso, how he works with people day to day, what he looks for in a co-founder, and his Life Framework.
 ---
 {% assign pr = site.data.profile %}{% assign m = pr.manifesto %}{% assign lf = pr.life %}
 <header class="page-head">
   <p class="eyebrow">$ manifesto</p>
-  <h1>What drives me</h1>
-  <p class="lede">{{ m.intro }}</p>
+  <h1>{{ m.title }}</h1>
+  <p class="lede">{{ m.subtitle }}</p>
+  <p>{{ m.intro }}</p>
 </header>
 
 <nav class="cat-jump" aria-label="On this page">
-  <a href="#working">Working with me</a><a href="#people">Who I want around me</a><a href="#cofounder">Co-founder</a><a href="#life">Life Framework</a>
+  <a href="#working">{{ m.working_title }}</a>
+  <a href="#daytoday">{{ m.daytoday.title }}</a>
+  <a href="#people">{{ m.people.title }}</a>
+  <a href="#cofounder">{{ m.cofounder.title }}</a>
+  <a href="#inshort">In short</a>
+  <a href="#life">{{ lf.name }}</a>
 </nav>
 
 <section class="block" id="working">
+  <h2>{{ m.working_title }}</h2>
   {% for sec in m.sections %}
   <div class="mf-sec">
-    <h2>{{ sec.title }}</h2>
+    <h3>{{ sec.title }}</h3>
     <ul class="ticks">{% for it in sec.items %}<li>{{ it }}</li>{% endfor %}</ul>
   </div>
   {% endfor %}
+</section>
+
+<section class="block" id="daytoday">
+  <h2>{{ m.daytoday.title }}</h2>
+  <p>{{ m.daytoday.intro }}</p>
+  <ol class="mf-steps">{% for it in m.daytoday.items %}{% assign parts = it | split: ': ' %}<li>{% if parts.size > 1 %}<strong>{{ parts[0] }}</strong> {{ parts[1] }}{% else %}<strong>{{ it }}</strong>{% endif %}</li>{% endfor %}</ol>
 </section>
 
 <section class="block" id="people">
@@ -32,17 +45,22 @@ description: How Alfonso works with people, how he decides, what he calls a trut
 <section class="block callout" id="cofounder">
   <h2>{{ m.cofounder.title }}</h2>
   <ul class="ticks">{% for it in m.cofounder.items %}<li>{{ it }}</li>{% endfor %}</ul>
+  <p class="mf-comp-intro">{{ m.cofounder.complement_intro }}</p>
+  <div class="mf-comp">
+    <span class="lf-label">Me</span><span class="lf-label">You</span>
+    {% for c in m.cofounder.complement %}<p class="mine">{{ c.mine }}</p><p class="yours">{{ c.yours }}</p>{% endfor %}
+  </div>
   <p>{{ pr.cofounder }}</p>
   <p><a class="btn" href="{{ '/contact/' | relative_url }}">Get in touch</a> <a class="btn ghost" href="https://www.ycombinator.com/cofounder-matching">YC Co-founder Matching</a></p>
 </section>
 
-<section class="block mf-summary">
+<section class="block mf-summary" id="inshort">
   <h2>In short</h2>
   {% for l in m.summary %}<p>{{ l }}</p>{% endfor %}
 </section>
 
 <section class="block" id="life">
-  <h2>How I live: {{ lf.name }}</h2>
+  <h2>{{ lf.name }}</h2>
   <p class="lf-tagline">{{ lf.tagline }}</p>
   <p>{{ lf.intro }}</p>
 

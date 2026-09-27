@@ -71,7 +71,7 @@
     return posts.filter(function (p) { return p.slug.toLowerCase().indexOf(q) !== -1 || p.title.toLowerCase().indexOf(q) !== -1; });
   }
 
-  var SECTIONS = { blog: '/blog/', about: '/about/', manifesto: '/what-drives-me/', projects: 'https://tribu-dash.web.app', contact: '/contact/', home: '/' };
+  var SECTIONS = { blog: '/blog/', about: '/about/', manifesto: '/manifesto/', projects: 'https://tribu-dash.web.app', contact: '/contact/', home: '/' };
   var EXTERNAL = {
     dashboard: 'https://tribu-dash.web.app',
     github: 'https://github.com/AAlvz',
@@ -168,7 +168,7 @@
     manifesto: function () {
       var m = (profile && profile.manifesto) || null;
       if (!m) return;
-      print('<span class="h">What drives me</span>');
+      print('<span class="h">' + esc(m.title) + '</span>  <span class="dim">' + esc(m.subtitle) + '</span>');
       print(esc(m.intro));
       m.sections.forEach(function (s) {
         blank();
@@ -176,13 +176,19 @@
         s.items.forEach(function (it) { print('  <span class="ok">▸</span> ' + esc(it)); });
       });
       blank();
+      print('<span class="ok">' + esc(m.daytoday.title) + '</span>');
+      m.daytoday.items.forEach(function (it, i) { print('  ' + (i + 1) + '. ' + esc(it)); });
+      blank();
       print('<span class="ok">' + esc(m.people.title) + '</span>');
       print('  ' + esc(m.people.intro) + ' ' + m.people.traits.map(esc).join(', ') + '.');
       print('  ' + esc(m.people.closing));
       blank();
+      print('<span class="ok">' + esc(m.cofounder.complement_intro) + '</span>');
+      m.cofounder.complement.forEach(function (c) { print('  <span class="dim">me:</span> ' + esc(c.mine) + '  <span class="ok">→ you:</span> ' + esc(c.yours)); });
+      blank();
       m.summary.forEach(function (l) { print('<span class="h">' + esc(l) + '</span>'); });
       blank();
-      print('Full page: ' + link('/what-drives-me/', 'what drives me'));
+      print('Full page: ' + link('/manifesto/', 'manifesto'));
       tryNext(['life', 'cofounder', 'management']);
     },
 
@@ -202,7 +208,7 @@
       print('<span class="ok">Check-in</span>');
       l.checkin.forEach(function (q, i) { print('  ' + (i + 1) + '. ' + esc(q)); });
       blank();
-      print('<span class="dim">' + esc(l.closing) + '</span>  ' + link('/what-drives-me/#life', 'visual version'));
+      print('<span class="dim">' + esc(l.closing) + '</span>  ' + link('/manifesto/#life', 'visual version'));
       tryNext(['management', 'books', 'big5']);
     },
 

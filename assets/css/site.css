@@ -189,7 +189,17 @@ main.page { max-width: 780px; }
 .deeper { display: grid; gap: .25rem; margin: -1rem 0 2.5rem; padding: 1rem 1.2rem; border-radius: 12px; border: 1px dashed color-mix(in srgb, var(--accent) 55%, var(--line)); background: var(--bg-2); color: var(--text); text-decoration: none; transition: border-color .15s, transform .15s; }
 .deeper:hover { border-style: solid; transform: translateY(-1px); color: var(--text); }
 .deeper span:last-child { color: var(--text-2); font-size: .92rem; }
-.mf-sec { margin-bottom: 1.8rem; }
+.mf-sec { margin-bottom: 1.4rem; }
+.mf-sec h3 { margin-top: 1.2rem; }
+[id] { scroll-margin-top: 5rem; } /* keep jump targets clear of the sticky top bar */
+.mf-steps { padding-left: 1.3rem; color: var(--text-2); }
+.mf-steps li { margin: .35rem 0; }
+.mf-steps strong { color: var(--text); }
+.mf-comp-intro { margin-top: 1.2rem; font-weight: 600; }
+.mf-comp { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem .8rem; margin: .6rem 0 1.2rem; }
+.mf-comp p { margin: 0; padding: .55rem .75rem; border-radius: 8px; font-size: .92rem; }
+.mf-comp .mine { background: var(--bg-3); color: var(--text-2); }
+.mf-comp .yours { background: color-mix(in srgb, var(--accent) 12%, var(--bg-2)); border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line)); }
 .mf-close { margin-top: 1rem; font-weight: 600; }
 .mf-summary p { margin: .25rem 0; font-size: 1.1rem; }
 .mf-summary p:last-child { color: var(--accent); font-weight: 700; }
@@ -284,7 +294,9 @@ main.page { max-width: 780px; }
 @media (max-width: 640px) {
   main { padding-top: 1.5rem; }
   .brand { font-size: .9rem; }
-  .topnav { gap: .4rem; }
+  .topnav { gap: .4rem; flex-wrap: wrap; row-gap: .35rem; }
+  .topnav .theme-toggle { margin-left: auto; }
+  .topnav nav { order: 3; width: 100%; margin-left: 0; justify-content: space-between; }
   .topnav nav a { padding: .35rem .45rem; font-size: .82rem; }
   .topnav nav a:first-child { display: none; } /* logo already links home */
   .term-screen { font-size: 13px; min-height: 220px; max-height: 60vh; padding: .8rem; }

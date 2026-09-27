@@ -1,7 +1,7 @@
 # Single source of truth: the About/Projects/Contact pages AND the terminal (via /profile.json) read this.
 name: Alfonso Álvarez
 handle: aalvz
-tagline: Platform engineer & builder. I automate processes, in infrastructure and in life.
+tagline: Platform engineer & builder. I turn things into systems, in infrastructure, in teams and in life.
 bio:
   - I'm an SRE / platform engineer who optimizes processes, in systems and in life, and helps teams get more done with DevOps practices.
   - By day I run platform and AI-ops work at scale (Kubernetes, AWS, Terraform, observability), and I build the AI tooling teams share. On the side I build ventures, mostly team-wellness SaaS and local services in Mexico.
@@ -134,7 +134,10 @@ how_i_work:
   - AI as a pair. I work with Claude daily, the same way this site will answer questions one day.
 
 manifesto:
+  title: Manifesto
+  subtitle: What drives me, how I work with people, and how I live.
   intro: This is what guides how I act. I first wrote it for the people I build with, so they'd know what to expect from me. It's still true.
+  working_title: Working with me
   sections:
     - title: What moves me
       items:
@@ -162,6 +165,15 @@ manifesto:
       items:
         - Being wrong is fine. Failing is fine. It's even what you aim for, because failing means learning, learning makes you wiser, and wiser people make fewer mistakes.
         - A mistake is different. It's something you could have seen coming. If there was no way to be prepared, it wasn't a mistake. It was a failure, and a lesson.
+  daytoday:
+    title: Day to day
+    intro: How a normal week of building with me looks.
+    items:
+      - "Build: the smallest thing that can test the idea."
+      - "Get out of the building: talk to users before we build and after we ship."
+      - "Sync: short, honest, frequent. Decisions get written down."
+      - "Pivot: when the data says so, not when it gets uncomfortable."
+      - "Move fast, break fast, fix fast."
   people:
     title: Who I want around me
     intro: People who want to be better, and who work at it. People who
@@ -172,7 +184,14 @@ manifesto:
     items:
       - "Wisdom: someone who has studied how to build a startup, a company and a product launch."
       - High emotional intelligence.
-      - "Strengths that complement mine, above all communicating with people."
+    complement_intro: "Where I need a complement. My weak spots, and what fills them:"
+    complement:
+      - mine: I'd rather build than sell.
+        yours: You love talking to customers and closing deals.
+      - mine: I start more things than I finish. Focus is a discipline I keep working on.
+        yours: You keep us on one thing until it works.
+      - mine: My standards and directness can feel like a lot.
+        yours: You read the room, and you make hard conversations land well.
   summary:
     - "Life's short."
     - "Let's enjoy it."
