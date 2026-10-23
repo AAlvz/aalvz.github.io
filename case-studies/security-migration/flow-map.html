@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="index,follow">
+<title>Security Migration Flow Map</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>[hidden]{display:none!important} img{max-width:100%}</style>
+<style>
+/* Layout: one wide system map (Slack band on top, GitLab band at the bottom, agents and files between) with a step player, then a per-repo decision path. */
+:root{
+  --bg:#f6f4ef; --surface:#ffffff; --ink:#1b2030; --muted:#5d6374; --line:#cfcabd; --band:#ebe7dd;
+  --you:#c2410c; --orch:#1b2030; --map:#0e7490; --prep:#2f54d9; --watch:#7c3aed; --file:#a16207; --team:#15803d; --rule:#e0602a;
+  --you-bg:#fdeee4; --orch-bg:#e7e9ef; --map-bg:#e2f3f6; --prep-bg:#e6ebfc; --watch-bg:#f0e9fd; --file-bg:#fbf3df; --team-bg:#e5f4ea;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif; --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#11141b; --surface:#191d27; --ink:#e8eaf0; --muted:#9aa1b2; --line:#3a4152; --band:#1f2430;
+  --you:#fb923c; --orch:#e8eaf0; --map:#5fd4e6; --prep:#8ea6ff; --watch:#c4b5fd; --file:#f2c14e; --team:#5fd38a; --rule:#ff8a5c;
+  --you-bg:#2b1c12; --orch-bg:#242a38; --map-bg:#0f2a30; --prep-bg:#1a2140; --watch-bg:#231b3a; --file-bg:#2b2412; --team-bg:#12291b; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#11141b; --surface:#191d27; --ink:#e8eaf0; --muted:#9aa1b2; --line:#3a4152; --band:#1f2430;
+  --you:#fb923c; --orch:#e8eaf0; --map:#5fd4e6; --prep:#8ea6ff; --watch:#c4b5fd; --file:#f2c14e; --team:#5fd38a; --rule:#ff8a5c;
+  --you-bg:#2b1c12; --orch-bg:#242a38; --map-bg:#0f2a30; --prep-bg:#1a2140; --watch-bg:#231b3a; --file-bg:#2b2412; --team-bg:#12291b; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;margin:0}
+.wrap{max-width:1280px;margin:0 auto;padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:22px}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,4.2vw,44px);line-height:1.05;margin:0;letter-spacing:-.01em;text-wrap:balance}
+h2{font-family:var(--display);font-weight:600;font-size:22px;margin:0}
+.lede{color:var(--muted);max-width:72ch;margin:6px 0 0}
+.legend{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;padding:3px 10px;border-radius:999px;background:var(--cb);border:1px solid var(--line)}
+.chip i{width:9px;height:9px;border-radius:2px;background:var(--c)}
+.chip.dash i{height:0;width:16px;border-top:2px dashed var(--rule);background:none;border-radius:0}
+figure{margin:0;display:flex;flex-direction:column;gap:12px}
+.scroll{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+svg.map{display:block;width:100%;min-width:980px;height:auto;color:var(--ink)}
+svg text{font-family:var(--body)}
+.band rect{fill:var(--band)} .band text{font-family:var(--mono);font-size:12px;letter-spacing:.12em;fill:var(--muted)}
+.node rect{fill:var(--nb);stroke:var(--nc);stroke-width:1.5}
+.node .lab{font-size:12.5px;font-weight:600;fill:var(--ink)}
+.node .sub{font-size:10.5px;fill:var(--muted)}
+.node{cursor:pointer}
+.node:focus{outline:none} .node:focus-visible rect{stroke-width:3}
+.edge path{fill:none;stroke:var(--muted);stroke-width:1.6}
+.edge text{font-size:10.5px;fill:var(--muted)}
+.edge.rule path{stroke:var(--rule);stroke-dasharray:5 4}
+.edge.rule text{fill:var(--rule)}
+.hot .edge path{opacity:.18} .hot .edge text{opacity:.25} .hot .node{opacity:.35}
+.hot .edge.on path{opacity:1;stroke:var(--ink);stroke-width:2.6} .hot .edge.on.rule path{stroke:var(--rule)}
+.hot .edge.on text{opacity:1;fill:var(--ink);font-weight:600} .hot .edge.on.rule text{fill:var(--rule)}
+.hot .node.on{opacity:1} .hot .node.on rect{stroke-width:2.6}
+.player{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:start}
+@media (max-width:760px){.player{grid-template-columns:1fr}}
+.ctrl{display:flex;gap:8px;flex-wrap:wrap}
+button{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:6px 12px;cursor:pointer}
+button.play{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+button:focus-visible{outline:2px solid var(--prep);outline-offset:2px}
+.cap{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;gap:4px;min-width:0;min-height:86px}
+.cap .k{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--c,var(--muted))}
+.cap .t{font-weight:600;font-size:16px}
+.cap .d{color:var(--muted);font-size:14px}
+.cap .io{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px}
+.cap .io b{font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-right:4px}
+.dots{display:flex;gap:5px;align-items:center}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--line)} .dots i.on{background:var(--ink)}
+figcaption{color:var(--muted);font-size:13.5px;max-width:80ch}
+svg.tree{display:block;width:100%;min-width:900px;height:auto;color:var(--ink)}
+.q rect{fill:var(--surface);stroke:var(--ink);stroke-width:1.5} .q text{font-size:13px;font-weight:600;fill:var(--ink)}
+.a rect{fill:var(--prep-bg);stroke:var(--prep);stroke-width:1.2} .a.stop rect{fill:var(--you-bg);stroke:var(--you)} .a.done rect{fill:var(--team-bg);stroke:var(--team)}
+.a .t{font-size:12.5px;font-weight:600;fill:var(--ink)} .a .e{font-size:11px;fill:var(--muted);font-family:var(--mono)}
+.tw path{fill:none;stroke:var(--muted);stroke-width:1.5} .tw text{font-size:11px;fill:var(--muted);font-family:var(--mono)}
+.foot{color:var(--muted);font-size:12.5px}
+.journey-sec{display:flex;flex-direction:column;gap:12px}
+.journey-sec > summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px;padding:12px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.journey-sec > summary::-webkit-details-marker{display:none}
+.journey-sec > summary h2::before{content:"▸ ";color:var(--muted)}
+.journey-sec[open] > summary h2::before{content:"▾ "}
+.journey-sec[open] > summary{margin-bottom:12px}
+.journey-sec > summary:focus-visible{outline:2px solid var(--prep);outline-offset:2px}
+.journey{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+@media (max-width:980px){.journey{grid-template-columns:1fr}}
+.ph{display:flex;flex-direction:column;gap:8px;padding:14px 14px 16px;border-right:1px solid var(--line);position:relative;min-width:0}
+.ph:last-child{border-right:0}
+@media (max-width:980px){.ph{border-right:0;border-bottom:1px solid var(--line)}.ph:last-child{border-bottom:0}}
+.ph::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--c)}
+.ph .top{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.ph .n{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--c)}
+.ph .cnt{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:nowrap}
+.ph .name{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15}
+.ph .goal{font-size:12.5px;color:var(--muted)}
+.ph.cur{background:var(--cb)}
+.pain{display:flex;gap:8px;align-items:flex-start;text-align:left;background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:7px 10px;font:inherit;font-size:13px;line-height:1.3;color:var(--ink);cursor:pointer;width:100%}
+.pain i{flex:none;width:8px;height:8px;border-radius:50%;background:var(--c);margin-top:5px}
+.pain.sel{border-color:var(--c);box-shadow:0 0 0 1px var(--c) inset;background:var(--surface)}
+.pain:focus-visible{outline:2px solid var(--prep);outline-offset:2px}
+.stepper{display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.stepper span{padding:1px 7px;border-radius:999px;border:1px solid var(--line)}
+.stepper span.on{background:var(--c);border-color:var(--c);color:var(--bg)}
+.stepper span.done{color:var(--ink)}
+.cap .rule{font-size:13.5px;color:var(--rule);font-weight:600}
+.cap dl{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;margin:0;font-size:13.5px}
+.cap dt{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding-top:2px}
+.cap dd{margin:0;min-width:0}
+.cases{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px}
+.case{position:relative;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px 12px 18px;cursor:pointer;color:var(--ink);display:flex;flex-direction:column;gap:6px;min-width:0}
+.case::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:4px;border-radius:0 3px 3px 0;background:var(--c)}
+.case.sel{border-color:var(--c);box-shadow:0 0 0 1px var(--c) inset}
+.case .k{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--c)}
+.case .t{font-weight:600;line-height:1.3}
+.case dl{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;margin:0;font-size:13px}
+.case dt{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding-top:2px}
+.case dd{margin:0;min-width:0}
+.case .rule{font-size:12.5px;color:var(--rule);font-weight:500}
+.case:focus-visible{outline:2px solid var(--prep);outline-offset:2px}
+.wsec{display:flex;flex-direction:column;gap:12px}
+.acts{margin:0;padding:0;list-style:none;counter-reset:a;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden}
+.acts li{counter-increment:a;display:grid;grid-template-columns:32px minmax(0,1fr);column-gap:10px;padding:10px 14px;border-top:1px solid var(--line)}
+.acts li:first-child{border-top:0}
+.acts li::before{content:counter(a);grid-row:span 2;width:24px;height:24px;border-radius:50%;background:var(--watch-bg);color:var(--watch);font:600 12px var(--mono);display:flex;align-items:center;justify-content:center}
+.acts b{font-weight:600} .acts span{color:var(--muted);font-size:13.5px}
+</style>
+</head>
+<body>
+<nav class="pnav" aria-label="Case study pages"><a href="index.html">Case study</a><a href="roster.html">Agents</a><a href="handoffs.html">Hand-offs</a><a href="flow-map.html" aria-current="page">Flow map</a></nav>
+<style>.pnav{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;padding-block:14px 0;max-width:1280px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}.pnav a{color:var(--muted)}.pnav a[aria-current]{color:var(--ink);font-weight:600}</style>
+
+
+<div class="wrap">
+  <header style="display:flex;flex-direction:column;gap:8px">
+    <h1>Security Migration Flow Map</h1>
+    <p class="lede">How the pieces of a security-pipeline migration across about a hundred repositories fed each other: what each agent read, what it handed on, and where an edge case looped back into the rules. Click a box to see its inputs and outputs, or play the flow step by step.</p>
+  </header>
+
+  <div class="legend" id="legend"></div>
+
+  <figure>
+    <div class="player">
+      <div class="ctrl"><button type="button" class="play" id="playPains">Play the pains</button><button type="button" id="play">Play the flow</button><button type="button" id="prev" aria-label="Previous step">←</button><button type="button" id="next" aria-label="Next step">→</button><button type="button" id="all">Show all</button></div>
+      <div class="cap" id="cap"></div>
+    </div>
+    <div class="scroll"><svg class="map" id="map" viewBox="0 0 1260 760" role="img" aria-label="System map: Slack across the top and GitLab across the bottom; the orchestrator sends repo lists to mapping agents, which write the team map; the team map becomes the group plan; group agents classify each repo using the playbook and open MRs; watchers check pipelines into result rows; results become DM drafts the human approves; teams approve and auto-merge triggers the main-pipeline scan; edge cases loop back as new playbook rules."></svg></div>
+    <figcaption>Slack and GitLab are the two systems everything reads from or writes to. Solid arrows are hand-offs; dashed orange arrows are the feedback loop where an edge case found in a real repo became a new rule in the playbook.</figcaption>
+  </figure>
+
+  <section class="wsec" aria-label="What the watchers did">
+    <h2>What the watchers did</h2>
+    <p class="lede" style="margin:0">51 small background scripts did the waiting and checking, so nobody had to refresh GitLab. They only read and reported; the one thing they were allowed to do was retry a job once.</p>
+    <ol class="acts">
+      <li><b>Waited for rebases to finish</b><span>before trusting any pipeline result</span></li>
+      <li><b>Followed each MR's pipeline</b><span>the one for its latest commit, job by job, until green or failed</span></li>
+      <li><b>Retried runner failures once</b><span>a job that died on the runner itself, not on the code (3 MRs)</span></li>
+      <li><b>Checked the reported image is the real one</b><span>image pushed by the build = image announced to the scanner (caught 5 repos reporting test images)</span></li>
+      <li><b>Held approved Slack messages</b><span>sent a team's message only once all its MRs were green (two teams)</span></li>
+      <li><b>Checked the first pipeline after merge</b><span>the scanner said "Scanning image" with the right arch</span></li>
+    </ol>
+  </section>
+
+  <figure>
+    <h2>How each repo's fix was chosen</h2>
+    <p class="lede" style="margin:0">Before writing anything, each group agent reviewed every repo in its group (CI file, bake file, the legacy scan job) and walked these questions to decide which change it actually needed. Across the 91 MRs, that meant reusing our shared CI template's report job in 59, only removing the old job in 23, and writing the report logic inline in 7 where the template couldn't be used.</p>
+    <div class="scroll"><svg class="tree" id="tree" viewBox="0 0 1200 600" role="img" aria-label="Decision path each group agent followed per repo: remove the legacy scan job if present; if it was the only job, stop and ask; if no image is built, stop at removal; choose an inline or template report job; add a second job when MR and main tags differ; make it automatic after a manual build; report the deployed image with the bake file's arch."></svg></div>
+    <figcaption>Every group agent asked these questions in order for each repo. Several rows exist because a real repo broke the earlier version of the rules; the example on the right is the repo that taught us.</figcaption>
+  </figure>
+
+  <details class="journey-sec" id="pains">
+    <summary><h2>The pains, phase by phase</h2><span class="foot">18 pains across 5 phases · expand to see them</span></summary>
+    <p class="lede" style="margin:0">Every problem we hit, in the order we hit it. Click one to see what we saw, what we found, what we did and the rule it left behind, lit up on the map above.</p>
+    <ol class="journey" id="journey"></ol>
+  </details>
+
+  <p class="foot">Totals for the whole migration: 96 repos audited, 12 agents, 51 background script jobs, 91 MRs. Company, team, repo and channel names are changed.</p>
+</div>
+
+<script>
+const TYPES={you:["Human","--you","--you-bg"],orch:["Orchestrator","--orch","--orch-bg"],map:["Mapping agent","--map","--map-bg"],prep:["Group agent","--prep","--prep-bg"],watch:["Background job","--watch","--watch-bg"],file:["Shared file","--file","--file-bg"],team:["Team","--team","--team-bg"]};
+const C=[100,300,510,720,930,1150], R=[160,300,440,580];
+const N={
+ sheet:{x:C[0],y:370,t:"file",l:"Audit sheet",s:"xlsx · 96 repos",in:"The security team's audit",out:"Repo list, fix-type hints",ex:"The sheet's 'Active?' column and fix types were often wrong, so they were treated as hints."},
+ orch:{x:C[1],y:370,h:140,t:"orch",l:"Orchestrator",s:"plans · tracks · verifies",in:"Sheet, team map, results, my decisions",out:"Repo lists, group plan, drafts, rebases",ex:"Ran at most two group agents at a time and spot-checked every MR they opened."},
+ mapag:{x:C[2],y:R[0],t:"map",l:"Mapping agents ×5",s:"read-only",in:"Repo lists, GitLab committers, Slack",out:"Owner + review channel per repo",ex:"A repo's Jira tickets and committers pointed to the Messaging team, not the group it lived in."},
+ tmap:{x:C[2],y:R[1],t:"file",l:"team-map.md",s:"14 teams · 22 channels",in:"Mapping agents",out:"Teams and groups to the orchestrator",ex:"One shared GitLab group split into three teams by commits, not path."},
+ plan:{x:C[2],y:R[2],t:"file",l:"tracker.md",s:"11 groups · skip lists",in:"Orchestrator",out:"One group per agent",ex:"Skipped 5 inactive and 15 no-CI repos; multi-arch left for last."},
+ pbook:{x:C[2],y:R[3],t:"file",l:"playbook.md",s:"52 lines · 8 revisions",in:"Rules, plus every new edge case",out:"How to classify and fix a repo",ex:"8 revisions; 'report the deployed image' was one of the last rules added."},
+ grp:{x:C[3],y:R[1],t:"prep",l:"Group agents ×7",s:"one per team group",in:"Group repos, playbook, GitLab files",out:"MRs and result rows",ex:"Platform, Messaging, Backend, Data, Web, Search, small teams."},
+ cls:{x:C[3],y:R[2],t:"prep",l:"Classify the repo",s:"what change fits?",in:"CI file, bake file, legacy job",out:"Exact fix for that repo",ex:"See the decision path below."},
+ mr:{x:C[3],y:R[3],t:"prep",l:"Open the MR",s:"one commit, CI file only",in:"Validated change",out:"MR in GitLab",ex:"One commit per repo, touching only the CI file."},
+ you:{x:C[4],y:R[0],t:"you",l:"Me",s:"review · approve",in:"DM drafts, MR links",out:"Rules, 'send <team>'",ex:"Reviewed every group in the browser before any team was pinged."},
+ dm:{x:C[4],y:R[1],t:"watch",l:"DM preview",s:"draft per team",in:"Result rows",out:"An approved message",ex:"Main message with the repo count, links in the thread."},
+ res:{x:C[4],y:R[2],t:"file",l:"results/*.json",s:"one row per repo",in:"Group agents, watchers",out:"Drafts, new rules",ex:"repo · MR · fix · image · arch · pipeline · notes."},
+ wat:{x:C[4],y:R[3],t:"watch",l:"Watchers ×51",s:"background scripts",in:"GitLab pipelines",out:"Green or failed, image = tag",ex:"Retried runner flakes; flagged an outdated base image to its owners."},
+ chan:{x:C[5],y:R[0],t:"team",l:"Team channel",s:"one post per team",in:"Approved message",out:"Team attention",ex:"Platform's review channel: 14 repos, links in the thread."},
+ appr:{x:C[5],y:R[1],t:"team",l:"Team approves",s:"in GitLab",in:"MR link",out:"Approval",ex:"The Platform team approved and merged all 14 quickly."},
+ amg:{x:C[5],y:R[2],t:"watch",l:"Auto-merge",s:"only if approval needed",in:"Approval + green pipeline",out:"Merged MR",ex:"Never set on MRs that need no approval."},
+ scan:{x:C[5],y:R[3],t:"watch",l:"Scan on main",s:"report job → scanner",in:"Merged code",out:"The deployed image gets scanned",ex:"Checked after merge: reported image = pushed tag."}
+};
+const W=160,H=56;
+const E=[
+ {id:"e1",a:"sheet",b:"orch",d:"M180 370 H220",l:"96 repos",lx:200,ly:358,m:"middle"},
+ {id:"e4",a:"slack",b:"mapag",d:"M510 64 V132",l:"review channels",lx:518,ly:102},
+ {id:"e5",a:"gitlab",b:"mapag",d:"M605 696 V176 Q605 160 590 160",l:"committers, CODEOWNERS",lx:598,ly:662,m:"end"},
+ {id:"e6",a:"orch",b:"mapag",d:"M380 318 C408 318 404 168 430 166",l:"repo lists",lx:392,ly:248},
+ {id:"e7",a:"mapag",b:"tmap",d:"M510 188 V272",l:"14 teams, 22 channels",lx:518,ly:234},
+ {id:"e8",a:"tmap",b:"orch",d:"M430 308 H382",l:"11 groups",lx:405,ly:298,m:"middle"},
+ {id:"e9",a:"orch",b:"plan",d:"M380 428 L430 440",l:"plan, skips",lx:405,ly:462,m:"middle"},
+ {id:"e10",a:"plan",b:"grp",d:"M590 440 C616 440 612 306 640 304",l:"spawn 7 agents, 2 at a time",lx:598,ly:392,m:"end"},
+ {id:"e11",a:"gitlab",b:"grp",d:"M628 696 V318 Q628 300 640 300",l:"CI + bake files",lx:636,ly:352},
+ {id:"e12",a:"pbook",b:"cls",d:"M590 578 C616 578 612 446 640 444",l:"rules",lx:598,ly:522,m:"end"},
+ {id:"e13",a:"grp",b:"cls",d:"M720 328 V412",l:"each repo",lx:728,ly:374},
+ {id:"e14",a:"cls",b:"mr",d:"M720 468 V552",l:"validated twice",lx:728,ly:514},
+ {id:"e15",a:"mr",b:"gitlab",d:"M720 608 V696",l:"opens MR",lx:728,ly:676},
+ {id:"e16",a:"gitlab",b:"wat",d:"M930 696 V608",l:"pipelines",lx:938,ly:676},
+ {id:"e17",a:"wat",b:"res",d:"M930 552 V468",l:"green? image = tag?",lx:938,ly:514},
+ {id:"e18",a:"grp",b:"res",d:"M800 300 C830 300 826 440 850 440",l:"result rows",lx:812,ly:390},
+ {id:"e19",a:"res",b:"pbook",d:"M850 462 C820 650 650 650 590 594",l:"edge case → new rule",lx:770,ly:640,m:"middle",rule:1},
+ {id:"e20",a:"res",b:"dm",d:"M930 412 V328",l:"draft per team",lx:938,ly:374},
+ {id:"e21",a:"you",b:"dm",d:"M930 188 V272",l:"review, 'send'",lx:938,ly:234},
+ {id:"e22",a:"dm",b:"chan",d:"M1010 300 C1046 300 1040 160 1070 160",l:"my account",lx:1046,ly:228},
+ {id:"e23",a:"chan",b:"appr",d:"M1150 188 V272",l:"team reviews",lx:1158,ly:234},
+ {id:"e24",a:"appr",b:"amg",d:"M1150 328 V412",l:"approval",lx:1158,ly:374},
+ {id:"e25",a:"amg",b:"scan",d:"M1150 468 V552",l:"merge",lx:1158,ly:514},
+ {id:"e26",a:"scan",b:"gitlab",d:"M1150 608 V696",l:"report job → scan",lx:1142,ly:676,m:"end"},
+ {id:"e27",a:"you",b:"orch",d:"M850 160 C806 160 806 100 770 100 H410 C396 100 396 112 396 126 V296 Q396 308 382 308",l:"rules, decisions",lx:600,ly:92,m:"middle"},
+ {id:"e28",a:"you",b:"pbook",d:"M850 172 C826 172 826 120 800 120 H824",l:"",lx:0,ly:0,rule:1,hide:1}
+].filter(e=>!e.hide);
+const STEPS=[
+ {t:"1 · The list",d:"The security team's audit sheet hands the orchestrator 96 repos and a guess at the fix for each.",e:["e1"]},
+ {t:"2 · Who owns what",d:"Mapping agents take repo lists, read GitLab committers and where teams review MRs in Slack, and write the team map: 14 teams, 22 channels.",e:["e6","e5","e4","e7"]},
+ {t:"3 · The strategy",d:"The team map tells the orchestrator there are 11 groups. That becomes the group plan, with skip lists for inactive and no-CI repos.",e:["e8","e9"]},
+ {t:"4 · One agent per group",d:"The orchestrator spawns seven group agents, two at a time, each with its group's repos.",e:["e10"]},
+ {t:"5 · What change fits this repo?",d:"Each agent reads the repo's CI and bake files, classifies it with the playbook's rules, validates the change twice and opens one MR.",e:["e11","e13","e12","e14","e15"]},
+ {t:"6 · Did it really work?",d:"Background watchers poll the pipelines and confirm the reported image equals the pushed tag. Each repo ends as a result row.",e:["e16","e17","e18"]},
+ {t:"7 · The rules get better",d:"When a repo surprises us (another team's template, a pinned ref, a test image), the case goes back into the playbook as a new rule for every later agent.",e:["e19"]},
+ {t:"8 · Nothing goes out without me",d:"Result rows become one draft per team in my DMs. I review the MRs, say 'send', and it posts to the team channel from my own account.",e:["e20","e21","e22","e27"]},
+ {t:"9 · Merged and scanned",d:"The team approves, auto-merge merges, and the main pipeline's report job points the scanner at the deployed image.",e:["e23","e24","e25","e26"]}
+];
+const S="http://www.w3.org/2000/svg";
+function el(tag,attrs,parent,text){const e=document.createElementNS(S,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;if(parent)parent.append(e);return e;}
+const svg=document.getElementById("map");
+const defs=el("defs",{},svg);
+[["ar","var(--muted)"],["arh","var(--ink)"],["arr","var(--rule)"]].forEach(([id,c])=>{const m=el("marker",{id,viewBox:"0 0 10 10",refX:"9",refY:"5",markerWidth:"7",markerHeight:"7",orient:"auto-start-reverse"},defs);el("path",{d:"M0 0 L10 5 L0 10 z",fill:c},m);});
+const bandG=el("g",{class:"band"},svg);
+el("rect",{x:20,y:24,width:1220,height:40,rx:8},bandG);el("text",{x:36,y:49},bandG,"SLACK");
+el("rect",{x:20,y:696,width:1220,height:40,rx:8},bandG);el("text",{x:36,y:721},bandG,"GITLAB");
+const eG=el("g",{},svg), nG=el("g",{},svg);
+const edgeEls={};
+E.forEach(e=>{const g=el("g",{class:"edge"+(e.rule?" rule":"")},eG);const p=el("path",{d:e.d,"marker-end":`url(#${e.rule?"arr":"ar"})`},g);if(e.l)el("text",{x:e.lx,y:e.ly,"text-anchor":e.m||"start"},g,e.l);edgeEls[e.id]={g,p,e};});
+const nodeEls={};
+Object.entries(N).forEach(([id,n])=>{const h=n.h||H;const g=el("g",{class:"node",tabindex:"0",role:"button","aria-label":n.l+": "+n.s},nG);
+ g.style.setProperty("--nc",`var(${TYPES[n.t][1]})`);g.style.setProperty("--nb",`var(${TYPES[n.t][2]})`);
+ el("rect",{x:n.x-W/2,y:n.y-h/2,width:W,height:h,rx:9},g);
+ el("text",{class:"lab",x:n.x,y:n.y-3,"text-anchor":"middle"},g,n.l);el("text",{class:"sub",x:n.x,y:n.y+13,"text-anchor":"middle"},g,n.s);
+ g.addEventListener("click",()=>{stop();clearPain();mode="flow";focusNode(id);});g.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();stop();focusNode(id);}});
+ nodeEls[id]=g;});
+function clear(){svg.classList.remove("hot");Object.values(edgeEls).forEach(o=>{o.g.classList.remove("on");o.p.setAttribute("marker-end",`url(#${o.e.rule?"arr":"ar"})`);});Object.values(nodeEls).forEach(g=>g.classList.remove("on"));}
+function light(ids){svg.classList.add("hot");ids.forEach(id=>{const o=edgeEls[id];if(!o)return;o.g.classList.add("on");o.p.setAttribute("marker-end",`url(#${o.e.rule?"arr":"arh"})`);[o.e.a,o.e.b].forEach(n=>nodeEls[n]&&nodeEls[n].classList.add("on"));});}
+const cap=document.getElementById("cap");
+function setCap(k,t,d,extra,color){cap.innerHTML="";cap.style.setProperty("--c",color||"var(--muted)");const a=document.createElement("span");a.className="k";a.textContent=k;const b=document.createElement("span");b.className="t";b.textContent=t;const c=document.createElement("span");c.className="d";c.textContent=d;cap.append(a,b,c);if(extra)cap.append(extra);}
+let step=-1,timer=null;var mode="flow";
+function dots(){const w=document.createElement("span");w.className="dots";STEPS.forEach((s,i)=>{const x=document.createElement("i");if(i===step)x.className="on";w.append(x);});return w;}
+function showStep(i){step=(i+STEPS.length)%STEPS.length;const s=STEPS[step];clear();light(s.e);setCap("Step "+(step+1)+" of "+STEPS.length,s.t.replace(/^\d+ · /,""),s.d,dots(),"var(--prep)");}
+function focusNode(id){const n=N[id];clear();const ids=E.filter(e=>e.a===id||e.b===id).map(e=>e.id);light(ids);nodeEls[id].classList.add("on");
+ const io=document.createElement("span");io.className="io";const a=document.createElement("span");a.innerHTML="<b>Gets</b>";a.append(n.in);const b=document.createElement("span");b.innerHTML="<b>Gives</b>";b.append(n.out);io.append(a,b);
+ const ex=document.createElement("span");ex.className="d";ex.textContent=n.ex;const wrap=document.createElement("span");wrap.style.display="flex";wrap.style.flexDirection="column";wrap.style.gap="4px";wrap.append(io,ex);
+ setCap(TYPES[n.t][0],n.l,n.s,wrap,`var(${TYPES[n.t][1]})`);}
+function stop(){if(timer){clearInterval(timer);timer=null;document.getElementById("play").textContent="Play the flow";}
+ if(typeof painTimer!=="undefined"&&painTimer){clearInterval(painTimer);painTimer=null;document.getElementById("playPains").textContent="Play the pains";}}
+document.getElementById("play").addEventListener("click",()=>{if(timer){stop();return;}stop();clearPain();mode="flow";document.getElementById("play").textContent="Pause";showStep(step+1);timer=setInterval(()=>{if(step===STEPS.length-1){stop();return;}showStep(step+1);},5200);});
+document.getElementById("next").addEventListener("click",()=>{const m=mode;stop();if(m==="pain")showPain(pain+1,false);else{clearPain();showStep(step+1);}});
+document.getElementById("prev").addEventListener("click",()=>{const m=mode;stop();if(m==="pain")showPain(pain<=0?ORDERED.length-1:pain-1,false);else{clearPain();showStep(step<=0?STEPS.length-1:step-1);}});
+document.getElementById("all").addEventListener("click",()=>{stop();clearPain();mode="flow";step=-1;clear();setCap("Overview","Everything at once","Click any box to see what it gets and gives, play the flow to follow the nine steps, or play the pains to walk the rollout phase by phase.",null);});
+// legend
+const lg=document.getElementById("legend");
+Object.values(TYPES).forEach(([l,c,b])=>{const s=document.createElement("span");s.className="chip";s.style.setProperty("--c",`var(${c})`);s.style.setProperty("--cb",`var(${b})`);s.append(document.createElement("i"),l);lg.append(s);});
+const rl=document.createElement("span");rl.className="chip dash";rl.style.setProperty("--cb","var(--surface)");rl.append(document.createElement("i"),"New rule from an edge case");lg.append(rl);
+setCap("Overview","Everything at once","Click any box to see what it gets and gives, or play the flow to follow the nine steps in order.",null);
+// problems we solved
+const LAYER={plan:["Planning","--orch","--orch-bg"],map:["Mapping","--map","--map-bg"],fix:["Fixing repos","--prep","--prep-bg"],verify:["Verifying","--watch","--watch-bg"],ship:["Shipping","--you","--you-bg"]};
+const CASES=[
+ {l:"plan",t:"The sheet was out of date",saw:"13 repos marked inactive had recent commits",found:"Checked the last commit on every default branch",did:"Used real activity; skipped only 5 truly inactive",rule:"Real commits beat the sheet's Active? column",n:["sheet","orch","plan"]},
+ {l:"plan",t:"The tracker said 'merged' when it wasn't",saw:"One utility's MR was still open with the legacy job",found:"A live GitLab status pass over every MR opened so far",did:"Rebased it (7 behind); it merged soon after",rule:"Status comes from GitLab, not from our notes",n:["orch","plan"]},
+ {l:"plan",t:"Sessions can die at any moment",saw:"Work spanned many sessions and restarts",found:"A session ran out of context mid-migration",did:"A checkpoint file after every milestone, resumed with one command",rule:"Checkpoint before risky steps and every ~10 exchanges",n:["orch"]},
+ {l:"map",t:"GitLab path didn't tell the owner",saw:"One GitLab group held repos from three teams",found:"Commit authors and Jira projects",did:"Split the group: 14 repos to one team, 8 to another, the rest to a third",rule:"Owner from commits and tickets, never from the path",n:["mapag","tmap"]},
+ {l:"map",t:"Some channels were only bots",saw:"A mobile team's channel only had GitLab notifications",found:"Read recent channel history",did:"Used each mobile team's working channel instead",rule:"Pick where the team reviews MRs, not a feed",n:["mapag","tmap","chan"]},
+ {l:"map",t:"A better channel turned up late",saw:"The backend team had no single team channel",found:"I found their shared-services channel",did:"Posted there too; the map now points to it",rule:"The team map is a living file",n:["tmap","chan","you"]},
+ {l:"fix",t:"One template silently replaced another",saw:"A service's build job silently lost a step",found:"GitLab's merged config, compared job by job",did:"Inline report job instead of a second template",rule:"Never stack the shared Docker template on a team's own",n:["cls","pbook","res"]},
+ {l:"fix",t:"Pinned templates had no report job",saw:"4 Data repos pinned the shared templates to an old ref",found:"That ref had no report template",did:"Inline job; the pin stayed, so nothing else changed",rule:"Don't bump pins to land a CI change",n:["cls","pbook"]},
+ {l:"fix",t:"We were scanning test images",saw:"5 Data repos reported test-<sha>",found:"Compared report jobs with the deploy jobs' image",did:"Switched to the deployed tag; kept the scan where the deployed image is built",rule:"Report the image that gets deployed",n:["cls","pbook","scan"]},
+ {l:"fix",t:"A manual build meant two clicks",saw:"Backend builds are manual on MRs; the report was too",found:"Tested on one service: clicked build, watched the report",did:"The report job waits on the build with needs: optional",rule:"A manual build gets an automatic report",n:["cls","pbook","wat"]},
+ {l:"fix",t:"Removing the job emptied the CI file",saw:"A small utility repo's only job was the legacy scan trigger",found:"The agent stopped instead of guessing",did:"I approved deleting the file; policy jobs still run",rule:"If a change leaves no jobs, stop and ask",n:["cls","you"]},
+ {l:"fix",t:"Deploys waited on the old scan",saw:"A web app's deploy jobs needed the legacy scan job",found:"Searched for needs on removed jobs",did:"Removed those needs so deploys stay unblocked",rule:"Remove needs that point at removed jobs",n:["cls","mr"]},
+ {l:"verify",t:"Runners failed, not our code",saw:"Jobs on 3 MRs died with 'tls: internal error'",found:"failure_reason = system failure",did:"One automatic retry; all three passed",rule:"Retry once on a runner failure, never twice",n:["wat","res"]},
+ {l:"verify",t:"A team's own test was flaky",saw:"A team's preprod test failed after our change",found:"The previous pipeline had passed; our diff was one line",did:"Retried; passed; build and report matched",rule:"Check whether the failure can be ours before fixing",n:["wat"]},
+ {l:"verify",t:"A base image had expired",saw:"One repo's Docker build failed on apt-get",found:"Its base image's OS release was end-of-life",did:"Handed the base-image upgrade to its owners",rule:"Don't fix someone else's base image inside this migration",n:["wat","plan"]},
+ {l:"verify",t:"Green didn't mean scanned",saw:"Pipelines were green, but one check showed nothing had been scanned",found:"Read the scanner logs, not just the status",did:"Fixed: every image-building repo now reports its image explicitly",rule:"Check what the tool actually did, not only that it passed",n:["wat","scan"]},
+ {l:"ship",t:"A bot had already posted the MR",saw:"Bot cards for the MRs in two channels",found:"Read the channel before every send",did:"One clean summary message, no duplicates",rule:"Check for bot cards in the pre-send check",n:["dm","chan"]},
+ {l:"ship",t:"Merging without the team",saw:"Auto-merge would instantly merge 0-approval MRs",found:"Checked required approvals before setting it",did:"Auto-merge only where an approval is required",rule:"Never merge another team's repo without review",n:["amg","appr","you"]}
+];
+const PHASES=[
+ {k:"plan",name:"Planning",goal:"Turn a 96-repo sheet into a plan we can trust"},
+ {k:"map",name:"Mapping",goal:"Find who owns each repo and where they review MRs"},
+ {k:"fix",name:"Fixing repos",goal:"Pick the right change for each repo's structure"},
+ {k:"verify",name:"Verifying",goal:"Prove it worked on real pipelines, not on paper"},
+ {k:"ship",name:"Shipping",goal:"Get every team to review and merge"}
+];
+const ORDERED=PHASES.flatMap(p=>CASES.filter(c=>c.l===p.k));
+const jEl=document.getElementById("journey"), painBtns=[], phEls={};
+PHASES.forEach((p,pi)=>{const L=LAYER[p.k];const li=document.createElement("li");li.className="ph";li.style.setProperty("--c",`var(${L[1]})`);li.style.setProperty("--cb",`var(${L[2]})`);
+ const list=CASES.filter(c=>c.l===p.k);
+ const top=document.createElement("div");top.className="top";top.append(txtEl("span","n","Phase "+(pi+1)),txtEl("span","cnt",list.length+(list.length===1?" pain":" pains")));
+ li.append(top,txtEl("span","name",p.name),txtEl("span","goal",p.goal));
+ list.forEach(c=>{const b=document.createElement("button");b.type="button";b.className="pain";b.append(document.createElement("i"),c.t);b.addEventListener("click",()=>{stopAll();showPain(ORDERED.indexOf(c),true);});painBtns[ORDERED.indexOf(c)]=b;li.append(b);});
+ phEls[p.k]=li;jEl.append(li);});
+function txtEl(tag,cls,t){const e=document.createElement(tag);e.className=cls;e.textContent=t;return e;}
+let pain=-1, painTimer=null;
+function showPain(i,scroll){pain=(i+ORDERED.length)%ORDERED.length;const c=ORDERED[pain];const L=LAYER[c.l];
+ painBtns.forEach((b,j)=>b.classList.toggle("sel",j===pain));Object.entries(phEls).forEach(([k,el])=>el.classList.toggle("cur",k===c.l));
+ clear();svg.classList.add("hot");c.n.forEach(n=>nodeEls[n]&&nodeEls[n].classList.add("on"));E.forEach(e=>{if(c.n.includes(e.a)&&c.n.includes(e.b))light([e.id]);});
+ const wrap=document.createElement("span");wrap.style.display="flex";wrap.style.flexDirection="column";wrap.style.gap="8px";
+ const dl=document.createElement("dl");[["Saw",c.saw],["Found",c.found],["Did",c.did]].forEach(([a,v])=>{dl.append(txtEl("dt","",a),txtEl("dd","",v));});
+ const st=document.createElement("span");st.className="stepper";const pi=PHASES.findIndex(p=>p.k===c.l);PHASES.forEach((p,j)=>{const s=txtEl("span",j===pi?"on":j<pi?"done":"",p.name);st.append(s);});
+ wrap.append(dl,txtEl("span","rule","Rule: "+c.rule),st);
+ setCap("Pain "+(pain+1)+" of "+ORDERED.length+" · "+L[0],c.t,"",wrap,`var(${L[1]})`);
+ if(scroll)document.getElementById("cap").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});}
+function stopAll(){stop();}
+function clearPain(){painBtns.forEach(b=>b.classList.remove("sel"));Object.values(phEls).forEach(el=>el.classList.remove("cur"));}
+document.getElementById("playPains").addEventListener("click",()=>{if(painTimer){stop();return;}stop();mode="pain";document.getElementById("playPains").textContent="Pause";showPain(pain>=ORDERED.length-1?0:pain+1,true);painTimer=setInterval(()=>{if(pain===ORDERED.length-1){stop();return;}showPain(pain+1,false);},6500);});
+painBtns.forEach(b=>b.addEventListener("click",()=>{mode="pain";}));
+// decision path
+const T=document.getElementById("tree");
+const ROWS=[
+ ["Has the legacy scan job?","Remove it, its hidden base and any needs on it","the monolith · a core service · a web app","a"],
+ ["Was it the only job?","Stop and ask before deleting the CI file","a small utility repo","stop"],
+ ["Does CI build an image?","No: removal is the whole fix (no legacy job either: no change)","npm libraries · a starter kit","done"],
+ ["Team's own or pinned template?","Write the report job inline instead of extends","a core service · a data API","a"],
+ ["MR and main build different tags?","Two jobs: one report for MRs, one for main","several web apps","a"],
+ ["Is the build manual on MRs?","Report runs right after it: needs (optional), no extra click","two backend services","a"],
+ ["Which image, which arch?","The image the deploy jobs use; arch from the bake file","data APIs: <prefix>-<sha> · amd64 services","a"]
+];
+const tw=el("g",{class:"tw"},T), tq=el("g",{},T);
+const tdefs=el("defs",{},T);const tm=el("marker",{id:"ta",viewBox:"0 0 10 10",refX:"9",refY:"5",markerWidth:"7",markerHeight:"7",orient:"auto-start-reverse"},tdefs);el("path",{d:"M0 0 L10 5 L0 10 z",fill:"var(--muted)"},tm);
+ROWS.forEach((r,i)=>{const y=40+i*80;
+ const q=el("g",{class:"q"},tq);el("rect",{x:40,y:y,width:360,height:48,rx:24},q);el("text",{x:220,y:y+29,"text-anchor":"middle"},q,r[0]);
+ const a=el("g",{class:"a "+(r[3]==="a"?"":r[3])},tq);el("rect",{x:520,y:y-2,width:640,height:52,rx:10},a);el("text",{class:"t",x:540,y:y+20},a,r[1]);el("text",{class:"e",x:540,y:y+39},a,"e.g. "+r[2]);
+ el("path",{d:`M400 ${y+24} H516`,"marker-end":"url(#ta)"},tw);el("text",{x:458,y:y+17,"text-anchor":"middle"},tw,i===2?"no":"yes");
+ if(i<ROWS.length-1){el("path",{d:`M220 ${y+48} V${y+76}`,"marker-end":"url(#ta)"},tw);el("text",{x:230,y:y+66},tw,i===2?"yes":i===6?"":"then");}
+});
+</script>
+
+</body>
+</html>

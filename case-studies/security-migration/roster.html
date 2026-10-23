@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="index,follow">
+<title>Security Migration Agents</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>[hidden]{display:none!important} img{max-width:100%}</style>
+<style>
+/* Layout: scale strip on top, roster grid (cards colored by agent type) beside a sticky detail panel; panel shows instructions and a "rules added" timeline. */
+:root{
+  --bg:#f6f4ef; --surface:#ffffff; --ink:#1b2030; --muted:#5a6072; --line:#dedad0;
+  --you:#c2410c; --orch:#1b2030; --map:#0e7490; --prep:#2f54d9; --watch:#7c3aed; --rule:#e0602a;
+  --you-bg:#fdeee4; --orch-bg:#eceef3; --map-bg:#e4f4f7; --prep-bg:#e8edfc; --watch-bg:#f1ebfd;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif; --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#11141b; --surface:#191d27; --ink:#e8eaf0; --muted:#9aa1b2; --line:#2b3140;
+  --you:#fb923c; --orch:#e8eaf0; --map:#5fd4e6; --prep:#8ea6ff; --watch:#c4b5fd; --rule:#ff8a5c;
+  --you-bg:#2b1c12; --orch-bg:#222734; --map-bg:#0f2a30; --prep-bg:#1a2140; --watch-bg:#231b3a; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#11141b; --surface:#191d27; --ink:#e8eaf0; --muted:#9aa1b2; --line:#2b3140;
+  --you:#fb923c; --orch:#e8eaf0; --map:#5fd4e6; --prep:#8ea6ff; --watch:#c4b5fd; --rule:#ff8a5c;
+  --you-bg:#2b1c12; --orch-bg:#222734; --map-bg:#0f2a30; --prep-bg:#1a2140; --watch-bg:#231b3a; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;margin:0}
+.wrap{max-width:1220px;margin:0 auto;padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:26px}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,4.4vw,46px);line-height:1.04;margin:0;letter-spacing:-.01em;text-wrap:balance}
+h2{font-family:var(--display);font-weight:600;font-size:20px;margin:0}
+.lede{color:var(--muted);max-width:70ch;margin:6px 0 0}
+/* scale strip */
+.scale{display:flex;flex-wrap:wrap;align-items:stretch;gap:0;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.sc{flex:1 1 150px;padding:14px 18px;display:flex;flex-direction:column;gap:2px;border-right:1px solid var(--line);min-width:0;position:relative}
+.sc:last-child{border-right:0}
+.sc .n{font-family:var(--display);font-weight:700;font-size:40px;line-height:1;font-variant-numeric:tabular-nums;color:var(--c)}
+.sc .l{font-weight:600}
+.sc .d{font-size:12.5px;color:var(--muted)}
+.sc::after{content:"→";position:absolute;right:-9px;top:20px;color:var(--muted);font-size:16px;background:var(--surface);z-index:1}
+.sc:last-child::after{display:none}
+@media (max-width:640px){.sc{border-right:0;border-bottom:1px solid var(--line)}.sc::after{display:none}}
+/* legend + controls */
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.legend{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;padding:3px 10px;border-radius:999px;background:var(--cb);border:1px solid var(--line)}
+.chip i{width:9px;height:9px;border-radius:50%;background:var(--c)}
+.ctrl{display:flex;gap:8px}
+button{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover{border-color:var(--prep)}
+button:focus-visible,.card:focus-visible{outline:2px solid var(--prep);outline-offset:2px}
+button.play{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+/* main */
+.main{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:920px){.main{grid-template-columns:1fr}}
+.group{display:flex;flex-direction:column;gap:10px}
+.group + .group{margin-top:18px}
+.ghead{display:flex;align-items:baseline;gap:10px}
+.ghead .k{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--c)}
+.ghead .c{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.card{position:relative;text-align:left;background:var(--cb);border:1px solid var(--line);border-radius:12px;padding:12px 14px 12px 16px;cursor:pointer;color:var(--ink);display:flex;flex-direction:column;gap:4px;min-width:0;transition:transform .15s}
+.card::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:4px;border-radius:0 3px 3px 0;background:var(--c)}
+.card .t{font-weight:600;line-height:1.25}
+.card .s{font-size:12.5px;color:var(--muted)}
+.card .m{font-family:var(--mono);font-size:11.5px;color:var(--c)}
+.card.sel{border-color:var(--c);box-shadow:0 0 0 1px var(--c) inset}
+.card.dim{opacity:.55}
+@media (prefers-reduced-motion:no-preference){.card:hover{transform:translateY(-1px)}}
+/* panel */
+.panel{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:14px;min-height:300px}
+.panel .k{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--c)}
+.panel h3{font-family:var(--display);font-size:26px;line-height:1.12;margin:0}
+.panel p{margin:0}
+.panel .stripe{height:4px;border-radius:4px;background:var(--c)}
+.sec{display:flex;flex-direction:column;gap:6px}
+.sec .h{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.io{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13.5px}
+.io b{font-weight:600;color:var(--muted);font-size:12px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;padding-top:2px}
+.instr{margin:0;padding:12px 14px;border-radius:10px;background:var(--cb);font-family:var(--mono);font-size:12.5px;line-height:1.6;white-space:pre-wrap;overflow-x:auto}
+.tl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.tl li{display:grid;grid-template-columns:12px 1fr;gap:10px;font-size:13.5px}
+.tl .d{font-family:var(--mono);font-size:11.5px;color:var(--rule);padding-top:2px}
+.tl .w{color:var(--muted);font-size:12.5px;display:block}
+.prog{height:3px;background:var(--line);border-radius:3px;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--c)}
+.foot{color:var(--muted);font-size:12.5px}
+/* gets → does → gives */
+.flow{display:grid;grid-template-columns:minmax(0,1fr) 14px minmax(0,1.2fr) 14px minmax(0,1fr);gap:8px;align-items:center}
+.fcol{display:flex;flex-direction:column;gap:6px;min-width:0}
+.flow .h{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.fchip{display:flex;flex-direction:column;gap:1px;text-align:left;font:inherit;font-size:12.5px;line-height:1.25;padding:6px 9px;border-radius:8px;border:1px solid var(--line);border-left:3px solid var(--c,var(--muted));background:var(--cb,var(--bg));color:var(--ink);min-width:0}
+button.fchip{cursor:pointer} button.fchip:hover{border-color:var(--c)}
+.fchip .fw{font-family:var(--mono);font-size:10.5px;color:var(--c,var(--muted))}
+span.fchip{--c:var(--muted);--cb:var(--bg)}
+.fcore{border:1.5px solid var(--c);background:var(--cb);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.fcore ol{margin:0;padding-left:18px;font-size:12.5px;line-height:1.35;display:flex;flex-direction:column;gap:4px}
+.fcore li::marker{color:var(--c);font-family:var(--mono);font-size:11px}
+.farr{color:var(--muted);text-align:center;font-size:15px}
+@media (max-width:560px){.flow{grid-template-columns:1fr}.farr{transform:rotate(90deg)}}
+/* network */
+.netfig{margin:0;display:flex;flex-direction:column;gap:10px}
+.netfig figcaption{color:var(--muted);font-size:13px}
+.netwrap{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:8px;overflow-x:auto}
+#net{display:block;width:100%;min-width:680px;height:auto}
+#net .ed{stroke:var(--line);stroke-width:1.5}
+#net.hot .ed.on{stroke:var(--ink);stroke-width:2}
+#net .nd{cursor:pointer;transition:opacity .2s}
+#net .nd rect{fill:var(--cb);stroke:var(--c);stroke-width:1.5}
+#net .nd text{font-size:12.5px;font-weight:600;fill:var(--ink)}
+#net .nd .sub{font-size:10.5px;font-weight:400;font-family:var(--mono);fill:var(--muted)}
+#net.hot .nd{opacity:.4} #net.hot .nd.on{opacity:1}
+#net .nd.me rect{stroke-width:3}
+#net .nd:focus-visible{outline:none} #net .nd:focus-visible rect{stroke-width:3;stroke-dasharray:4 3}
+#net .lb{display:none} #net .lb.on{display:block}
+#net .lb rect{fill:var(--surface);stroke:var(--ink);stroke-width:1}
+#net .lb text{font-family:var(--mono);font-size:11px;fill:var(--ink)}
+</style>
+</head>
+<body>
+<nav class="pnav" aria-label="Case study pages"><a href="index.html">Case study</a><a href="roster.html" aria-current="page">Agents</a><a href="handoffs.html">Hand-offs</a><a href="flow-map.html">Flow map</a></nav>
+<style>.pnav{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;padding-block:14px 0;max-width:1220px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}.pnav a{color:var(--muted)}.pnav a[aria-current]{color:var(--ink);font-weight:600}</style>
+
+
+<div class="wrap">
+  <header style="display:flex;flex-direction:column;gap:8px">
+    <h1>Security Migration Agents</h1>
+    <p class="lede">A platform team had to move about a hundred repositories onto a centrally enforced security-scanning pipeline. One engineer did it with a small crew of AI agents and scripts. These are the agents, one card per job: click a card, or press Play tour, to see its instructions and the rules added as real repos surprised us.</p>
+  </header>
+
+  <section class="scale" id="scale" aria-label="Scale"></section>
+
+  <div class="bar">
+    <div class="legend" id="legend"></div>
+    <div class="ctrl"><button type="button" id="prev" aria-label="Previous agent">←</button><button type="button" class="play" id="play">Play tour</button><button type="button" id="next" aria-label="Next agent">→</button></div>
+  </div>
+
+  <figure class="netfig">
+    <h2>How they connect</h2>
+    <div class="netwrap"><svg id="net" viewBox="0 0 900 480" role="img" aria-label="Network of the migration: the orchestrator sits in the middle; me above it, the three mapping agents to its left, the seven group agents to its right and the three kinds of watcher below. Every line runs between the orchestrator and one agent; no agent talks to another directly."></svg></div>
+    <figcaption>No agent talked to another: everything went through the orchestrator, which is how one session could check every hand-off. Click a box, or play the tour, to light up its connection.</figcaption>
+  </figure>
+
+  <section class="main">
+    <div id="roster"></div>
+    <aside class="panel" id="panel" aria-live="polite"></aside>
+  </section>
+
+  <p class="foot">Counts come from the migration's session records. Background jobs are small scripts, not AI agents. The per-repo steps ran inside each group agent. Company, team, repo and channel names are changed.</p>
+</div>
+
+<script>
+const TYPES={
+  you:{label:"Human",c:"--you",bg:"--you-bg"},
+  orch:{label:"Orchestrator",c:"--orch",bg:"--orch-bg"},
+  map:{label:"Mapping agent · read-only",c:"--map",bg:"--map-bg"},
+  prep:{label:"Group prep agent · opens MRs",c:"--prep",bg:"--prep-bg"},
+  watch:{label:"Background job · script",c:"--watch",bg:"--watch-bg"}
+};
+const SCALE=[
+  {n:1,l:"Orchestrator",d:"plans, verifies, drafts",t:"orch"},
+  {n:12,l:"Agents",d:"5 mapping · 7 group prep",t:"prep"},
+  {n:51,l:"Background jobs",d:"watchers and send-when-green",t:"watch"},
+  {n:57,l:"Repos worked by agents",d:"across 11 team groups",t:"map"},
+  {n:91,l:"MRs opened",d:"across 96 audited repos",t:"you"}
+];
+const PLAYBOOK_TL=[
+  ["","Playbook v1","Remove the legacy scan job, add the report job as a separate job, validate the YAML diff, never merge or post."],
+  ["","Stop on other teams' templates","Adding the shared Docker template silently replaced one team's own build job. Agents now stop instead."],
+  ["","Check the merged config","Second validation: GitLab's merged config, so every existing job must stay identical."],
+  ["","Inline report job","Repos on a team's own Docker template get an inline report job."],
+  ["","Pinned templates stay pinned","Repos on an old template ref get the inline job instead of a template bump."],
+  ["","Empty CI file → ask","When the legacy job was the only job, stop and ask before deleting the file."],
+  ["","Manual build → automatic report","The report job waits on the build with needs: optional, no extra click."],
+  ["","Report the deployed image","Some repos were reporting test images. Rule: report the image the deploy jobs use."]
+];
+const AGENTS=[
+  {id:"you",t:"you",name:"Me",sub:"Decides, reviews, approves every send",meta:"1 human",
+   job:"Set the rules, reviewed each group's MRs in the browser, and approved every Slack message after a private preview.",
+   in:"Agent results, message drafts, MR links",out:"Decisions, approvals, 'send <team>'",
+   instr:"Work one team group at a time.\nNo @-mentions. One message per team channel.\nPreview in my DMs before anything is posted.\nExplicit image names.",
+   tl:[["","Review, then send","two passes: review every group, then send group by group"],["","No sneaky merges","auto-merge only where a team approval is required"],["","Scan what ships","drop a slow test-image scan from MR pipelines"]]},
+  {id:"orch",t:"orch",name:"Orchestrator",sub:"The main Claude Code session",meta:"1 main session",
+   job:"Splits the migration into team groups, runs two agents at a time, spot-checks every MR they open, rebases before each send, posts from my account, and keeps the tracker and checkpoint current.",
+   in:"The audit sheet, agent results, my decisions",out:"Tracker, checkpoints, Slack drafts, rebases, auto-merge",
+   instr:"Never send without explicit approval.\nRebase and re-check (image = pushed tag, arch = scanned arch) before every send.\nAt most two group agents running at once.\nPlain URLs only; I work in a terminal.",
+   tl:[["","One batch at a time","after opening the next batch too early"],["","Rebase before send","teams shouldn't review MRs that are behind"],["","Group strategy","switched from sheet batches to one group per team"],["","Pre-send verification","image name, arch, bot cards, human comments"],["","Auto-merge after send","never on MRs with zero required approvals"]]},
+  {id:"m-chan",t:"map",name:"Channel mappers",sub:"Repo → team → Slack channel",meta:"read-only · 3 runs",
+   job:"For each batch, found the owning team and the channel where that team reviews MRs, using Slack search and GitLab committers, maintainers and CODEOWNERS.",
+   in:"Repo list for the batch",out:"Rows in team-map.md",
+   instr:"NEVER send, schedule, or draft any Slack message.\nPrefer the team's working or review channel over bot or announcement channels.\nUse recent top committers, maintainers, CODEOWNERS.",
+   tl:[["","Prefer review channels","after a bot-only channel came back"],["","Found our own repos","most of one batch belonged to my team"]]},
+  {id:"m-split",t:"map",name:"Shared-group splitter",sub:"One GitLab group, three teams",meta:"read-only · 1 run",
+   job:"One GitLab group held repos from three different teams. Split them by committers and Jira project.",
+   in:"23 repos in a shared group",out:"Which repos go in which team's message",
+   instr:"Classify each repo: owning team, channel, active (recent commits), confidence.\nUse Jira projects and committers, not the path.\nReport repos whose owner is unclear.",
+   tl:[["","Path ≠ owner","a repo's GitLab path pointed at the wrong team"]]},
+  {id:"m-rest",t:"map",name:"Remaining-groups mapper",sub:"Data, Web, Search, mobile…",meta:"read-only · 1 run",
+   job:"Mapped the last nine groups and flagged repos that belong to a different team than their GitLab group.",
+   in:"9 GitLab groups",out:"Channels for the remaining teams",
+   instr:"Find where each team's MRs get reviewed.\nFlag any repo that belongs to a different team than the rest of its group.\nRecover channels from earlier sends (search my own messages).",
+   tl:[["","Grouped by team, not by sheet","two sheet batches became single team messages"]]},
+  {id:"g1",t:"prep",name:"Platform agent",sub:"Platform team",meta:"group 1 · 8 repos · resumed once",
+   job:"Fixed the Platform team's remaining services, then was resumed with five more once I approved them.",
+   in:"Repos, playbook, team context",out:"7 MRs + 1 stop report",
+   instr:"Follow playbook.md strictly.\nMatch the team's earlier, already-approved MRs.\nIf something is unusual, handle it per the playbook and call it out.",
+   tl:[["","Stopped on a team template","that template had no report job; led to the inline option"]]},
+  {id:"g2",t:"prep",name:"Messaging agent",sub:"Messaging team",meta:"group 2 · 5 repos · resumed twice",
+   job:"Five Messaging repos. One of its MRs exposed that adding our template silently overrode the team's own.",
+   in:"Repos, playbook, team context",out:"5 MRs",
+   instr:"The sheet's fix type is only a hint; verify against the file.\nAdd the shared Docker template only if no other template defines the build job.\nCheck the merged config before pushing.",
+   tl:[["","Told to stop stacking templates","mid-run correction, then a rule for every agent"]]},
+  {id:"g3",t:"prep",name:"Backend agent",sub:"Shared backend team",meta:"group 3 · 4 repos",
+   job:"Four backend services. The sheet said 'remove only', but three of them build images.",
+   in:"Repos, playbook",out:"4 MRs (one amd64)",
+   instr:"Do not touch the multi-arch repos (deferred).\nIf a repo builds an image, add the report job per the playbook.",
+   tl:[["","Manual MR builds","found the case that became 'automatic report after a manual build'"]]},
+  {id:"g45",t:"prep",name:"Data agent",sub:"Data team",meta:"groups 4+5 · 15 repos",
+   job:"Six Databricks bundles plus nine data services and tools. Repos pinned to an old template got an inline report job.",
+   in:"15 repos, playbook",out:"14 MRs + 1 'no change needed'",
+   instr:"Verify default branch, image, tags, arch for every repo.\nDon't bump pinned template refs; write the report job inline.\nWork through repos in parallel where practical.",
+   tl:[["","Pinned templates","led to the 'keep pins, inline the job' rule"],["","Test → deployed image","5 repos switched after review"]]},
+  {id:"g6",t:"prep",name:"Web agent",sub:"Web team",meta:"group 6 · 11 repos",
+   job:"Web services that build one tag on MRs and another on main, plus npm libraries that only lose the legacy job.",
+   in:"11 repos, playbook, web patterns",out:"10 MRs + 1 stopped",
+   instr:"Prefer explicit image names over indirection.\nGround truth: the legacy job's image name and the build's pushed tag.\nMR and main build different tags → two report jobs.",
+   tl:[["","CI file with one job","led to 'stop and ask before deleting'"]]},
+  {id:"g710",t:"prep",name:"Search agent",sub:"Search team",meta:"groups 7+10 · 7 repos",
+   job:"Search components, two services and a shared library. One repo needed no change.",
+   in:"7 repos, playbook",out:"6 MRs",
+   instr:"Use the inline job on repos with their own Docker template.\nA pipeline that is 'manual' only because of an existing deploy is fine; say so.",
+   tl:[["","No surprises","first group to run on the full playbook"]]},
+  {id:"g811",t:"prep",name:"Small-teams agent",sub:"Three small teams",meta:"groups 8+9+11 · 7 repos",
+   job:"A follow-up for one web team, two libraries and a mobile app (its own branch model, release jobs untouched).",
+   in:"7 repos, playbook",out:"7 MRs, 3 draft messages",
+   instr:"If removing the legacy job would leave no jobs, stop and ask.\nMobile app: change only the legacy scan job.\nOne draft message per team.",
+   tl:[["","A warning comment","it sat on the legacy job; removing the job was still the fix"]]},
+  {id:"w-pipe",t:"watch",name:"Pipeline watchers",sub:"Is it green? Is it behind?",meta:"script · most of the 51 jobs",
+   job:"Polled GitLab after every push and rebase until each pipeline settled, then reported green, behind, and whether the reported image matched the pushed tag.",
+   in:"MR list",out:"Ready / failed, with the failing job",
+   instr:"Wait for the rebase, then the head pipeline.\nRetry once on a runner 'system failure'.\nReport, never fix.",
+   tl:[["","Runner flakes","'tls: internal error' retries"],["","Flaky team tests","a team's own test, retried once"]]},
+  {id:"w-send",t:"watch",name:"Send-when-green",sub:"Post only after CI passes",meta:"script · 2 runs",
+   job:"Held an already-approved Slack message until every build and report job passed, then posted the main message, the links and the note, and set auto-merge.",
+   in:"Approved message, MR list",out:"Slack post + auto-merge",
+   instr:"Post nothing if any build or report job fails.\nAuto-merge only where an approval is required.",
+   tl:[["","Two teams","both sent this way after late rebases"]]},
+  {id:"w-main",t:"watch",name:"Post-merge checks",sub:"Did it work on main?",meta:"script · several runs",
+   job:"After merges, read the first main pipeline: the report job's output against the pushed tag, and what the container scan actually scanned.",
+   in:"Merged MRs",out:"Verified end to end, or a finding",
+   instr:"Compare the reported image with 'pushing manifest for …'.\nRead the scanner's 'Scanning image' line.",
+   tl:[["","Read the scanner's logs","a green pipeline isn't proof the image was scanned"]]}
+];
+// per-agent flow: what comes in (and from whom), what it does, what goes out (and to whom); src/dst are agent ids, agent types, or outside systems
+const PREP_STEPS=["Read the CI file, bake file and legacy job","Pick the change (decision path)","One commit, validate twice, open the MR"];
+const FLOW={
+ you:{ins:[["DM drafts","orch"],["MR links to review","orch"]],steps:["Review each group's MRs in the browser","Read the DM preview","Approve 'send <team>' or add a rule"],outs:[["Approvals","orch"],["New rules","orch"],["Merges on my team's repos","GitLab"]],link:"drafts ⇄ approvals"},
+ orch:{ins:[["Audit sheet","Sheet"],["Owners and channels","map"],["MRs and result rows","prep"],["Green / failed","watch"],["Approvals and rules","you"]],steps:["Split repos into team groups","Run two group agents at a time, spot-check every MR","Rebase, re-verify, draft each team's message"],outs:[["Repo lists","map"],["Group repos and playbook","prep"],["MRs to watch","watch"],["DM drafts","you"],["Tracker and checkpoint","Files"]]},
+ "m-chan":{ins:[["Batch repo list","orch"],["Committers, CODEOWNERS","GitLab"],["Channel search","Slack"]],steps:["Find who commits to and maintains each repo","Find where that team reviews MRs","Skip bot and announcement channels"],outs:[["Rows in team-map.md","orch"]],link:"repos ⇄ owners"},
+ "m-split":{ins:[["23 shared-group repos","orch"],["Committers, Jira projects","GitLab"]],steps:["Check committers and Jira project","Tag each repo with its owning team","Flag unclear owners"],outs:[["Which repos go to which team","orch"],["Three teams, not one","orch"]],link:"repos ⇄ teams"},
+ "m-rest":{ins:[["9 GitLab groups","orch"],["Earlier sends","Slack"]],steps:["Find each team's review channel","Flag repos owned by another team","Recover channels from past sends"],outs:[["Channels for 9 groups","orch"]],link:"groups ⇄ channels"},
+ g1:{ins:[["8 Platform repos + playbook","orch"],["CI and bake files","GitLab"]],outs:[["7 MRs","GitLab"],["1 stop report","orch"]]},
+ g2:{ins:[["5 Messaging repos + playbook","orch"],["CI and bake files","GitLab"]],outs:[["5 MRs","GitLab"],["Template-override finding","orch"]]},
+ g3:{ins:[["4 Backend repos + playbook","orch"],["CI and bake files","GitLab"]],outs:[["4 MRs (one amd64)","GitLab"],["Manual-build case","orch"]]},
+ g45:{ins:[["15 Data repos + playbook","orch"],["CI and bake files","GitLab"]],outs:[["14 MRs","GitLab"],["1 'no change needed'","orch"]]},
+ g6:{ins:[["11 Web repos + playbook","orch"],["CI and bake files","GitLab"]],outs:[["10 MRs","GitLab"],["1 stopped","orch"]]},
+ g710:{ins:[["7 Search repos + playbook","orch"],["CI and bake files","GitLab"]],outs:[["6 MRs","GitLab"],["1 'no change needed'","orch"]]},
+ g811:{ins:[["7 repos + playbook","orch"],["CI and bake files","GitLab"]],outs:[["7 MRs","GitLab"],["3 draft messages","orch"]]},
+ "w-pipe":{ins:[["MRs to watch","orch"],["Pipelines and job logs","GitLab"]],steps:["Wait for the rebase, then the head pipeline","Retry once on a runner failure","Compare reported image with pushed tag"],outs:[["Ready / failed","orch"]],link:"MRs ⇄ green / failed"},
+ "w-send":{ins:[["Approved message","orch"],["Pipelines","GitLab"]],steps:["Wait until every build and report passes","Post main message, links, note","Set auto-merge where approval is needed"],outs:[["Team post","Slack"],["Auto-merge","GitLab"]],link:"message ⇄ posted"},
+ "w-main":{ins:[["Merged MRs","orch"],["First main pipeline","GitLab"]],steps:["Read the report job output","Compare with the pushed tag","Read the scanner's 'Scanning image' line"],outs:[["Verified, or a finding","orch"]],link:"merges ⇄ verified"}
+};
+const PREP_INSTR="FIRST read playbook.md and the project notes.\nNEVER post to Slack. NEVER merge. NEVER push to a default branch.\nOne commit, CI file only.\nValidate twice: minimal YAML diff + merged config (GitLab lint).\nVerify: green, 0 behind, reported image = pushed tag.";
+const $=s=>document.querySelector(s);
+let sel=0, timer=null, started=0;
+function paint(el,t){el.style.setProperty("--c",`var(${TYPES[t].c})`);el.style.setProperty("--cb",`var(${TYPES[t].bg})`);}
+function txt(tag,cls,t){const e=document.createElement(tag);if(cls)e.className=cls;e.textContent=t;return e;}
+// scale
+SCALE.forEach(s=>{const d=document.createElement("div");d.className="sc";paint(d,s.t);d.append(txt("span","n","0"),txt("span","l",s.l),txt("span","d",s.d));d.dataset.n=s.n;$("#scale").append(d);});
+function countUp(){const els=[...document.querySelectorAll(".sc .n")];const ns=SCALE.map(s=>s.n);
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(reduce){els.forEach((e,i)=>e.textContent=ns[i]);return;}
+  const t0=performance.now();(function f(now){const p=Math.min(1,(now-t0)/1400);const e=1-Math.pow(1-p,3);els.forEach((el,i)=>el.textContent=Math.round(ns[i]*Math.min(1,e*(1+i*0.04))));if(p<1)requestAnimationFrame(f);else els.forEach((el,i)=>el.textContent=ns[i]);})(t0);}
+// legend
+Object.entries(TYPES).forEach(([k,v])=>{const c=document.createElement("span");c.className="chip";paint(c,k);c.append(document.createElement("i"),v.label);$("#legend").append(c);});
+// roster
+const ORDER=["you","orch","map","prep","watch"];
+ORDER.forEach(type=>{
+  const list=AGENTS.filter(a=>a.t===type);
+  const g=document.createElement("div");g.className="group";paint(g,type);
+  const h=document.createElement("div");h.className="ghead";h.append(txt("span","k",TYPES[type].label),txt("span","c",type==="watch"?"51 jobs":type==="map"?"5 agents":type==="prep"?"7 agents":"1"));
+  const grid=document.createElement("div");grid.className="grid";
+  list.forEach(a=>{const b=document.createElement("button");b.type="button";b.className="card";paint(b,a.t);b.dataset.id=a.id;
+    b.append(txt("span","t",a.name),txt("span","s",a.sub),txt("span","m",a.meta));
+    b.addEventListener("click",()=>{stop();select(AGENTS.indexOf(a));});grid.append(b);});
+  g.append(h,grid);$("#roster").append(g);
+});
+// gets → does → gives, inside the panel
+const WHO={you:"Me",orch:"Orchestrator",map:"Mapping agents",prep:"Group agents",watch:"Watchers"};
+function whoType(src){const a=AGENTS.find(x=>x.id===src);return a?a.t:(TYPES[src]?src:null);}
+function whoIndex(src){const i=AGENTS.findIndex(x=>x.id===src);return i>=0?i:AGENTS.findIndex(x=>x.t===src);}
+function chip(item,dir){const [label,who]=item;const t=whoType(who);
+  const c=document.createElement(t?"button":"span");c.className="fchip";if(t){c.type="button";paint(c,t);c.addEventListener("click",()=>{stop();select(whoIndex(who));});}
+  c.append(txt("span","fl",label),txt("span","fw",(dir==="in"?"from ":"to ")+(t?(AGENTS.find(x=>x.id===who)?.name||WHO[who]):who)));return c;}
+function flowEl(a){const f=FLOW[a.id];
+  const w=document.createElement("div");w.className="flow";w.setAttribute("role","group");w.setAttribute("aria-label",`Gets: ${a.in}. Does: ${(f.steps||PREP_STEPS).join("; ")}. Gives: ${a.out}.`);
+  const col=(h,items,dir)=>{const d=document.createElement("div");d.className="fcol";d.append(txt("span","h",h));items.forEach(it=>d.append(chip(it,dir)));return d;};
+  const core=document.createElement("div");core.className="fcore";core.append(txt("span","h","Does"));
+  const ol=document.createElement("ol");(f.steps||PREP_STEPS).forEach(s=>ol.append(txt("li","",s)));core.append(ol);
+  w.append(col("Gets",f.ins,"in"),txt("span","farr","→"),core,txt("span","farr","→"),col("Gives",f.outs,"out"));return w;}
+// network: everyone talks through the orchestrator
+const SVGNS="http://www.w3.org/2000/svg";
+function sv(tag,attrs,parent,text){const e=document.createElementNS(SVGNS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;parent&&parent.append(e);return e;}
+const POS={you:[400,46],orch:[400,240],"m-chan":[120,150],"m-split":[120,240],"m-rest":[120,330],"w-pipe":[245,440],"w-send":[400,440],"w-main":[555,440]};
+["g1","g2","g3","g45","g6","g710","g811"].forEach((id,i)=>POS[id]=[780,45+i*65]);
+const SIZE=a=>a.t==="orch"?[200,52]:a.t==="watch"?[140,40]:[170,40];
+function edgePt(a,b){const [cx,cy]=POS[a.id],[hw,hh]=SIZE(a).map(v=>v/2+5),dx=POS[b.id][0]-cx,dy=POS[b.id][1]-cy;
+  const t=Math.min(hw/Math.abs(dx||1e-9),hh/Math.abs(dy||1e-9));return [cx+dx*t,cy+dy*t];}
+const NET=$("#net"),netEdges=sv("g",{},NET),netNodes=sv("g",{},NET),netLabels=sv("g",{},NET),EL={};
+const ORCH=AGENTS.find(a=>a.id==="orch");
+const nd=sv("defs",{},NET);[["ah","var(--muted)"],["ahOn","var(--ink)"]].forEach(([id,c])=>{const m=sv("marker",{id,viewBox:"0 0 10 10",refX:"8",refY:"5",markerWidth:"6",markerHeight:"6",orient:"auto-start-reverse"},nd);sv("path",{d:"M0 0 L10 5 L0 10 z",fill:c},m);});
+AGENTS.forEach(a=>{
+  if(a.id!=="orch"){const [x1,y1]=edgePt(ORCH,a),[x2,y2]=edgePt(a,ORCH);
+    const e=sv("line",{class:"ed",x1,y1,x2,y2,"marker-start":"url(#ah)","marker-end":"url(#ah)"},netEdges);
+    const lab=(FLOW[a.id]&&FLOW[a.id].link)||"repos ⇄ MRs",lg=sv("g",{class:"lb"},netLabels),mx=(x1+x2)/2,my=(y1+y2)/2,lw=lab.length*6.3+14;
+    sv("rect",{x:mx-lw/2,y:my-10,width:lw,height:20,rx:10},lg);sv("text",{x:mx,y:my+4,"text-anchor":"middle"},lg,lab);
+    EL[a.id]={e,lg};}
+  const [cx,cy]=POS[a.id],[w,h]=SIZE(a),g=sv("g",{class:"nd",tabindex:"0",role:"button","aria-label":a.name},netNodes);paint(g,a.t);
+  sv("rect",{x:cx-w/2,y:cy-h/2,width:w,height:h,rx:9},g);sv("text",{x:cx,y:cy+(a.t==="orch"?-2:4),"text-anchor":"middle"},g,a.name);
+  if(a.t==="orch")sv("text",{class:"sub",x:cx,y:cy+15,"text-anchor":"middle"},g,"the main session");
+  const go=()=>{stop();select(AGENTS.indexOf(a));$("#panel").scrollIntoView({behavior:"smooth",block:"nearest"});};
+  g.addEventListener("click",go);g.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();go();}});
+  EL["n-"+a.id]=g;});
+function highlight(a){NET.classList.add("hot");
+  AGENTS.forEach(b=>{const on=a.id==="orch"||b.id===a.id||b.id==="orch";EL["n-"+b.id].classList.toggle("on",on);EL["n-"+b.id].classList.toggle("me",b.id===a.id);
+    if(EL[b.id]){const eOn=a.id==="orch"||b.id===a.id;EL[b.id].e.classList.toggle("on",eOn);["marker-start","marker-end"].forEach(m=>EL[b.id].e.setAttribute(m,`url(#${eOn?"ahOn":"ah"})`));EL[b.id].lg.classList.toggle("on",b.id===a.id);}});}
+function select(i){
+  sel=(i+AGENTS.length)%AGENTS.length;const a=AGENTS[sel];
+  document.querySelectorAll(".card").forEach(c=>{c.classList.toggle("sel",c.dataset.id===a.id);c.classList.toggle("dim",!!timer&&c.dataset.id!==a.id);});
+  const p=$("#panel");p.innerHTML="";paint(p,a.t);
+  p.append(Object.assign(document.createElement("div"),{className:"stripe"}),txt("div","k",TYPES[a.t].label+" · "+a.meta),txt("h3","",a.name),txt("p","",a.job));
+  p.append(flowEl(a));
+  const s1=document.createElement("div");s1.className="sec";s1.append(txt("span","h","Its instructions (excerpt)"),txt("pre","instr",a.t==="prep"?PREP_INSTR+"\n— plus, for this group —\n"+a.instr:a.instr));p.append(s1);
+  const s2=document.createElement("div");s2.className="sec";s2.append(txt("span","h",a.t==="prep"?"Rules added along the way (shared playbook)":"Rules added along the way"));
+  const ul=document.createElement("ul");ul.className="tl";
+  const rows=a.t==="prep"?[...PLAYBOOK_TL.map(r=>[r[0],r[1],r[2]]),...a.tl.map(r=>[r[0],"This group: "+r[1],r[2]])]:a.tl;
+  rows.forEach(r=>{const li=document.createElement("li");li.append(txt("span","d","•"));const w=document.createElement("span");w.append(document.createTextNode(r[1]));w.append(txt("span","w",r[2]));li.append(w);ul.append(li);});
+  s2.append(ul);p.append(s2);
+  highlight(a);
+  if(timer){const pr=document.createElement("div");pr.className="prog";const i2=document.createElement("i");pr.append(i2);p.prepend(pr);requestAnimationFrame(()=>{i2.style.transition="width 7s linear";i2.style.width="100%";});}
+}
+function stop(){if(timer){clearInterval(timer);timer=null;$("#play").textContent="Play tour";document.querySelectorAll(".card").forEach(c=>c.classList.remove("dim"));}}
+$("#play").addEventListener("click",()=>{if(timer){stop();select(sel);return;}$("#play").textContent="Pause tour";timer=setInterval(()=>select(sel+1),7000);select(sel);});
+$("#next").addEventListener("click",()=>{const on=!!timer;stop();select(sel+1);});
+$("#prev").addEventListener("click",()=>{stop();select(sel-1);});
+document.addEventListener("keydown",e=>{if(e.key==="ArrowRight"){stop();select(sel+1);}if(e.key==="ArrowLeft"){stop();select(sel-1);}});
+select(1);countUp();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="How one engineer moved about a hundred repositories onto a centrally enforced security-scanning pipeline with a crew of AI agents, background scripts and a human gate.">
+<title>Security Migration Case Study</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a short case-study cover. Thesis and numbers on top, the approach in five lines, then one card per companion page. */
+:root{
+  --bg:#f6f4ef; --surface:#ffffff; --ink:#1b2030; --muted:#5d6374; --line:#d6d1c5;
+  --you:#c2410c; --orch:#1b2030; --map:#0e7490; --prep:#2f54d9; --watch:#7c3aed;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif; --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#11141b; --surface:#191d27; --ink:#e8eaf0; --muted:#9aa1b2; --line:#363d4d;
+  --you:#fb923c; --orch:#e8eaf0; --map:#5fd4e6; --prep:#8ea6ff; --watch:#c4b5fd; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#11141b; --surface:#191d27; --ink:#e8eaf0; --muted:#9aa1b2; --line:#363d4d;
+  --you:#fb923c; --orch:#e8eaf0; --map:#5fd4e6; --prep:#8ea6ff; --watch:#c4b5fd; color-scheme:dark }
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;margin:0}
+.wrap{max-width:980px;margin:0 auto;padding-block:40px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:32px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,5.4vw,58px);line-height:1.02;letter-spacing:-.015em;margin:6px 0 0;text-wrap:balance}
+h2{font-family:var(--display);font-weight:600;font-size:22px;margin:0}
+.lede{max-width:64ch;color:var(--muted);font-size:17px;margin:12px 0 0}
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden}
+.nums div{padding:14px 18px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:2px}
+.nums div:last-child{border-right:0}
+.nums b{font-family:var(--display);font-size:38px;line-height:1;font-variant-numeric:tabular-nums;color:var(--c)}
+.nums span{font-size:13px;color:var(--muted)}
+@media (max-width:620px){.nums div{border-right:0;border-bottom:1px solid var(--line)}.nums div:last-child{border-bottom:0}}
+.how{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;max-width:70ch;counter-reset:step}
+.how li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;counter-increment:step}
+.how li::before{content:counter(step);font-family:var(--mono);font-size:12px;color:var(--muted);padding-top:3px}
+.how b{font-weight:600}
+.pages{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.pg{display:flex;flex-direction:column;gap:6px;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;min-width:0}
+.pg:hover{border-color:var(--c)}
+.pg:focus-visible{outline:2px solid var(--c);outline-offset:2px}
+.pg .k{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--c)}
+.pg .t{font-family:var(--display);font-size:21px;font-weight:600;line-height:1.15}
+.pg .d{font-size:14px;color:var(--muted)}
+.pg .go{font-size:13px;color:var(--c);margin-top:auto;padding-top:6px}
+.foot{color:var(--muted);font-size:13px;max-width:70ch}
+.film{margin:0;display:flex;flex-direction:column;gap:8px}
+.film video{display:block;width:100%;height:auto;aspect-ratio:16/9;border-radius:14px;border:1px solid var(--line);background:var(--surface)}
+.film figcaption{color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <p class="eyebrow">Case study · platform engineering with AI agents</p>
+    <h1>One engineer, twelve agents, ninety-one merge requests</h1>
+    <p class="lede">The security team turned on a centrally enforced scanning pipeline for every repository. About a hundred repos needed a CI change before it could scan them properly, spread across fourteen teams. I ran the migration with a crew of AI agents, small background scripts and one rule: nothing reached a team without my review.</p>
+  </header>
+
+  <figure class="film">
+    <video controls playsinline preload="metadata" poster="film-poster.jpg" width="1280" height="720">
+      <source src="film.mp4" type="video/mp4">
+      <a href="film.mp4">Watch the one-minute film (MP4)</a>
+    </video>
+    <figcaption>The whole approach in under a minute: the five layers, one repo going through the loop, the human gate, and the scale.</figcaption>
+  </figure>
+
+  <section class="nums" aria-label="Scale">
+    <div style="--c:var(--orch)"><b>1</b><span>orchestrator session</span></div>
+    <div style="--c:var(--prep)"><b>12</b><span>AI agents</span></div>
+    <div style="--c:var(--watch)"><b>51</b><span>background script jobs</span></div>
+    <div style="--c:var(--map)"><b>96</b><span>repos audited</span></div>
+    <div style="--c:var(--you)"><b>91</b><span>merge requests</span></div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:14px">
+    <h2>The approach</h2>
+    <ol class="how">
+      <li><span><b>Map before fixing.</b> Read-only agents worked out who owns each repo and where that team reviews code, from commits and tickets rather than folder paths.</span></li>
+      <li><span><b>One agent per team group.</b> Seven agents each took one team's repos and a shared playbook, two running at a time, instead of one agent per repo.</span></li>
+      <li><span><b>Rules that learn.</b> Every repo that surprised us became a new playbook rule, so later agents started smarter than earlier ones.</span></li>
+      <li><span><b>Prove it on real pipelines.</b> Scripts watched every pipeline and compared the image the build pushed with the image the scanner was told about.</span></li>
+      <li><span><b>A human gate.</b> I reviewed each team's changes and approved every message before it went out, one team at a time.</span></li>
+    </ol>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:14px">
+    <h2>Explore it</h2>
+    <div class="pages">
+      <a class="pg" href="roster.html" style="--c:var(--prep)"><span class="k">Who did what</span><span class="t">The agents</span><span class="d">One card per agent: its instructions, what it got, what it did, what it gave, and the rules added along the way.</span><span class="go">Open the roster →</span></a>
+      <a class="pg" href="handoffs.html" style="--c:var(--watch)"><span class="k">How work moved</span><span class="t">The hand-offs</span><span class="d">Every output landing as someone else's input, in order, across eight lanes and five phases.</span><span class="go">Open the hand-offs →</span></a>
+      <a class="pg" href="flow-map.html" style="--c:var(--map)"><span class="k">The whole system</span><span class="t">The flow map</span><span class="d">The system map, how each repo's fix was chosen, and the pains we hit phase by phase.</span><span class="go">Open the flow map →</span></a>
+    </div>
+  </section>
+
+  <p class="foot">Built from the migration's own records. Company, team, repository, channel and people names are changed or left out; the structure, the numbers and the lessons are real.</p>
+</main>
+</body>
+</html>
