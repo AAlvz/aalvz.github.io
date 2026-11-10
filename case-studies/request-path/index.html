@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A four-minute animated walkthrough of one HTTPS request through a typical AWS and Kubernetes setup: DNS, CDN, load balancer, service-mesh gateway, routing rules and the answer.">
+<title>Life of a Request</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a short explainer cover. Title and lede, the film, the stops in order, then the takeaways. */
+:root{
+  --bg:#f5f3ee; --surface:#ffffff; --ink:#16171b; --muted:#5d6270; --line:#d8d3c7;
+  --teal:#0b6e69; --orange:#c2481f;
+  --display:"Archivo","Segoe UI",system-ui,sans-serif; --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#111416; --surface:#1a1e21; --ink:#e9eaec; --muted:#9ca2ab; --line:#353b40;
+  --teal:#4fd1c5; --orange:#f08a5d; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#111416; --surface:#1a1e21; --ink:#e9eaec; --muted:#9ca2ab; --line:#353b40;
+  --teal:#4fd1c5; --orange:#f08a5d; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;margin:0}
+.wrap{max-width:980px;margin:0 auto;padding-block:40px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:32px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(34px,5.4vw,58px);line-height:1.02;letter-spacing:-.015em;margin:6px 0 0;text-wrap:balance}
+h2{font-family:var(--display);font-weight:600;font-size:22px;margin:0}
+.lede{max-width:64ch;color:var(--muted);font-size:17px;margin:12px 0 0}
+.film{margin:0;display:flex;flex-direction:column;gap:8px}
+.film video{display:block;width:100%;height:auto;aspect-ratio:16/9;border-radius:14px;border:1px solid var(--line);background:var(--surface)}
+.film figcaption{color:var(--muted);font-size:13px}
+.stops{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;counter-reset:stop}
+.stops li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;counter-increment:stop;min-width:0}
+.stops li::before{content:counter(stop,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--teal)}
+.stops b{font-family:var(--display);font-weight:600;font-size:17px}
+.stops span{font-size:14px;color:var(--muted)}
+.how{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;max-width:70ch}
+.how li{padding-left:16px;border-left:3px solid var(--orange)}
+.how b{font-weight:600}
+.foot{color:var(--muted);font-size:13px;max-width:70ch}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <p class="eyebrow">Explainer · cloud networking</p>
+    <h1>The life of a request in the cloud</h1>
+    <p class="lede">You type a URL and a page comes back. In between, the request crosses half a dozen systems, each configured in a different place and owned by a different team. This film follows one request through a typical AWS and Kubernetes setup, hop by hop, with the config that decides each step.</p>
+  </header>
+
+  <figure class="film">
+    <video controls playsinline preload="metadata" poster="film-poster.jpg" width="1280" height="720">
+      <source src="film.mp4" type="video/mp4">
+      <a href="film.mp4">Watch the film (MP4)</a>
+    </video>
+    <figcaption>About four minutes, in eighteen short scenes. The example request is a redirect from <code>/promo</code> to <code>/campaigns/promo</code>.</figcaption>
+  </figure>
+
+  <section style="display:flex;flex-direction:column;gap:14px">
+    <h2>The stops</h2>
+    <ol class="stops">
+      <li><b>DNS</b><span>Route 53 answers with an alias to the CDN.</span></li>
+      <li><b>CDN edge</b><span>CloudFront ends TLS, upgrades HTTP to HTTPS and picks an origin by path.</span></li>
+      <li><b>Load balancer</b><span>An ALB built from a Kubernetes Ingress. It only accepts traffic that came through the CDN.</span></li>
+      <li><b>Gateway pods</b><span>Envoy pods of the service mesh receive the request and clean it up.</span></li>
+      <li><b>Gateway + routes</b><span>The Gateway says which hosts it accepts. The VirtualService rules run top to bottom.</span></li>
+      <li><b>The answer</b><span>A rule matches and Envoy replies with the redirect itself. The browser follows it on a second trip.</span></li>
+    </ol>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:14px">
+    <h2>What to take away</h2>
+    <ul class="how">
+      <li><b>Every hop has its own config.</b> DNS records, CDN behaviors, an Ingress, mesh objects. A change in one place only works if the layers before it send the request there.</li>
+      <li><b>Order matters twice.</b> The CDN checks path behaviors in order, and so does the routing table. The first match wins.</li>
+      <li><b>Not every answer comes from an app.</b> Redirects and rejections can come straight from the edge, the load balancer or the gateway.</li>
+      <li><b>YAML isn't the running config.</b> The mesh control plane compiles it and pushes it to the gateway pods live.</li>
+      <li><b>Know who owns each layer.</b> When something breaks, the first question is which layer answered.</li>
+    </ul>
+  </section>
+
+  <p class="foot">Built from a real change. Hostnames, paths, repository and rule names, line numbers and header names are made up or changed, and some details are simplified. The architecture and the order of the hops are real.</p>
+</main>
+</body>
+</html>
