@@ -1,0 +1,211 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+<defs>
+<marker id="ah-trip" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto"><path d="M0,0 L14,7 L0,14 z" fill="#e8590c"/></marker>
+<marker id="ah-muted" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#7b8794"/></marker>
+<marker id="ah-back" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#2f9e44"/></marker>
+</defs>
+<rect x="0" y="0" width="1600" height="1200" rx="0" fill="#fbfaf7" stroke="#fbfaf7" stroke-width="0" />
+<text x="30" y="46" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="28" fill="#1f2933" font-weight="bold" text-anchor="start">The trip of one request out of a VPC</text>
+<text x="30" y="74" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="16" fill="#52606d" font-weight="normal" text-anchor="start">…and how to tell whether a NAT gateway is actually being used</text>
+<text x="1090" y="46" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" xml:space="preserve"><tspan fill="#e8590c" font-weight="bold">● </tspan><tspan fill="#1f2933" font-weight="600">the trip: EC2 → api.github.com</tspan></text>
+<rect x="730" y="84" width="330" height="58" rx="31" fill="#ffffff" stroke="#c3cad3" stroke-width="1.5" />
+<text x="895" y="108" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#1f2933" font-weight="bold" text-anchor="middle">INTERNET</text>
+<text x="895" y="129" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#52606d" font-weight="normal" text-anchor="middle">api.github.com · 140.82.112.3</text>
+<rect x="30" y="190" width="990" height="720" rx="16" fill="#ffffff" stroke="#3e4c59" stroke-width="2.5" />
+<rect x="44" y="177" width="410" height="26" rx="6" fill="#3e4c59" stroke="#3e4c59" stroke-width="0" />
+<text x="54" y="195" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#fff" font-weight="bold" text-anchor="start">VPC 10.20.0.0/18 · the building · one region</text>
+<rect x="840" y="168" width="110" height="44" rx="8" fill="#f5f7fa" stroke="#3e4c59" stroke-width="2" />
+<text x="895" y="188" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#1f2933" font-weight="bold" text-anchor="middle">IGW</text>
+<text x="895" y="204" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11" fill="#52606d" font-weight="normal" text-anchor="middle">front door</text>
+<rect x="55" y="245" width="570" height="640" rx="12" fill="none" stroke="#9aa5b1" stroke-width="1.5" stroke-dasharray="6 5" />
+<text x="69" y="267" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#52606d" font-weight="600" text-anchor="start">AZ us-east-1a · one or more datacenters  (×3: 1a / 1b / 1c each repeat this)</text>
+<rect x="75" y="280" width="530" height="190" rx="10" fill="#eaf6ec" stroke="#3d9a50" stroke-width="1.8" />
+<text x="89" y="304" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#2b7a3d" font-weight="bold" text-anchor="start">PUBLIC SUBNET · 10.20.0.0/24</text>
+<text x="89" y="322" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#2b7a3d" font-weight="normal" text-anchor="start" font-style="italic">"public" only because its route table sends 0.0.0.0/0 to the IGW</text>
+<rect x="360" y="330" width="230" height="120" rx="10" fill="#fff1e0" stroke="#e8590c" stroke-width="2.2" />
+<text x="374" y="356" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="16" fill="#1f2933" font-weight="bold" text-anchor="start">NAT gateway</text>
+<text x="374" y="377" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#52606d" font-weight="normal" text-anchor="start">EIP 203.0.113.10 (public)</text>
+<text x="374" y="396" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#52606d" font-weight="normal" text-anchor="start">card type: nat_gateway · no SG</text>
+<text x="374" y="415" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#52606d" font-weight="normal" text-anchor="start">one-way: replies only</text>
+<text x="374" y="434" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#52606d" font-weight="normal" text-anchor="start">~$32/mo even when idle</text>
+<rect x="95" y="345" width="245" height="90" rx="8" fill="#ffffff" stroke="#c3cad3" stroke-width="1.2" />
+<text x="107" y="366" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#1f2933" font-weight="600" text-anchor="start">every byte through it is counted</text>
+<text x="107" y="384" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11.5" fill="#52606d" font-weight="normal" text-anchor="start">→ CloudWatch AWS/NATGateway</text>
+<text x="107" y="402" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11.5" fill="#52606d" font-weight="normal" text-anchor="start">BytesOutToDestination</text>
+<text x="107" y="420" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#e8590c" font-weight="600" text-anchor="start">15 months of 0 = nobody used it</text>
+<rect x="75" y="495" width="530" height="370" rx="10" fill="#e8f1fb" stroke="#2f74c0" stroke-width="1.8" />
+<text x="89" y="519" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#1f5f9e" font-weight="bold" text-anchor="start">PRIVATE SUBNET · 10.20.32.0/21</text>
+<text x="89" y="537" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#1f5f9e" font-weight="normal" text-anchor="start" font-style="italic">2,048 IPs − 5 reserved = 2,043 usable · every card (ENI) takes one</text>
+<text x="89" y="567" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#1f2933" font-weight="bold" text-anchor="start">WORKLOADS · START trips  → these use the NAT</text>
+<rect x="89" y="579" width="100" height="40" rx="7" fill="#fff" stroke="#2f74c0" stroke-width="1.3" />
+<text x="139.0" y="597" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2933" font-weight="600" text-anchor="middle">Lambda</text>
+<text x="139.0" y="612" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#52606d" font-weight="normal" text-anchor="middle">lambda ENI</text>
+<rect x="199" y="579" width="100" height="40" rx="7" fill="#fff" stroke="#2f74c0" stroke-width="1.3" />
+<text x="249.0" y="597" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2933" font-weight="600" text-anchor="middle">EKS node</text>
+<text x="249.0" y="612" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#52606d" font-weight="normal" text-anchor="middle">interface</text>
+<rect x="309" y="579" width="100" height="40" rx="7" fill="#fff" stroke="#2f74c0" stroke-width="1.3" />
+<text x="359.0" y="597" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2933" font-weight="600" text-anchor="middle">ECS task</text>
+<text x="359.0" y="612" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#52606d" font-weight="normal" text-anchor="middle">interface</text>
+<rect x="425" y="579" width="160" height="40" rx="7" fill="#fff" stroke="#e8590c" stroke-width="1.3" />
+<text x="505.0" y="597" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2933" font-weight="bold" text-anchor="middle">EC2  i-0abc</text>
+<text x="505.0" y="612" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#52606d" font-weight="normal" text-anchor="middle">10.20.33.10</text>
+<rect x="425" y="579" width="160" height="40" rx="7" fill="none" stroke="#e8590c" stroke-width="2.5"/>
+<text x="89" y="653" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#1f2933" font-weight="bold" text-anchor="start">PLUMBING / RECEIVERS · never start a trip → never use the NAT</text>
+<rect x="89" y="665" width="160" height="40" rx="7" fill="#f5f7fa" stroke="#9aa5b1" stroke-width="1.3" />
+<text x="169.0" y="683" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2933" font-weight="600" text-anchor="middle">TGW attachment</text>
+<text x="169.0" y="698" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#52606d" font-weight="normal" text-anchor="middle">transit_gateway</text>
+<rect x="261" y="665" width="150" height="40" rx="7" fill="#f5f7fa" stroke="#9aa5b1" stroke-width="1.3" />
+<text x="336.0" y="683" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2933" font-weight="600" text-anchor="middle">interface endpoint</text>
+<text x="336.0" y="698" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#52606d" font-weight="normal" text-anchor="middle">vpc_endpoint</text>
+<rect x="423" y="665" width="76" height="40" rx="7" fill="#f5f7fa" stroke="#9aa5b1" stroke-width="1.3" />
+<text x="461.0" y="683" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2933" font-weight="600" text-anchor="middle">ELB</text>
+<text x="461.0" y="698" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#52606d" font-weight="normal" text-anchor="middle">receiver</text>
+<rect x="509" y="665" width="76" height="40" rx="7" fill="#f5f7fa" stroke="#9aa5b1" stroke-width="1.3" />
+<text x="547.0" y="683" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2933" font-weight="600" text-anchor="middle">RDS</text>
+<text x="547.0" y="698" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#52606d" font-weight="normal" text-anchor="middle">receiver</text>
+<rect x="89" y="727" width="496" height="120" rx="8" fill="#ffffff" stroke="#c3cad3" stroke-width="1.2" />
+<text x="101" y="749" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2933" font-weight="bold" text-anchor="start">Reading a card in EC2 → Network interfaces</text>
+<text x="101" y="770" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#3e4c59" font-weight="normal" text-anchor="start">Type not "Elastic network interface" or "lambda"  →  AWS plumbing</text>
+<text x="101" y="790" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#3e4c59" font-weight="normal" text-anchor="start">"Elastic network interface" → read Description / Instance ID:</text>
+<text x="113" y="809" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#52606d" font-weight="normal" text-anchor="start">i-… = EC2 · "AWS Lambda VPC ENI-…" = Lambda · "arn:aws:ecs…" = ECS</text>
+<text x="101" y="832" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#3e4c59" font-weight="normal" text-anchor="start">A workload card → find who deployed it and ask</text>
+<text x="655" y="262" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#3e4c59" font-weight="bold" text-anchor="start">ROUTE TABLES · live at VPC level</text>
+<text x="655" y="279" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#52606d" font-weight="normal" text-anchor="start" font-style="italic">each subnet uses exactly 1 · one table can serve many</text>
+<rect x="655" y="300" width="340" height="120" rx="8" fill="#ffffff" stroke="#7b8794" stroke-width="1.5" />
+<text x="667" y="321" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#1f2933" font-weight="bold" text-anchor="start">route table public-1a</text>
+<text x="667" y="345" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11" fill="#7b8794" font-weight="600" text-anchor="start">destination</text>
+<text x="815" y="345" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11" fill="#7b8794" font-weight="600" text-anchor="start">target</text>
+<text x="667" y="367" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#1f2933" font-weight="normal" text-anchor="start">10.20.0.0/18</text>
+<text x="815" y="367" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#1f2933" font-weight="normal" text-anchor="start">local</text>
+<rect x="661" y="377" width="328" height="26" rx="5" fill="#ffe3cc" stroke="#ffe3cc" stroke-width="0" />
+<text x="667" y="395" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#1f2933" font-weight="bold" text-anchor="start">0.0.0.0/0</text>
+<text x="815" y="395" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#1f2933" font-weight="bold" text-anchor="start">igw-…</text>
+<text x="895" y="395" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#e8590c" font-weight="600" text-anchor="start">→ internet</text>
+<line x1="605" y1="370" x2="655" y2="360" stroke="#3d9a50" stroke-width="1.5" stroke-dasharray="4 4"/>
+<text x="612" y="352" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10.5" fill="#2b7a3d" font-weight="normal" text-anchor="start" font-style="italic">uses</text>
+<rect x="655" y="470" width="340" height="238" rx="8" fill="#ffffff" stroke="#7b8794" stroke-width="1.5" />
+<text x="667" y="491" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#1f2933" font-weight="bold" text-anchor="start">route table private-1a</text>
+<text x="667" y="515" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11" fill="#7b8794" font-weight="600" text-anchor="start">destination</text>
+<text x="815" y="515" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11" fill="#7b8794" font-weight="600" text-anchor="start">target</text>
+<text x="895" y="515" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11" fill="#7b8794" font-weight="600" text-anchor="start">leads to</text>
+<text x="667" y="540" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#1f2933" font-weight="normal" text-anchor="start">10.20.0.0/18</text>
+<text x="815" y="540" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#1f2933" font-weight="normal" text-anchor="start">local</text>
+<text x="895" y="540" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#52606d" font-weight="normal" text-anchor="start">this VPC</text>
+<text x="667" y="568" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#1f2933" font-weight="normal" text-anchor="start">10.30.5.0/24</text>
+<text x="815" y="568" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#1f2933" font-weight="normal" text-anchor="start">pcx-…</text>
+<text x="895" y="568" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#52606d" font-weight="normal" text-anchor="start">partner</text>
+<text x="667" y="596" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#1f2933" font-weight="normal" text-anchor="start">10.0.0.0/8</text>
+<text x="815" y="596" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#1f2933" font-weight="normal" text-anchor="start">tgw-…</text>
+<text x="895" y="596" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#52606d" font-weight="normal" text-anchor="start">company</text>
+<text x="667" y="624" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#1f2933" font-weight="normal" text-anchor="start">pl-… (S3 IPs)</text>
+<text x="815" y="624" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#1f2933" font-weight="normal" text-anchor="start">vpce-…</text>
+<text x="895" y="624" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#52606d" font-weight="normal" text-anchor="start">S3</text>
+<rect x="661" y="634" width="328" height="26" rx="5" fill="#ffe3cc" stroke="#ffe3cc" stroke-width="0" />
+<text x="667" y="652" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#1f2933" font-weight="bold" text-anchor="start">0.0.0.0/0</text>
+<text x="815" y="652" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#1f2933" font-weight="bold" text-anchor="start">nat-…</text>
+<text x="895" y="652" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#e8590c" font-weight="600" text-anchor="start">internet</text>
+<text x="667" y="692" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#52606d" font-weight="normal" text-anchor="start" font-style="italic">most specific match wins (most fixed bits)</text>
+<line x1="605" y1="560" x2="655" y2="560" stroke="#2f74c0" stroke-width="1.5" stroke-dasharray="4 4"/>
+<text x="612" y="552" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10.5" fill="#1f5f9e" font-weight="normal" text-anchor="start" font-style="italic">uses</text>
+<rect x="655" y="730" width="340" height="62" rx="8" fill="#f5f7fa" stroke="#9aa5b1" stroke-width="1.3" />
+<text x="667" y="753" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#1f2933" font-weight="bold" text-anchor="start">S3 / DynamoDB gateway endpoint</text>
+<text x="667" y="773" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#52606d" font-weight="normal" text-anchor="start">VPC level · no card · free · S3 traffic skips the NAT</text>
+<rect x="655" y="808" width="340" height="82" rx="8" fill="#fff8f2" stroke="#e8590c" stroke-width="1.3" />
+<text x="667" y="830" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2933" font-weight="600" text-anchor="start">Deleting a NAT leaves its 0.0.0.0/0 row</text>
+<text x="667" y="849" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2933" font-weight="normal" text-anchor="start">as a blackhole (remove it) and keeps the</text>
+<text x="667" y="868" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2933" font-weight="normal" text-anchor="start">EIP (release it). Other rows keep working.</text>
+<path d="M 587 599 C 628 599, 622 648, 657 648" fill="none" stroke="#e8590c" stroke-width="3" marker-end="url(#ah-trip)" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 989 648 L 1008 648 L 1008 442 L 594 442" fill="none" stroke="#e8590c" stroke-width="3" marker-end="url(#ah-trip)" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 590 370 C 625 370, 625 390, 657 390" fill="none" stroke="#e8590c" stroke-width="3" marker-end="url(#ah-trip)" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 989 390 L 1005 390 L 1005 238 L 895 238 L 895 213" fill="none" stroke="#e8590c" stroke-width="3" marker-end="url(#ah-trip)" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 895 167 L 895 144" fill="none" stroke="#e8590c" stroke-width="3" marker-end="url(#ah-trip)" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="419" cy="619" r="14" fill="#e8590c" stroke="#fff" stroke-width="2"/>
+<text x="419" y="624" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#fff" font-weight="bold" text-anchor="middle">1</text>
+<circle cx="1008" cy="612" r="14" fill="#e8590c" stroke="#fff" stroke-width="2"/>
+<text x="1008" y="617" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#fff" font-weight="bold" text-anchor="middle">2</text>
+<circle cx="590" cy="330" r="14" fill="#e8590c" stroke="#fff" stroke-width="2"/>
+<text x="590" y="335" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#fff" font-weight="bold" text-anchor="middle">3</text>
+<circle cx="1005" cy="330" r="14" fill="#e8590c" stroke="#fff" stroke-width="2"/>
+<text x="1005" y="335" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#fff" font-weight="bold" text-anchor="middle">4</text>
+<circle cx="925" cy="156" r="14" fill="#e8590c" stroke="#fff" stroke-width="2"/>
+<text x="925" y="161" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#fff" font-weight="bold" text-anchor="middle">5</text>
+<text x="540" y="106" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#2f9e44" font-weight="600" text-anchor="start">reply comes back the same way:</text>
+<text x="540" y="123" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#2f9e44" font-weight="normal" text-anchor="start">IGW → NAT swaps address back → EC2</text>
+<text x="1050" y="210" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#3e4c59" font-weight="bold" text-anchor="start">OUTSIDE THE VPC · where the other rows of private-1a lead</text>
+<rect x="1050" y="225" width="520" height="46" rx="8" fill="#ffffff" stroke="#c3cad3" stroke-width="1.3" />
+<text x="1064" y="245" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#1f2933" font-weight="bold" text-anchor="start">TGW hub → other company VPCs, offices</text>
+<text x="1064" y="262" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#52606d" font-weight="normal" text-anchor="start">10.0.0.0/8 → tgw-…   (e.g. 10.50.4.7)</text>
+<rect x="1050" y="281" width="520" height="46" rx="8" fill="#ffffff" stroke="#c3cad3" stroke-width="1.3" />
+<text x="1064" y="301" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#1f2933" font-weight="bold" text-anchor="start">Peering → partner VPC (exactly one VPC, not transitive)</text>
+<text x="1064" y="318" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#52606d" font-weight="normal" text-anchor="start">10.30.5.0/24 → pcx-…   (e.g. 10.30.5.20)</text>
+<rect x="1050" y="337" width="520" height="46" rx="8" fill="#ffffff" stroke="#c3cad3" stroke-width="1.3" />
+<text x="1064" y="357" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#1f2933" font-weight="bold" text-anchor="start">S3 via gateway endpoint</text>
+<text x="1064" y="374" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#52606d" font-weight="normal" text-anchor="start">pl-… → vpce-…   (no NAT, free)</text>
+<rect x="1050" y="405" width="520" height="300" rx="10" fill="#ffffff" stroke="#7b8794" stroke-width="1.5" />
+<text x="1064" y="431" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#1f2933" font-weight="bold" text-anchor="start">How a route matches: /N = the first N bits must match</text>
+<text x="1064" y="459" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#1f2933" font-weight="600" text-anchor="start">10.20.0.0/18</text>
+<text x="1180" y="459" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" xml:space="preserve"><tspan fill="#1f5f9e" font-weight="bold">00001010.00010100.00</tspan><tspan fill="#b0b8c1" font-weight="normal">xxxxxx.xxxxxxxx</tspan></text>
+<text x="1470" y="459" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#52606d" font-weight="normal" text-anchor="start">18 fixed bits</text>
+<text x="1064" y="481" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#1f2933" font-weight="600" text-anchor="start">10.30.5.0/24</text>
+<text x="1180" y="481" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" xml:space="preserve"><tspan fill="#1f5f9e" font-weight="bold">00001010.00011110.00000101.</tspan><tspan fill="#b0b8c1" font-weight="normal">xxxxxxxx</tspan></text>
+<text x="1470" y="481" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#52606d" font-weight="normal" text-anchor="start">24 fixed bits</text>
+<text x="1064" y="503" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#1f2933" font-weight="600" text-anchor="start">10.0.0.0/8</text>
+<text x="1180" y="503" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" xml:space="preserve"><tspan fill="#1f5f9e" font-weight="bold">00001010.</tspan><tspan fill="#b0b8c1" font-weight="normal">xxxxxxxx.xxxxxxxx.xxxxxxxx</tspan></text>
+<text x="1470" y="503" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#52606d" font-weight="normal" text-anchor="start">8 fixed bits</text>
+<text x="1064" y="525" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#1f2933" font-weight="600" text-anchor="start">0.0.0.0/0</text>
+<text x="1180" y="525" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" xml:space="preserve"><tspan fill="#1f5f9e" font-weight="bold"></tspan><tspan fill="#b0b8c1" font-weight="normal">xxxxxxxx.xxxxxxxx.xxxxxxxx.xxxxxxxx</tspan></text>
+<text x="1470" y="525" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#52606d" font-weight="normal" text-anchor="start">0 fixed bits</text>
+<line x1="1064" y1="539" x2="1556" y2="539" stroke="#e4e7eb" stroke-width="1"/>
+<text x="1064" y="559" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#1f2933" font-weight="bold" text-anchor="start">140.82.112.3</text>
+<text x="1180" y="559" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" xml:space="preserve"><tspan fill="#e8590c" font-weight="bold">1</tspan><tspan fill="#1f2933" font-weight="normal">0001100.01010010.01110000.00000011</tspan></text>
+<text x="1200" y="576" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#e8590c" font-weight="600" text-anchor="start">matches 0.0.0.0/0 only  → NAT</text>
+<text x="1064" y="599" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#1f2933" font-weight="bold" text-anchor="start">10.30.5.20</text>
+<text x="1180" y="599" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" xml:space="preserve"><tspan fill="#1f2933" font-weight="normal">00001010.00011110.00000101.00010100</tspan></text>
+<text x="1200" y="616" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#52606d" font-weight="normal" text-anchor="start">matches /24, /8, /0  → partner (/24 wins)</text>
+<text x="1064" y="639" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#1f2933" font-weight="bold" text-anchor="start">10.20.33.10</text>
+<text x="1180" y="639" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" xml:space="preserve"><tspan fill="#1f2933" font-weight="normal">00001010.00010100.00100001.00001010</tspan></text>
+<text x="1200" y="656" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#52606d" font-weight="normal" text-anchor="start">matches /18, /8, /0  → local (/18 wins)</text>
+<text x="1064" y="681" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#e8590c" font-weight="normal" text-anchor="start" font-style="italic">140… starts with bit 1; every 10.x route needs 0 → only /0 can match</text>
+<rect x="1050" y="722" width="520" height="188" rx="10" fill="#ffffff" stroke="#7b8794" stroke-width="1.5" />
+<text x="1064" y="748" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#1f2933" font-weight="bold" text-anchor="start">Inside the NAT: rewrite the envelope, remember it</text>
+<text x="1064" y="774" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" xml:space="preserve"><tspan fill="#7b8794" font-weight="600">OUT    </tspan><tspan fill="#1f5f9e" font-weight="bold">10.20.33.10:51000</tspan><tspan fill="#1f2933" font-weight="normal"> → 140.82.112.3:443</tspan></text>
+<text x="1064" y="794" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" xml:space="preserve"><tspan fill="#7b8794" font-weight="normal">       becomes </tspan><tspan fill="#e8590c" font-weight="bold">203.0.113.10:62001</tspan><tspan fill="#1f2933" font-weight="normal"> → 140.82.112.3:443</tspan></text>
+<text x="1064" y="818" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" xml:space="preserve"><tspan fill="#7b8794" font-weight="600">BACK   </tspan><tspan fill="#1f2933" font-weight="normal">140.82.112.3:443 → 203.0.113.10:62001</tspan><tspan fill="#2f9e44" font-weight="bold">  ✓ in table</tspan></text>
+<text x="1064" y="838" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" xml:space="preserve"><tspan fill="#7b8794" font-weight="normal">       → delivered to </tspan><tspan fill="#1f5f9e" font-weight="bold">10.20.33.10:51000</tspan></text>
+<text x="1064" y="862" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" xml:space="preserve"><tspan fill="#7b8794" font-weight="600">ATTACK </tspan><tspan fill="#1f2933" font-weight="normal">198.51.100.66:443 → 203.0.113.10:62001</tspan><tspan fill="#c92a2a" font-weight="bold">  ✗ dropped</tspan></text>
+<text x="1064" y="888" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#52606d" font-weight="normal" text-anchor="start" font-style="italic">The private IP never appears on the internet: nobody outside can even name it.</text>
+<text x="30" y="941" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" fill="#1f2933" font-weight="bold" text-anchor="start">Is this NAT used?  Three checks in the AWS console</text>
+<rect x="30" y="959" width="370" height="200" rx="10" fill="#ffffff" stroke="#7b8794" stroke-width="1.5" />
+<text x="46" y="987" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#1f2933" font-weight="bold" text-anchor="start">TRAFFIC  ·  the past</text>
+<text x="46" y="1009" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#e8590c" font-weight="600" text-anchor="start">VPC → NAT gateways → Monitoring</text>
+<text x="46" y="1037" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#3e4c59" font-weight="normal" text-anchor="start">• Set Period = 1 day to see 15 months</text>
+<text x="46" y="1059" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#3e4c59" font-weight="normal" text-anchor="start">• (5-min data only covers ~63 days)</text>
+<text x="46" y="1081" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#3e4c59" font-weight="normal" text-anchor="start">• All zero → nobody walked through the door</text>
+<text x="46" y="1140" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" xml:space="preserve"><tspan fill="#7b8794" font-weight="normal">looks at step </tspan><tspan fill="#e8590c" font-weight="bold">3</tspan><tspan fill="#7b8794" font-weight="normal"> of the trip</tspan></text>
+<rect x="416" y="959" width="370" height="200" rx="10" fill="#ffffff" stroke="#7b8794" stroke-width="1.5" />
+<text x="432" y="987" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#1f2933" font-weight="bold" text-anchor="start">WIRING  ·  the hallway</text>
+<text x="432" y="1009" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#e8590c" font-weight="600" text-anchor="start">VPC → Route tables → Routes tab</text>
+<text x="432" y="1037" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#3e4c59" font-weight="normal" text-anchor="start">• Which tables send 0.0.0.0/0 → nat-…?</text>
+<text x="432" y="1059" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#3e4c59" font-weight="normal" text-anchor="start">• Their Subnet associations = the rooms</text>
+<text x="432" y="1081" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#3e4c59" font-weight="normal" text-anchor="start">• Resource map shows Name tags, not IDs</text>
+<text x="432" y="1140" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" xml:space="preserve"><tspan fill="#7b8794" font-weight="normal">looks at step </tspan><tspan fill="#e8590c" font-weight="bold">2</tspan><tspan fill="#7b8794" font-weight="normal"> of the trip</tspan></text>
+<rect x="802" y="959" width="370" height="200" rx="10" fill="#ffffff" stroke="#7b8794" stroke-width="1.5" />
+<text x="818" y="987" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#1f2933" font-weight="bold" text-anchor="start">INVENTORY  ·  the present</text>
+<text x="818" y="1009" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#e8590c" font-weight="600" text-anchor="start">EC2 → Network interfaces (filter VPC / Subnet)</text>
+<text x="818" y="1037" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#3e4c59" font-weight="normal" text-anchor="start">• Only plumbing cards → nothing can use it</text>
+<text x="818" y="1059" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#3e4c59" font-weight="normal" text-anchor="start">• Workload card → find its owner, check it</text>
+<text x="818" y="1081" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#3e4c59" font-weight="normal" text-anchor="start">• Occupancy: (CIDR − 5) − available IPs</text>
+<text x="818" y="1140" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" xml:space="preserve"><tspan fill="#7b8794" font-weight="normal">looks at step </tspan><tspan fill="#e8590c" font-weight="bold">1</tspan><tspan fill="#7b8794" font-weight="normal"> of the trip</tspan></text>
+<rect x="1190" y="959" width="380" height="92" rx="10" fill="#fff1e0" stroke="#e8590c" stroke-width="2" />
+<text x="1206" y="987" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#1f2933" font-weight="bold" text-anchor="start">No traffic + nobody inside who</text>
+<text x="1206" y="1008" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#1f2933" font-weight="bold" text-anchor="start">starts trips = safe to delete ✓</text>
+<text x="1206" y="1033" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#52606d" font-weight="normal" text-anchor="start">busy VPC? trace route → subnet → cards</text>
+<rect x="1190" y="1063" width="380" height="96" rx="10" fill="#f5f7fa" stroke="#c3cad3" stroke-width="1.3" />
+<text x="1206" y="1085" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#1f2933" font-weight="bold" text-anchor="start">Under the hood: none of this is physical</text>
+<text x="1206" y="1105" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#3e4c59" font-weight="normal" text-anchor="start">A Nitro card on each AWS host checks routes + SGs</text>
+<text x="1206" y="1122" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#3e4c59" font-weight="normal" text-anchor="start">per packet; a mapping service knows where each</text>
+<text x="1206" y="1139" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#3e4c59" font-weight="normal" text-anchor="start">private IP really lives. You edit config (control</text>
+<text x="1206" y="1156" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#3e4c59" font-weight="normal" text-anchor="start">plane), the cards enforce it (data plane).</text>
+<text x="1570" y="1178" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#7b8794" font-weight="600" text-anchor="end">1 / 3 · the logical view</text>
+<text x="30" y="1178" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#7b8794" font-weight="normal" text-anchor="start" font-style="italic">IPs are illustrative</text>
+</svg>

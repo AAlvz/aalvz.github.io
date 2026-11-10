@@ -1,0 +1,827 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="2150" viewBox="0 0 2400 2150">
+<defs>
+<marker id="ah-trip" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 z" fill="#e8590c"/></marker>
+<marker id="ah-cp" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto"><path d="M0,0 L13,6.5 L0,13 z" fill="#7048e8"/></marker>
+<radialGradient id="flash" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#fff9db"/><stop offset="45%" stop-color="#ffd43b"/><stop offset="100%" stop-color="#f08c00"/></radialGradient>
+<filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e9ecef"/><stop offset="100%" stop-color="#dee2e6"/></linearGradient>
+</defs>
+<rect x="0" y="0" width="2400" height="2150" rx="0" fill="#fbfaf7" stroke="#fbfaf7" stroke-width="0"/>
+<text x="40" y="58" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="34" fill="#1f2933" font-weight="bold" text-anchor="start">How the cloud really moves one request</text>
+<text x="40" y="94" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="18" fill="#52606d" font-weight="normal" text-anchor="start">Your EC2 calls api.github.com. Follow the columns: what you configure → the hardware that does it → which network layer each place touches.</text>
+<rect x="1650" y="18" width="726" height="84" rx="12" fill="#ffffff" stroke="#e4e7eb" stroke-width="1"/>
+<polygon points="1666,46 1688,33 1742,33 1720,46" fill="#4a5568" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="1720,46 1742,33 1742,63 1720,76" fill="#1a202c" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<rect x="1666" y="46" width="54" height="30" rx="2" fill="#2d3748" stroke="#111827" stroke-width="1"/>
+<text x="1746" y="52" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#1f2933" font-weight="bold" text-anchor="start">HARDWARE</text>
+<text x="1746" y="72" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52606d" font-weight="normal" text-anchor="start">solid 3D: you could touch it</text>
+<polygon points="2006,38 2070,38 2044,78 1980,78" fill="#f6f7ff" fill-opacity="0.88" stroke="#5c6ac4" stroke-width="1.8" stroke-dasharray="7 5" stroke-linejoin="round"/>
+<text x="2070" y="52" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#3b4799" font-weight="bold" text-anchor="start">SOFTWARE</text>
+<text x="2070" y="72" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52606d" font-weight="normal" text-anchor="start">glass pane: runs on hardware</text>
+<rect x="330" y="380" width="292" height="1316" rx="0" fill="#f1f3f5" fill-opacity="0.55" stroke="none" stroke-width="0"/>
+<rect x="914" y="380" width="292" height="1316" rx="0" fill="#f1f3f5" fill-opacity="0.55" stroke="none" stroke-width="0"/>
+<rect x="1498" y="380" width="292" height="1316" rx="0" fill="#f1f3f5" fill-opacity="0.55" stroke="none" stroke-width="0"/>
+<rect x="2082" y="380" width="292" height="1316" rx="0" fill="#f1f3f5" fill-opacity="0.55" stroke="none" stroke-width="0"/>
+<rect x="24" y="128" width="2352" height="232" rx="16" fill="#fafbff" stroke="#5c6ac4" stroke-width="1.8" stroke-dasharray="8 6"/>
+<rect x="44" y="144" width="36" height="22" rx="5" fill="#ffffff" stroke="#5c6ac4" stroke-width="1.4" stroke-dasharray="3 2"/>
+<text x="62" y="160" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#5c6ac4" font-weight="bold" text-anchor="middle">&lt;/&gt;</text>
+<text x="92" y="161" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="19" fill="#3b4799" font-weight="bold" text-anchor="start">WHAT YOU CONFIGURE</text>
+<text x="44" y="190" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#52606d" font-weight="normal" text-anchor="start">console / Terraform</text>
+<text x="44" y="210" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#52606d" font-weight="normal" text-anchor="start">100% software: config</text>
+<text x="44" y="230" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#52606d" font-weight="normal" text-anchor="start">stored by AWS</text>
+<rect x="44" y="250" width="240" height="92" rx="8" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="56" y="274" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#5c6ac4" font-weight="600" text-anchor="start" font-style="italic">VPC 10.20.0.0/18 is an</text>
+<text x="56" y="294" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#5c6ac4" font-weight="600" text-anchor="start" font-style="italic">idea, not a place: it lives</text>
+<text x="56" y="314" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#5c6ac4" font-weight="600" text-anchor="start" font-style="italic">in this row only.</text>
+<rect x="346" y="198" width="260" height="120" rx="12" fill="#fff1e0" stroke="#e8590c" stroke-width="2.2" stroke-dasharray="8 5"/>
+<text x="476.0" y="234" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="18" fill="#1f2933" font-weight="bold" text-anchor="middle">EC2 i-0abc</text>
+<text x="476.0" y="264" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" fill="#52606d" font-weight="normal" text-anchor="middle">10.20.33.10</text>
+<rect x="638" y="198" width="260" height="120" rx="12" fill="#ffffff" stroke="#5c6ac4" stroke-width="1.8" stroke-dasharray="8 5"/>
+<text x="768.0" y="234" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="18" fill="#1f2933" font-weight="bold" text-anchor="middle">route table + SG</text>
+<text x="768.0" y="264" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" fill="#52606d" font-weight="normal" text-anchor="middle">0.0.0.0/0 → nat-…</text>
+<text x="768.0" y="288" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" fill="#52606d" font-weight="normal" text-anchor="middle">allow out: 443</text>
+<rect x="930" y="232" width="552" height="86" rx="10" fill="#ffffff" stroke="#ced4da" stroke-width="1.4" stroke-dasharray="3 4"/>
+<text x="1206" y="258" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="16" fill="#e8590c" font-weight="bold" text-anchor="middle">in your view: ONE hop, straight to the NAT</text>
+<text x="1206" y="282" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#7b8794" font-weight="600" text-anchor="middle">switches, cables, spine: NOT in your view</text>
+<text x="1206" y="304" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#7b8794" font-weight="normal" text-anchor="middle" font-style="italic">no console page, nothing to configure</text>
+<rect x="1514" y="198" width="260" height="120" rx="12" fill="#fff1e0" stroke="#e8590c" stroke-width="2.2" stroke-dasharray="8 5"/>
+<text x="1644.0" y="234" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="18" fill="#1f2933" font-weight="bold" text-anchor="middle">NAT gateway</text>
+<text x="1644.0" y="264" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" fill="#52606d" font-weight="normal" text-anchor="middle">EIP 203.0.113.10</text>
+<text x="1644.0" y="288" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" fill="#52606d" font-weight="normal" text-anchor="middle">0.0.0.0/0 → igw-…</text>
+<rect x="1806" y="198" width="260" height="120" rx="12" fill="#ffffff" stroke="#5c6ac4" stroke-width="1.8" stroke-dasharray="8 5"/>
+<text x="1936.0" y="234" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="18" fill="#1f2933" font-weight="bold" text-anchor="middle">IGW</text>
+<text x="1936.0" y="264" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" fill="#52606d" font-weight="normal" text-anchor="middle">front door</text>
+<rect x="2098" y="198" width="260" height="120" rx="12" fill="#ffffff" stroke="#5c6ac4" stroke-width="1.8" stroke-dasharray="8 5"/>
+<text x="2228.0" y="234" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="18" fill="#1f2933" font-weight="bold" text-anchor="middle">INTERNET</text>
+<text x="2228.0" y="264" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" fill="#52606d" font-weight="normal" text-anchor="middle">api.github.com</text>
+<path d="M 606 258 L 634 258" fill="none" stroke="#e8590c" stroke-width="3.5" marker-end="url(#ah-trip)" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 898 216 L 1510 216" fill="none" stroke="#e8590c" stroke-width="3.5" marker-end="url(#ah-trip)" stroke-dasharray="11 8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 1774 258 L 1802 258" fill="none" stroke="#e8590c" stroke-width="3.5" marker-end="url(#ah-trip)" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 2066 258 L 2094 258" fill="none" stroke="#e8590c" stroke-width="3.5" marker-end="url(#ah-trip)" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="24" y="380" width="2352" height="640" rx="16" fill="none" stroke="#2d3748" stroke-width="2.6"/>
+<polygon points="46,410 68,397 108,397 86,410" fill="#4a5568" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="86,410 108,397 108,419 86,432" fill="#1a202c" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<rect x="46" y="410" width="40" height="22" rx="2" fill="#2d3748" stroke="#111827" stroke-width="1"/>
+<text x="112" y="426" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="19" fill="#1f2933" font-weight="bold" text-anchor="start">THE HARDWARE IT CROSSES</text>
+<text x="44" y="462" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#52606d" font-weight="normal" text-anchor="start">real machines in an AWS</text>
+<text x="44" y="483" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#52606d" font-weight="normal" text-anchor="start">datacenter, joined by fiber.</text>
+<text x="44" y="504" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#52606d" font-weight="normal" text-anchor="start"></text>
+<text x="44" y="525" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#52606d" font-weight="normal" text-anchor="start">Glass panes = the software</text>
+<text x="44" y="546" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#52606d" font-weight="normal" text-anchor="start">running on that hardware.</text>
+<text x="44" y="567" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#52606d" font-weight="normal" text-anchor="start"></text>
+<text x="44" y="588" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#52606d" font-weight="normal" text-anchor="start">Orange line = the cable</text>
+<text x="44" y="609" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#52606d" font-weight="normal" text-anchor="start">the light actually travels in.</text>
+<text x="476.0" y="420" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15.5" fill="#1f2933" font-weight="bold" text-anchor="middle">YOUR VM</text>
+<text x="476.0" y="442" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52606d" font-weight="normal" text-anchor="middle" font-style="italic">software on host A</text>
+<text x="768.0" y="420" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15.5" fill="#1f2933" font-weight="bold" text-anchor="middle">NITRO CARD</text>
+<text x="768.0" y="442" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52606d" font-weight="normal" text-anchor="middle" font-style="italic">hardware inside host A</text>
+<text x="1060.0" y="420" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15.5" fill="#1f2933" font-weight="bold" text-anchor="middle">TOP-OF-RACK SWITCH</text>
+<text x="1060.0" y="442" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52606d" font-weight="normal" text-anchor="middle" font-style="italic">hardware · rack 4</text>
+<text x="1352.0" y="420" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15.5" fill="#1f2933" font-weight="bold" text-anchor="middle">SPINE SWITCHES</text>
+<text x="1352.0" y="442" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52606d" font-weight="normal" text-anchor="middle" font-style="italic">hardware · datacenter</text>
+<text x="1644.0" y="420" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15.5" fill="#1f2933" font-weight="bold" text-anchor="middle">NAT · HYPERPLANE</text>
+<text x="1644.0" y="442" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52606d" font-weight="normal" text-anchor="middle" font-style="italic">software on real servers</text>
+<text x="1936.0" y="420" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15.5" fill="#1f2933" font-weight="bold" text-anchor="middle">EDGE ROUTERS = IGW</text>
+<text x="1936.0" y="442" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52606d" font-weight="normal" text-anchor="middle" font-style="italic">hardware · region border</text>
+<text x="2228.0" y="420" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15.5" fill="#1f2933" font-weight="bold" text-anchor="middle">INTERNET → GITHUB</text>
+<text x="2228.0" y="442" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52606d" font-weight="normal" text-anchor="middle" font-style="italic">other companies' networks</text>
+<polygon points="350,842 372,829 896,829 874,842" fill="#4a5568" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="874,842 896,829 896,899 874,912" fill="#1a202c" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<rect x="350" y="842" width="524" height="70" rx="2" fill="#2d3748" stroke="#111827" stroke-width="1"/>
+<rect x="358" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="372" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="386" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="400" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="414" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="428" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="442" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="456" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="470" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="484" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="498" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="512" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="526" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="540" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="554" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="568" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="582" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="596" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="610" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="624" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="638" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="652" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="666" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="680" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="694" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="708" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="722" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="736" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="750" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="764" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="778" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="792" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="806" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="820" y="849" width="10" height="56" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<circle cx="854" cy="877.0" r="3" fill="#51cf66"/><circle cx="864" cy="877.0" r="3" fill="#51cf66"/>
+<rect x="360" y="858" width="236" height="38" rx="6" fill="#1a202c" stroke="#1a202c" stroke-width="0"/>
+<text x="372" y="883" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" fill="#ffffff" font-weight="bold" text-anchor="start">HOST A · one physical server</text>
+<rect x="662" y="850" width="190" height="54" rx="4" fill="#0b0f17" stroke="#000" stroke-width="1"/>
+<polygon points="686,760 708,747 858,747 836,760" fill="#37b24d" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<rect x="686" y="760" width="150" height="58" rx="3" fill="#2b8a3e" stroke="#1e5e2b" stroke-width="1.2"/>
+<rect x="743.0" y="770" width="34" height="28" rx="3" fill="#212529" stroke="#000" stroke-width="1"/>
+<text x="760.0" y="789" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" fill="#adb5bd" font-weight="normal" text-anchor="middle">chip</text>
+<rect x="694.0" y="809" width="8.166666666666666" height="9" rx="0.5" fill="#fcc419" stroke="#e67700" stroke-width="0.4"/>
+<rect x="705.1666666666666" y="809" width="8.166666666666666" height="9" rx="0.5" fill="#fcc419" stroke="#e67700" stroke-width="0.4"/>
+<rect x="716.3333333333334" y="809" width="8.166666666666666" height="9" rx="0.5" fill="#fcc419" stroke="#e67700" stroke-width="0.4"/>
+<rect x="727.5" y="809" width="8.166666666666666" height="9" rx="0.5" fill="#fcc419" stroke="#e67700" stroke-width="0.4"/>
+<rect x="738.6666666666666" y="809" width="8.166666666666666" height="9" rx="0.5" fill="#fcc419" stroke="#e67700" stroke-width="0.4"/>
+<rect x="749.8333333333334" y="809" width="8.166666666666666" height="9" rx="0.5" fill="#fcc419" stroke="#e67700" stroke-width="0.4"/>
+<rect x="761.0" y="809" width="8.166666666666666" height="9" rx="0.5" fill="#fcc419" stroke="#e67700" stroke-width="0.4"/>
+<rect x="772.1666666666666" y="809" width="8.166666666666666" height="9" rx="0.5" fill="#fcc419" stroke="#e67700" stroke-width="0.4"/>
+<rect x="783.3333333333334" y="809" width="8.166666666666666" height="9" rx="0.5" fill="#fcc419" stroke="#e67700" stroke-width="0.4"/>
+<rect x="794.5" y="809" width="8.166666666666666" height="9" rx="0.5" fill="#fcc419" stroke="#e67700" stroke-width="0.4"/>
+<rect x="805.6666666666666" y="809" width="8.166666666666666" height="9" rx="0.5" fill="#fcc419" stroke="#e67700" stroke-width="0.4"/>
+<rect x="816.8333333333334" y="809" width="8.166666666666666" height="9" rx="0.5" fill="#fcc419" stroke="#e67700" stroke-width="0.4"/>
+<rect x="676" y="756" width="10" height="66" rx="1" fill="#ced4da" stroke="#868e96" stroke-width="1"/>
+<rect x="678" y="766" width="6" height="12" rx="1" fill="#495057" stroke="#495057" stroke-width="0"/>
+<rect x="678" y="786" width="6" height="12" rx="1" fill="#495057" stroke="#495057" stroke-width="0"/>
+<path d="M 761 818 L 761 850" stroke="#868e96" stroke-width="1.5" stroke-dasharray="3 3"/>
+<text x="761" y="886" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#adb5bd" font-weight="normal" text-anchor="middle" font-style="italic">inside host A</text>
+<polygon points="382,772 602,772 576,812 356,812" fill="#f6f7ff" fill-opacity="0.88" stroke="#5c6ac4" stroke-width="1.8" stroke-dasharray="7 5" stroke-linejoin="round"/>
+<text x="479.0" y="798" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#3b4799" font-weight="600" text-anchor="middle">hypervisor</text>
+<polygon points="378,492 606,492 580,558 352,558" fill="#f6f7ff" fill-opacity="0.88" stroke="#5c6ac4" stroke-width="1.8" stroke-dasharray="7 5" stroke-linejoin="round"/>
+<text x="479.0" y="520" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" fill="#1f2933" font-weight="bold" text-anchor="middle">customer Y VM</text>
+<text x="479.0" y="542" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13.5" fill="#52606d" font-weight="normal" text-anchor="middle">172.31.5.9</text>
+<polygon points="378,584 606,584 580,650 352,650" fill="#f6f7ff" fill-opacity="0.88" stroke="#5c6ac4" stroke-width="1.8" stroke-dasharray="7 5" stroke-linejoin="round"/>
+<text x="479.0" y="612" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" fill="#1f2933" font-weight="bold" text-anchor="middle">customer X VM</text>
+<text x="479.0" y="634" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13.5" fill="#e8590c" font-weight="600" text-anchor="middle">10.20.33.10 (!)</text>
+<polygon points="378,676 606,676 580,742 352,742" fill="#fff1e0" fill-opacity="0.88" stroke="#e8590c" stroke-width="1.8" stroke-dasharray="7 5" stroke-linejoin="round"/>
+<text x="479.0" y="704" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" fill="#1f2933" font-weight="bold" text-anchor="middle">YOUR EC2 VM</text>
+<text x="479.0" y="726" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13.5" fill="#52606d" font-weight="normal" text-anchor="middle">10.20.33.10</text>
+<text x="476.0" y="480" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52606d" font-weight="600" text-anchor="middle" font-style="italic">3 customers, 1 machine</text>
+<polygon points="678,492 898,492 872,584 652,584" fill="#f3f0ff" fill-opacity="0.88" stroke="#7048e8" stroke-width="1.8" stroke-dasharray="7 5" stroke-linejoin="round"/>
+<text x="775.0" y="522" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" fill="#7048e8" font-weight="bold" text-anchor="middle">your route table + SG</text>
+<text x="775.0" y="544" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="middle">enforced on the card,</text>
+<text x="775.0" y="564" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="middle">on every packet</text>
+<path d="M 864 318 L 864 488" fill="none" stroke="#7048e8" stroke-width="2.4" marker-end="url(#ah-cp)" stroke-dasharray="7 5" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="874" y="374" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#7048e8" font-weight="600" text-anchor="start" font-style="italic">pushed down</text>
+<text x="698.0" y="630" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52606d" font-weight="normal" text-anchor="start" font-style="italic">the VM can't touch</text>
+<text x="698.0" y="648" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52606d" font-weight="normal" text-anchor="start" font-style="italic">the card, so it can't</text>
+<text x="698.0" y="666" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52606d" font-weight="normal" text-anchor="start" font-style="italic">skip the checks</text>
+<polygon points="938,842 960,829 1182,829 1160,842" fill="#2d3748" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="1160,842 1182,829 1182,875 1160,888" fill="#0b0f17" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<rect x="938" y="842" width="222" height="46" rx="2" fill="#1a202c" stroke="#111827" stroke-width="1"/>
+<rect x="948.0" y="850" width="8.0" height="30" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="960.0" y="850" width="8.0" height="30" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="972.0" y="850" width="8.0" height="30" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="984.0" y="850" width="8.0" height="30" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="996.0" y="850" width="8.0" height="30" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1008.0" y="850" width="8.0" height="30" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1020.0" y="850" width="8.0" height="30" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1032.0" y="850" width="8.0" height="30" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1044.0" y="850" width="8.0" height="30" rx="1.5" fill="#ffd8a8" stroke="#e8590c" stroke-width="1.6"/>
+<rect x="1056.0" y="850" width="8.0" height="30" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1068.0" y="850" width="8.0" height="30" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1080.0" y="850" width="8.0" height="30" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1092.0" y="850" width="8.0" height="30" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1104.0" y="850" width="8.0" height="30" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1116.0" y="850" width="8.0" height="30" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1128.0" y="850" width="8.0" height="30" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<circle cx="1150" cy="865.0" r="2.6" fill="#51cf66"/>
+<text x="992" y="916" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#e8590c" font-weight="bold" text-anchor="start">in: socket 24</text>
+<text x="992" y="936" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#e8590c" font-weight="bold" text-anchor="start">out: uplink 49</text>
+<rect x="938" y="530" width="232" height="150" rx="10" fill="#ffffff" stroke="#2d3748" stroke-width="1.4"/>
+<text x="952" y="556" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#1f2933" font-weight="bold" text-anchor="start">chip's table</text>
+<text x="952" y="590" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#1f2933" font-weight="normal" text-anchor="start">host A</text>
+<text x="1156" y="590" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#1f2933" font-weight="normal" text-anchor="end">socket 24</text>
+<rect x="944" y="600" width="220" height="28" rx="6" fill="#ffe3cc" stroke="#ffe3cc" stroke-width="0"/>
+<text x="952" y="620" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#1f2933" font-weight="bold" text-anchor="start">node 17</text>
+<text x="1156" y="620" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#e8590c" font-weight="bold" text-anchor="end">uplink 49</text>
+<text x="952" y="650" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#1f2933" font-weight="normal" text-anchor="start">else</text>
+<text x="1156" y="650" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#1f2933" font-weight="normal" text-anchor="end">uplinks</text>
+<text x="938" y="710" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52606d" font-weight="normal" text-anchor="start" font-style="italic">reads only the AWS envelope;</text>
+<text x="938" y="728" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52606d" font-weight="normal" text-anchor="start" font-style="italic">lookup takes nanoseconds</text>
+<polygon points="1246,632 1268,619 1460,619 1438,632" fill="#2d3748" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="1438,632 1460,619 1460,653 1438,666" fill="#0b0f17" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<rect x="1246" y="632" width="192" height="34" rx="2" fill="#1a202c" stroke="#111827" stroke-width="1"/>
+<rect x="1256.0" y="640" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1267.5714285714287" y="640" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1279.142857142857" y="640" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1290.7142857142858" y="640" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1302.2857142857142" y="640" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1313.857142857143" y="640" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1325.4285714285713" y="640" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1337.0" y="640" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1348.5714285714287" y="640" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1360.142857142857" y="640" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1371.7142857142858" y="640" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1383.2857142857142" y="640" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1394.857142857143" y="640" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1406.4285714285713" y="640" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<circle cx="1428" cy="649.0" r="2.6" fill="#51cf66"/>
+<polygon points="1246,684 1268,671 1460,671 1438,684" fill="#2d3748" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="1438,684 1460,671 1460,705 1438,718" fill="#0b0f17" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<rect x="1246" y="684" width="192" height="34" rx="2" fill="#1a202c" stroke="#111827" stroke-width="1"/>
+<rect x="1256.0" y="692" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1267.5714285714287" y="692" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1279.142857142857" y="692" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1290.7142857142858" y="692" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1302.2857142857142" y="692" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1313.857142857143" y="692" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1325.4285714285713" y="692" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1337.0" y="692" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1348.5714285714287" y="692" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1360.142857142857" y="692" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1371.7142857142858" y="692" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1383.2857142857142" y="692" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1394.857142857143" y="692" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1406.4285714285713" y="692" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<circle cx="1428" cy="701.0" r="2.6" fill="#51cf66"/>
+<polygon points="1246,736 1268,723 1460,723 1438,736" fill="#2d3748" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="1438,736 1460,723 1460,757 1438,770" fill="#0b0f17" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<rect x="1246" y="736" width="192" height="34" rx="2" fill="#1a202c" stroke="#111827" stroke-width="1"/>
+<rect x="1256.0" y="744" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1267.5714285714287" y="744" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1279.142857142857" y="744" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1290.7142857142858" y="744" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1302.2857142857142" y="744" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1313.857142857143" y="744" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1325.4285714285713" y="744" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1337.0" y="744" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1348.5714285714287" y="744" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1360.142857142857" y="744" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1371.7142857142858" y="744" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1383.2857142857142" y="744" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1394.857142857143" y="744" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1406.4285714285713" y="744" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<circle cx="1428" cy="753.0" r="2.6" fill="#51cf66"/>
+<polygon points="1246,788 1268,775 1460,775 1438,788" fill="#2d3748" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="1438,788 1460,775 1460,809 1438,822" fill="#0b0f17" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<rect x="1246" y="788" width="192" height="34" rx="2" fill="#1a202c" stroke="#111827" stroke-width="1"/>
+<rect x="1256.0" y="796" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1267.5714285714287" y="796" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1279.142857142857" y="796" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1290.7142857142858" y="796" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1302.2857142857142" y="796" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1313.857142857143" y="796" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1325.4285714285713" y="796" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1337.0" y="796" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1348.5714285714287" y="796" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1360.142857142857" y="796" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1371.7142857142858" y="796" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1383.2857142857142" y="796" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1394.857142857143" y="796" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1406.4285714285713" y="796" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<circle cx="1428" cy="805.0" r="2.6" fill="#51cf66"/>
+<polygon points="1246,840 1268,827 1460,827 1438,840" fill="#2d3748" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="1438,840 1460,827 1460,861 1438,874" fill="#0b0f17" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<rect x="1246" y="840" width="192" height="34" rx="2" fill="#1a202c" stroke="#111827" stroke-width="1"/>
+<rect x="1256.0" y="848" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1267.5714285714287" y="848" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1279.142857142857" y="848" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1290.7142857142858" y="848" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1302.2857142857142" y="848" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1313.857142857143" y="848" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1325.4285714285713" y="848" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1337.0" y="848" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1348.5714285714287" y="848" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1360.142857142857" y="848" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1371.7142857142858" y="848" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1383.2857142857142" y="848" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1394.857142857143" y="848" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1406.4285714285713" y="848" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<circle cx="1428" cy="857.0" r="2.6" fill="#51cf66"/>
+<polygon points="1246,892 1268,879 1460,879 1438,892" fill="#2d3748" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="1438,892 1460,879 1460,913 1438,926" fill="#0b0f17" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<rect x="1246" y="892" width="192" height="34" rx="2" fill="#1a202c" stroke="#111827" stroke-width="1"/>
+<rect x="1256.0" y="900" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1267.5714285714287" y="900" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1279.142857142857" y="900" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1290.7142857142858" y="900" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1302.2857142857142" y="900" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1313.857142857143" y="900" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1325.4285714285713" y="900" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1337.0" y="900" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1348.5714285714287" y="900" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1360.142857142857" y="900" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1371.7142857142858" y="900" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1383.2857142857142" y="900" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1394.857142857143" y="900" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<rect x="1406.4285714285713" y="900" width="7.571428571428571" height="18" rx="1.5" fill="#4a5568" stroke="#718096" stroke-width="0.6"/>
+<circle cx="1428" cy="909.0" r="2.6" fill="#51cf66"/>
+<text x="1352.0" y="580" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#52606d" font-weight="600" text-anchor="middle">many big switches</text>
+<text x="1352.0" y="600" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#52606d" font-weight="600" text-anchor="middle">joining every rack</text>
+<polygon points="1524,780 1546,767 1654,767 1632,780" fill="#4a5568" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="1632,780 1654,767 1654,799 1632,812" fill="#1a202c" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<rect x="1524" y="780" width="108" height="32" rx="2" fill="#2d3748" stroke="#e8590c" stroke-width="2.4"/>
+<rect x="1532" y="787" width="10" height="18" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="1546" y="787" width="10" height="18" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="1560" y="787" width="10" height="18" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="1574" y="787" width="10" height="18" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<circle cx="1612" cy="796.0" r="3" fill="#51cf66"/><circle cx="1622" cy="796.0" r="3" fill="#ff922b"/>
+<text x="1578" y="827" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10" fill="#52606d" font-weight="normal" text-anchor="start"></text>
+<polygon points="1648,780 1670,767 1778,767 1756,780" fill="#4a5568" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="1756,780 1778,767 1778,799 1756,812" fill="#1a202c" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<rect x="1648" y="780" width="108" height="32" rx="2" fill="#2d3748" stroke="#e8590c" stroke-width="2.4"/>
+<rect x="1656" y="787" width="10" height="18" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="1670" y="787" width="10" height="18" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="1684" y="787" width="10" height="18" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="1698" y="787" width="10" height="18" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<circle cx="1736" cy="796.0" r="3" fill="#51cf66"/><circle cx="1746" cy="796.0" r="3" fill="#ff922b"/>
+<text x="1702" y="827" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10" fill="#52606d" font-weight="normal" text-anchor="start"></text>
+<polygon points="1524,826 1546,813 1654,813 1632,826" fill="#4a5568" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="1632,826 1654,813 1654,845 1632,858" fill="#1a202c" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<rect x="1524" y="826" width="108" height="32" rx="2" fill="#2d3748" stroke="#111827" stroke-width="1"/>
+<rect x="1532" y="833" width="10" height="18" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="1546" y="833" width="10" height="18" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="1560" y="833" width="10" height="18" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="1574" y="833" width="10" height="18" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<circle cx="1612" cy="842.0" r="3" fill="#51cf66"/><circle cx="1622" cy="842.0" r="3" fill="#51cf66"/>
+<text x="1578" y="873" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10" fill="#52606d" font-weight="normal" text-anchor="start"></text>
+<polygon points="1648,826 1670,813 1778,813 1756,826" fill="#4a5568" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="1756,826 1778,813 1778,845 1756,858" fill="#1a202c" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<rect x="1648" y="826" width="108" height="32" rx="2" fill="#2d3748" stroke="#111827" stroke-width="1"/>
+<rect x="1656" y="833" width="10" height="18" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="1670" y="833" width="10" height="18" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="1684" y="833" width="10" height="18" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="1698" y="833" width="10" height="18" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<circle cx="1736" cy="842.0" r="3" fill="#51cf66"/><circle cx="1746" cy="842.0" r="3" fill="#51cf66"/>
+<text x="1702" y="873" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10" fill="#52606d" font-weight="normal" text-anchor="start"></text>
+<polygon points="1524,872 1546,859 1654,859 1632,872" fill="#4a5568" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="1632,872 1654,859 1654,891 1632,904" fill="#1a202c" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<rect x="1524" y="872" width="108" height="32" rx="2" fill="#2d3748" stroke="#111827" stroke-width="1"/>
+<rect x="1532" y="879" width="10" height="18" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="1546" y="879" width="10" height="18" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="1560" y="879" width="10" height="18" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="1574" y="879" width="10" height="18" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<circle cx="1612" cy="888.0" r="3" fill="#51cf66"/><circle cx="1622" cy="888.0" r="3" fill="#51cf66"/>
+<text x="1578" y="919" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10" fill="#52606d" font-weight="normal" text-anchor="start"></text>
+<polygon points="1648,872 1670,859 1778,859 1756,872" fill="#4a5568" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="1756,872 1778,859 1778,891 1756,904" fill="#1a202c" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<rect x="1648" y="872" width="108" height="32" rx="2" fill="#2d3748" stroke="#111827" stroke-width="1"/>
+<rect x="1656" y="879" width="10" height="18" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="1670" y="879" width="10" height="18" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="1684" y="879" width="10" height="18" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="1698" y="879" width="10" height="18" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<circle cx="1736" cy="888.0" r="3" fill="#51cf66"/><circle cx="1746" cy="888.0" r="3" fill="#51cf66"/>
+<text x="1702" y="919" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10" fill="#52606d" font-weight="normal" text-anchor="start"></text>
+<text x="1524" y="754" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#e8590c" font-weight="bold" text-anchor="start">nodes 17 + 22 = your NAT</text>
+<polygon points="1546,492 1774,492 1748,660 1520,660" fill="#fff8f2" fill-opacity="0.88" stroke="#e8590c" stroke-width="1.8" stroke-dasharray="7 5" stroke-linejoin="round"/>
+<text x="1647.0" y="522" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#1f2933" font-weight="bold" text-anchor="middle">NAT software</text>
+<text x="1647.0" y="544" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13.5" fill="#52606d" font-weight="normal" text-anchor="middle">(your nat-…)</text>
+<text x="1647.0" y="574" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13.5" fill="#1f5f9e" font-weight="bold" text-anchor="middle">10.20.33.10:51000</text>
+<text x="1647.0" y="594" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52606d" font-weight="normal" text-anchor="middle">↓ rewritten to</text>
+<text x="1647.0" y="614" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13.5" fill="#e8590c" font-weight="bold" text-anchor="middle">203.0.113.10:62001</text>
+<text x="1647.0" y="640" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#52606d" font-weight="normal" text-anchor="middle">counts bytes → CloudWatch</text>
+<text x="1644.0" y="700" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52606d" font-weight="normal" text-anchor="middle" font-style="italic">one NAT = a slice of a</text>
+<text x="1644.0" y="718" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52606d" font-weight="normal" text-anchor="middle" font-style="italic">shared fleet, not one box</text>
+<path d="M 1826 790 L 1826 824 A 43.0 14 0 0 0 1912 824 L 1912 790 Z" fill="#2d3748"/>
+<ellipse cx="1869.0" cy="790" rx="43.0" ry="14" fill="#4a5568"/>
+<path d="M 1847.0 785 L 1891.0 795 M 1847.0 795 L 1891.0 785" stroke="#fff" stroke-width="2.4"/>
+<path d="M 1940 790 L 1940 824 A 43.0 14 0 0 0 2026 824 L 2026 790 Z" fill="#2d3748"/>
+<ellipse cx="1983.0" cy="790" rx="43.0" ry="14" fill="#4a5568"/>
+<path d="M 1961.0 785 L 2005.0 795 M 1961.0 795 L 2005.0 785" stroke="#fff" stroke-width="2.4"/>
+<path d="M 1883 860 L 1883 894 A 43.0 14 0 0 0 1969 894 L 1969 860 Z" fill="#2d3748"/>
+<ellipse cx="1926.0" cy="860" rx="43.0" ry="14" fill="#4a5568"/>
+<path d="M 1904.0 855 L 1948.0 865 M 1904.0 865 L 1948.0 855" stroke="#fff" stroke-width="2.4"/>
+<text x="1936.0" y="550" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#52606d" font-weight="normal" text-anchor="middle">real routers at the</text>
+<text x="1936.0" y="572" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#52606d" font-weight="normal" text-anchor="middle">region's border,</text>
+<text x="1936.0" y="594" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#52606d" font-weight="normal" text-anchor="middle">shared by every VPC</text>
+<text x="1936.0" y="616" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#52606d" font-weight="normal" text-anchor="middle"></text>
+<text x="1936.0" y="638" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#52606d" font-weight="normal" text-anchor="middle">they remove the</text>
+<text x="1936.0" y="660" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#52606d" font-weight="normal" text-anchor="middle">AWS envelope</text>
+<path d="M 2128 710 a 50 40 0 0 1 80 -40 a 60 48 0 0 1 110 10 a 40 34 0 0 1 10 70 l -190 0 a 34 30 0 0 1 -10 -40 z" fill="#ffffff" stroke="#c3cad3" stroke-width="2"/>
+<text x="2218" y="710" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#1f2933" font-weight="bold" text-anchor="middle">the internet</text>
+<text x="2218" y="732" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52606d" font-weight="normal" text-anchor="middle">many networks</text>
+<polygon points="2148,800 2170,787 2320,787 2298,800" fill="#4a5568" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="2298,800 2320,787 2320,817 2298,830" fill="#1a202c" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<rect x="2148" y="800" width="150" height="30" rx="2" fill="#2d3748" stroke="#111827" stroke-width="1"/>
+<rect x="2156" y="807" width="10" height="16" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="2170" y="807" width="10" height="16" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="2184" y="807" width="10" height="16" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="2198" y="807" width="10" height="16" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="2212" y="807" width="10" height="16" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="2226" y="807" width="10" height="16" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="2240" y="807" width="10" height="16" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<circle cx="2278" cy="815.0" r="3" fill="#51cf66"/><circle cx="2288" cy="815.0" r="3" fill="#51cf66"/>
+<polygon points="2148,842 2170,829 2320,829 2298,842" fill="#4a5568" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="2298,842 2320,829 2320,859 2298,872" fill="#1a202c" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<rect x="2148" y="842" width="150" height="30" rx="2" fill="#2d3748" stroke="#111827" stroke-width="1"/>
+<rect x="2156" y="849" width="10" height="16" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="2170" y="849" width="10" height="16" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="2184" y="849" width="10" height="16" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="2198" y="849" width="10" height="16" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="2212" y="849" width="10" height="16" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="2226" y="849" width="10" height="16" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="2240" y="849" width="10" height="16" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<circle cx="2278" cy="857.0" r="3" fill="#51cf66"/><circle cx="2288" cy="857.0" r="3" fill="#51cf66"/>
+<polygon points="2148,884 2170,871 2320,871 2298,884" fill="#4a5568" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="2298,884 2320,871 2320,901 2298,914" fill="#1a202c" stroke="none" stroke-width="1" stroke-linejoin="round"/>
+<rect x="2148" y="884" width="150" height="30" rx="2" fill="#2d3748" stroke="#111827" stroke-width="1"/>
+<rect x="2156" y="891" width="10" height="16" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="2170" y="891" width="10" height="16" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="2184" y="891" width="10" height="16" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="2198" y="891" width="10" height="16" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="2212" y="891" width="10" height="16" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="2226" y="891" width="10" height="16" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<rect x="2240" y="891" width="10" height="16" rx="1.5" fill="#4a5568" stroke="#4a5568" stroke-width="0"/>
+<circle cx="2278" cy="899.0" r="3" fill="#51cf66"/><circle cx="2288" cy="899.0" r="3" fill="#51cf66"/>
+<text x="2223" y="778" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="bold" text-anchor="middle">github · 140.82.112.3</text>
+<text x="2228.0" y="560" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#e8590c" font-weight="bold" text-anchor="middle">sees only 203.0.113.10</text>
+<text x="2228.0" y="580" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#e8590c" font-weight="bold" text-anchor="middle">never 10.20.33.10</text>
+<path d="M 761 912 L 761 964" fill="none" stroke="#1a202c" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 761 912 L 761 964" fill="none" stroke="#e8590c" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 11"/>
+<path d="M 978 888 L 978 964" fill="none" stroke="#1a202c" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 978 888 L 978 964" fill="none" stroke="#e8590c" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 11"/>
+<path d="M 1120 888 L 1120 964" fill="none" stroke="#1a202c" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 1120 888 L 1120 964" fill="none" stroke="#e8590c" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 11"/>
+<path d="M 1342.0 926 L 1342.0 964" fill="none" stroke="#1a202c" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 1342.0 926 L 1342.0 964" fill="none" stroke="#e8590c" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 11"/>
+<path d="M 1638 904 L 1638 964" fill="none" stroke="#1a202c" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 1638 904 L 1638 964" fill="none" stroke="#e8590c" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 11"/>
+<path d="M 1946.0 908 L 1946.0 964" fill="none" stroke="#1a202c" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 1946.0 908 L 1946.0 964" fill="none" stroke="#e8590c" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 11"/>
+<path d="M 2223 914 L 2223 964" fill="none" stroke="#1a202c" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 2223 914 L 2223 964" fill="none" stroke="#e8590c" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 11"/>
+<path d="M 761 964 L 2223 964" fill="none" stroke="#1a202c" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 761 964 L 2223 964" fill="none" stroke="#e8590c" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 11"/>
+<rect x="779" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="809" y="956" width="16" height="16" rx="4.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="839" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="869" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="899" y="956" width="16" height="16" rx="4.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="929" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="959" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="989" y="956" width="16" height="16" rx="4.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="1019" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1049" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1079" y="956" width="16" height="16" rx="4.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="1109" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1139" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1169" y="956" width="16" height="16" rx="4.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="1199" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1229" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1259" y="956" width="16" height="16" rx="4.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="1289" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1319" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1349" y="956" width="16" height="16" rx="4.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="1379" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1409" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1439" y="956" width="16" height="16" rx="4.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="1469" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1499" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1529" y="956" width="16" height="16" rx="4.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="1559" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1589" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1619" y="956" width="16" height="16" rx="4.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="1649" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1679" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1709" y="956" width="16" height="16" rx="4.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="1739" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1769" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1799" y="956" width="16" height="16" rx="4.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="1829" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1859" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1889" y="956" width="16" height="16" rx="4.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="1919" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1949" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1979" y="956" width="16" height="16" rx="4.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="2009" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="2039" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="2069" y="956" width="16" height="16" rx="4.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="2099" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="2129" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="2159" y="956" width="16" height="16" rx="4.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="2189" y="956" width="16" height="16" rx="4.0" fill="url(#flash)" filter="url(#glow)"/>
+<text x="751" y="998" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#e8590c" font-weight="bold" text-anchor="start">one fiber path · the light travels this way →</text>
+<rect x="24" y="1046" width="2352" height="650" rx="16" fill="#ffffff" stroke="#c3cad3" stroke-width="1.6"/>
+<text x="44" y="1084" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="19" fill="#1f2933" font-weight="bold" text-anchor="start">WHO TOUCHES WHICH LAYER</text>
+<text x="360" y="1083" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="16" fill="#52606d" font-weight="normal" text-anchor="start">The OSI model: a packet is built in layers, like nested envelopes. Each place opens only the layers it needs.</text>
+<rect x="330" y="1102" width="26" height="20" rx="4" fill="#fff1e0" stroke="#e8590c" stroke-width="2.2"/>
+<text x="366" y="1117" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#e8590c" font-weight="bold" text-anchor="start">ADDS</text>
+<rect x="420.8" y="1102" width="26" height="20" rx="4" fill="#e8f1fb" stroke="#2f74c0" stroke-width="2"/>
+<text x="456.8" y="1117" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#1f5f9e" font-weight="bold" text-anchor="start">READS</text>
+<rect x="520.8" y="1102" width="26" height="20" rx="4" fill="#ffe3cc" stroke="#e8590c" stroke-width="3"/>
+<text x="556.8" y="1117" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#e8590c" font-weight="bold" text-anchor="start">REWRITES</text>
+<rect x="648.4" y="1102" width="26" height="20" rx="4" fill="#ede9fe" stroke="#7048e8" stroke-width="2.4"/>
+<text x="684.4" y="1117" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#7048e8" font-weight="bold" text-anchor="start">WRAPS + READS</text>
+<rect x="822.0" y="1102" width="26" height="20" rx="4" fill="#fff5f5" stroke="#c92a2a" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="858.0" y="1117" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#c92a2a" font-weight="bold" text-anchor="start">REMOVES</text>
+<rect x="940.4" y="1102" width="26" height="20" rx="4" fill="#eef2f6" stroke="#718096" stroke-width="1.4"/>
+<text x="976.4" y="1117" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#4a5568" font-weight="bold" text-anchor="start">REBUILDS</text>
+<rect x="1068.0" y="1102" width="26" height="20" rx="4" fill="#ffffff" stroke="#dee2e6" stroke-width="1.2" stroke-dasharray="4 4"/>
+<text x="1104.0" y="1117" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#adb5bd" font-weight="bold" text-anchor="start">passes through</text>
+<rect x="1250.8" y="1102" width="26" height="20" rx="4" fill="#2d3748" stroke="#000" stroke-width="1"/>
+<text x="1286.8" y="1117" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#2d3748" font-weight="bold" text-anchor="start">physical (light)</text>
+<rect x="322" y="1144" width="0" height="0" rx="0" fill="none" stroke="none" stroke-width="0"/>
+<rect x="338" y="1146" width="276" height="78" rx="9" fill="#fff1e0" stroke="#e8590c" stroke-width="2.2"/>
+<text x="352" y="1170" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#e8590c" font-weight="bold" text-anchor="start">ADDS</text>
+<text x="352" y="1192" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">GET /repos/…</text>
+<text x="352" y="1211" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">the program writes it</text>
+<rect x="630" y="1146" width="276" height="78" rx="9" fill="none" stroke="#dee2e6" stroke-width="1.2" stroke-dasharray="4 4"/>
+<text x="644" y="1170" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#adb5bd" font-weight="bold" text-anchor="start">passes through</text>
+<text x="644" y="1192" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#adb5bd" font-weight="normal" text-anchor="start">encrypted: can't read</text>
+<rect x="922" y="1146" width="276" height="78" rx="9" fill="none" stroke="#dee2e6" stroke-width="1.2" stroke-dasharray="4 4"/>
+<text x="936" y="1170" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#adb5bd" font-weight="bold" text-anchor="start">passes through</text>
+<rect x="1214" y="1146" width="276" height="78" rx="9" fill="none" stroke="#dee2e6" stroke-width="1.2" stroke-dasharray="4 4"/>
+<text x="1228" y="1170" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#adb5bd" font-weight="bold" text-anchor="start">passes through</text>
+<rect x="1506" y="1146" width="276" height="78" rx="9" fill="none" stroke="#dee2e6" stroke-width="1.2" stroke-dasharray="4 4"/>
+<text x="1520" y="1170" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#adb5bd" font-weight="bold" text-anchor="start">passes through</text>
+<text x="1520" y="1192" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#adb5bd" font-weight="normal" text-anchor="start">encrypted: can't read</text>
+<rect x="1798" y="1146" width="276" height="78" rx="9" fill="none" stroke="#dee2e6" stroke-width="1.2" stroke-dasharray="4 4"/>
+<text x="1812" y="1170" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#adb5bd" font-weight="bold" text-anchor="start">passes through</text>
+<rect x="2090" y="1146" width="276" height="78" rx="9" fill="#e8f1fb" stroke="#2f74c0" stroke-width="2"/>
+<text x="2104" y="1170" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f5f9e" font-weight="bold" text-anchor="start">READS</text>
+<text x="2104" y="1192" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">github answers it</text>
+<rect x="322" y="1236" width="0" height="0" rx="0" fill="none" stroke="none" stroke-width="0"/>
+<rect x="338" y="1238" width="276" height="78" rx="9" fill="#fff1e0" stroke="#e8590c" stroke-width="2.2"/>
+<text x="352" y="1262" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#e8590c" font-weight="bold" text-anchor="start">ADDS</text>
+<text x="352" y="1284" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">encrypts (TLS)</text>
+<rect x="630" y="1238" width="276" height="78" rx="9" fill="none" stroke="#dee2e6" stroke-width="1.2" stroke-dasharray="4 4"/>
+<text x="644" y="1262" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#adb5bd" font-weight="bold" text-anchor="start">passes through</text>
+<rect x="922" y="1238" width="276" height="78" rx="9" fill="none" stroke="#dee2e6" stroke-width="1.2" stroke-dasharray="4 4"/>
+<text x="936" y="1262" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#adb5bd" font-weight="bold" text-anchor="start">passes through</text>
+<rect x="1214" y="1238" width="276" height="78" rx="9" fill="none" stroke="#dee2e6" stroke-width="1.2" stroke-dasharray="4 4"/>
+<text x="1228" y="1262" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#adb5bd" font-weight="bold" text-anchor="start">passes through</text>
+<rect x="1506" y="1238" width="276" height="78" rx="9" fill="none" stroke="#dee2e6" stroke-width="1.2" stroke-dasharray="4 4"/>
+<text x="1520" y="1262" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#adb5bd" font-weight="bold" text-anchor="start">passes through</text>
+<rect x="1798" y="1238" width="276" height="78" rx="9" fill="none" stroke="#dee2e6" stroke-width="1.2" stroke-dasharray="4 4"/>
+<text x="1812" y="1262" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#adb5bd" font-weight="bold" text-anchor="start">passes through</text>
+<rect x="2090" y="1238" width="276" height="78" rx="9" fill="#e8f1fb" stroke="#2f74c0" stroke-width="2"/>
+<text x="2104" y="1262" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f5f9e" font-weight="bold" text-anchor="start">READS</text>
+<text x="2104" y="1284" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">decrypts</text>
+<rect x="322" y="1328" width="0" height="0" rx="0" fill="none" stroke="none" stroke-width="0"/>
+<rect x="338" y="1330" width="276" height="78" rx="9" fill="#fff1e0" stroke="#e8590c" stroke-width="2.2"/>
+<text x="352" y="1354" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#e8590c" font-weight="bold" text-anchor="start">ADDS</text>
+<text x="352" y="1376" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">port 51000 → 443</text>
+<rect x="630" y="1330" width="276" height="78" rx="9" fill="#e8f1fb" stroke="#2f74c0" stroke-width="2"/>
+<text x="644" y="1354" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f5f9e" font-weight="bold" text-anchor="start">READS</text>
+<text x="644" y="1376" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">SG checks the ports</text>
+<rect x="922" y="1330" width="276" height="78" rx="9" fill="none" stroke="#dee2e6" stroke-width="1.2" stroke-dasharray="4 4"/>
+<text x="936" y="1354" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#adb5bd" font-weight="bold" text-anchor="start">passes through</text>
+<rect x="1214" y="1330" width="276" height="78" rx="9" fill="none" stroke="#dee2e6" stroke-width="1.2" stroke-dasharray="4 4"/>
+<text x="1228" y="1354" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#adb5bd" font-weight="bold" text-anchor="start">passes through</text>
+<rect x="1506" y="1330" width="276" height="78" rx="9" fill="#ffe3cc" stroke="#e8590c" stroke-width="3"/>
+<text x="1520" y="1354" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#e8590c" font-weight="bold" text-anchor="start">REWRITES</text>
+<text x="1520" y="1376" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">51000 → 62001</text>
+<rect x="1798" y="1330" width="276" height="78" rx="9" fill="none" stroke="#dee2e6" stroke-width="1.2" stroke-dasharray="4 4"/>
+<text x="1812" y="1354" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#adb5bd" font-weight="bold" text-anchor="start">passes through</text>
+<rect x="2090" y="1330" width="276" height="78" rx="9" fill="#e8f1fb" stroke="#2f74c0" stroke-width="2"/>
+<text x="2104" y="1354" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f5f9e" font-weight="bold" text-anchor="start">READS</text>
+<text x="2104" y="1376" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">443 = the web server</text>
+<rect x="322" y="1420" width="0" height="0" rx="0" fill="none" stroke="none" stroke-width="0"/>
+<rect x="338" y="1422" width="276" height="78" rx="9" fill="#fff1e0" stroke="#e8590c" stroke-width="2.2"/>
+<text x="352" y="1446" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#e8590c" font-weight="bold" text-anchor="start">ADDS</text>
+<text x="352" y="1468" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">10.20.33.10 →</text>
+<text x="352" y="1487" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">140.82.112.3</text>
+<rect x="630" y="1422" width="276" height="78" rx="9" fill="#ede9fe" stroke="#7048e8" stroke-width="2.4"/>
+<text x="644" y="1446" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#7048e8" font-weight="bold" text-anchor="start">WRAPS + READS</text>
+<text x="644" y="1468" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">route table check,</text>
+<text x="644" y="1487" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">adds AWS envelope</text>
+<rect x="922" y="1422" width="276" height="78" rx="9" fill="#e8f1fb" stroke="#2f74c0" stroke-width="2"/>
+<text x="936" y="1446" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f5f9e" font-weight="bold" text-anchor="start">READS</text>
+<text x="936" y="1468" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">outer envelope only</text>
+<text x="936" y="1487" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">→ uplink 49</text>
+<rect x="1214" y="1422" width="276" height="78" rx="9" fill="#e8f1fb" stroke="#2f74c0" stroke-width="2"/>
+<text x="1228" y="1446" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f5f9e" font-weight="bold" text-anchor="start">READS</text>
+<text x="1228" y="1468" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">outer envelope only</text>
+<rect x="1506" y="1422" width="276" height="78" rx="9" fill="#ffe3cc" stroke="#e8590c" stroke-width="3"/>
+<text x="1520" y="1446" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#e8590c" font-weight="bold" text-anchor="start">REWRITES</text>
+<text x="1520" y="1468" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">sender → 203.0.113.10</text>
+<text x="1520" y="1487" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">+ new envelope</text>
+<rect x="1798" y="1422" width="276" height="78" rx="9" fill="#fff5f5" stroke="#c92a2a" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="1812" y="1446" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#c92a2a" font-weight="bold" text-anchor="start">REMOVES</text>
+<text x="1812" y="1468" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">the AWS envelope;</text>
+<text x="1812" y="1487" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">routes by public IP</text>
+<rect x="2090" y="1422" width="276" height="78" rx="9" fill="#e8f1fb" stroke="#2f74c0" stroke-width="2"/>
+<text x="2104" y="1446" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f5f9e" font-weight="bold" text-anchor="start">READS</text>
+<text x="2104" y="1468" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">routers forward</text>
+<text x="2104" y="1487" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">by IP, hop by hop</text>
+<rect x="322" y="1512" width="0" height="0" rx="0" fill="none" stroke="none" stroke-width="0"/>
+<rect x="338" y="1514" width="276" height="78" rx="9" fill="#fff1e0" stroke="#e8590c" stroke-width="2.2"/>
+<text x="352" y="1538" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#e8590c" font-weight="bold" text-anchor="start">ADDS</text>
+<text x="352" y="1560" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">a virtual frame</text>
+<rect x="630" y="1514" width="276" height="78" rx="9" fill="#eef2f6" stroke="#718096" stroke-width="1.4"/>
+<text x="644" y="1538" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#4a5568" font-weight="bold" text-anchor="start">REBUILDS</text>
+<text x="644" y="1560" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">real frame for</text>
+<text x="644" y="1579" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">the cable</text>
+<rect x="922" y="1514" width="276" height="78" rx="9" fill="#eef2f6" stroke="#718096" stroke-width="1.4"/>
+<text x="936" y="1538" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#4a5568" font-weight="bold" text-anchor="start">REBUILDS</text>
+<text x="936" y="1560" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">new frame per link</text>
+<rect x="1214" y="1514" width="276" height="78" rx="9" fill="#eef2f6" stroke="#718096" stroke-width="1.4"/>
+<text x="1228" y="1538" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#4a5568" font-weight="bold" text-anchor="start">REBUILDS</text>
+<text x="1228" y="1560" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">new frame per link</text>
+<rect x="1506" y="1514" width="276" height="78" rx="9" fill="#eef2f6" stroke="#718096" stroke-width="1.4"/>
+<text x="1520" y="1538" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#4a5568" font-weight="bold" text-anchor="start">REBUILDS</text>
+<text x="1520" y="1560" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">new frame per link</text>
+<rect x="1798" y="1514" width="276" height="78" rx="9" fill="#eef2f6" stroke="#718096" stroke-width="1.4"/>
+<text x="1812" y="1538" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#4a5568" font-weight="bold" text-anchor="start">REBUILDS</text>
+<text x="1812" y="1560" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">new frame per link</text>
+<rect x="2090" y="1514" width="276" height="78" rx="9" fill="#eef2f6" stroke="#718096" stroke-width="1.4"/>
+<text x="2104" y="1538" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#4a5568" font-weight="bold" text-anchor="start">REBUILDS</text>
+<text x="2104" y="1560" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#1f2933" font-weight="normal" text-anchor="start">at every hop</text>
+<rect x="322" y="1604" width="0" height="0" rx="0" fill="none" stroke="none" stroke-width="0"/>
+<rect x="338" y="1606" width="276" height="78" rx="9" fill="none" stroke="none" stroke-width="0"/>
+<text x="352" y="1630" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#adb5bd" font-weight="normal" text-anchor="start">none: a VM</text>
+<text x="352" y="1649" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#adb5bd" font-weight="normal" text-anchor="start">has no cables</text>
+<rect x="630" y="1606" width="276" height="78" rx="9" fill="#2d3748" stroke="#000" stroke-width="1"/>
+<text x="644" y="1630" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#f8f9fa" font-weight="600" text-anchor="start">transceiver:</text>
+<text x="644" y="1649" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#f8f9fa" font-weight="normal" text-anchor="start">electricity → light</text>
+<rect x="814" y="1618" width="11" height="11" rx="2.75" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="831" y="1618" width="11" height="11" rx="2.75" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="848" y="1618" width="11" height="11" rx="2.75" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="865" y="1618" width="11" height="11" rx="2.75" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="882" y="1618" width="11" height="11" rx="2.75" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="922" y="1606" width="276" height="78" rx="9" fill="#2d3748" stroke="#000" stroke-width="1"/>
+<text x="936" y="1630" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#f8f9fa" font-weight="600" text-anchor="start">light in socket 24,</text>
+<text x="936" y="1649" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#f8f9fa" font-weight="normal" text-anchor="start">out of uplink 49</text>
+<rect x="1106" y="1618" width="11" height="11" rx="2.75" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1123" y="1618" width="11" height="11" rx="2.75" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="1140" y="1618" width="11" height="11" rx="2.75" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1157" y="1618" width="11" height="11" rx="2.75" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="1174" y="1618" width="11" height="11" rx="2.75" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1214" y="1606" width="276" height="78" rx="9" fill="#2d3748" stroke="#000" stroke-width="1"/>
+<text x="1228" y="1630" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#f8f9fa" font-weight="600" text-anchor="start">light in, light out</text>
+<rect x="1398" y="1618" width="11" height="11" rx="2.75" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1415" y="1618" width="11" height="11" rx="2.75" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="1432" y="1618" width="11" height="11" rx="2.75" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1449" y="1618" width="11" height="11" rx="2.75" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="1466" y="1618" width="11" height="11" rx="2.75" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1506" y="1606" width="276" height="78" rx="9" fill="#2d3748" stroke="#000" stroke-width="1"/>
+<text x="1520" y="1630" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#f8f9fa" font-weight="600" text-anchor="start">the servers' own</text>
+<text x="1520" y="1649" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#f8f9fa" font-weight="normal" text-anchor="start">Nitro cards + fiber</text>
+<rect x="1690" y="1618" width="11" height="11" rx="2.75" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1707" y="1618" width="11" height="11" rx="2.75" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="1724" y="1618" width="11" height="11" rx="2.75" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1741" y="1618" width="11" height="11" rx="2.75" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="1758" y="1618" width="11" height="11" rx="2.75" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1798" y="1606" width="276" height="78" rx="9" fill="#2d3748" stroke="#000" stroke-width="1"/>
+<text x="1812" y="1630" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#f8f9fa" font-weight="600" text-anchor="start">fiber to other</text>
+<text x="1812" y="1649" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#f8f9fa" font-weight="normal" text-anchor="start">networks</text>
+<rect x="1982" y="1618" width="11" height="11" rx="2.75" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1999" y="1618" width="11" height="11" rx="2.75" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="2016" y="1618" width="11" height="11" rx="2.75" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="2033" y="1618" width="11" height="11" rx="2.75" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="2050" y="1618" width="11" height="11" rx="2.75" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="2090" y="1606" width="276" height="78" rx="9" fill="#2d3748" stroke="#000" stroke-width="1"/>
+<text x="2104" y="1630" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#f8f9fa" font-weight="600" text-anchor="start">cables, some under</text>
+<text x="2104" y="1649" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#f8f9fa" font-weight="normal" text-anchor="start">the ocean</text>
+<rect x="2274" y="1618" width="11" height="11" rx="2.75" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="2291" y="1618" width="11" height="11" rx="2.75" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="2308" y="1618" width="11" height="11" rx="2.75" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="2325" y="1618" width="11" height="11" rx="2.75" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="2342" y="1618" width="11" height="11" rx="2.75" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="52" y="1146" width="262" height="78" rx="10" fill="#ffffff" stroke="#495057" stroke-width="2.2"/>
+<text x="68" y="1184" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" fill="#495057" font-weight="bold" text-anchor="start">L7</text>
+<text x="140" y="1174" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" fill="#1f2933" font-weight="bold" text-anchor="start">Application</text>
+<text x="140" y="1196" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#52606d" font-weight="normal" text-anchor="start">HTTP: GET /repos/…</text>
+<rect x="52" y="1238" width="262" height="78" rx="10" fill="#ffffff" stroke="#495057" stroke-width="2.2"/>
+<text x="68" y="1276" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" fill="#495057" font-weight="bold" text-anchor="start">L6·5</text>
+<text x="140" y="1266" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" fill="#1f2933" font-weight="bold" text-anchor="start">Presentation · Session</text>
+<text x="140" y="1288" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#52606d" font-weight="normal" text-anchor="start">TLS encryption</text>
+<rect x="52" y="1330" width="262" height="78" rx="10" fill="#ffffff" stroke="#0ca678" stroke-width="2.2"/>
+<text x="68" y="1368" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" fill="#0ca678" font-weight="bold" text-anchor="start">L4</text>
+<text x="140" y="1358" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" fill="#1f2933" font-weight="bold" text-anchor="start">Transport</text>
+<text x="140" y="1380" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#52606d" font-weight="normal" text-anchor="start">TCP ports</text>
+<rect x="52" y="1422" width="262" height="78" rx="10" fill="#ffffff" stroke="#1f5f9e" stroke-width="2.2"/>
+<text x="68" y="1460" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" fill="#1f5f9e" font-weight="bold" text-anchor="start">L3</text>
+<text x="140" y="1450" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" fill="#1f2933" font-weight="bold" text-anchor="start">Network</text>
+<text x="140" y="1472" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#52606d" font-weight="normal" text-anchor="start">IP addresses</text>
+<rect x="52" y="1514" width="262" height="78" rx="10" fill="#ffffff" stroke="#4a5568" stroke-width="2.2"/>
+<text x="68" y="1552" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" fill="#4a5568" font-weight="bold" text-anchor="start">L2</text>
+<text x="140" y="1542" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" fill="#1f2933" font-weight="bold" text-anchor="start">Data link</text>
+<text x="140" y="1564" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#52606d" font-weight="normal" text-anchor="start">frames on one link</text>
+<rect x="52" y="1606" width="262" height="78" rx="10" fill="#ffffff" stroke="#e8590c" stroke-width="2.2"/>
+<text x="68" y="1644" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" fill="#e8590c" font-weight="bold" text-anchor="start">L1</text>
+<text x="140" y="1634" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" fill="#1f2933" font-weight="bold" text-anchor="start">Physical</text>
+<text x="140" y="1656" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#52606d" font-weight="normal" text-anchor="start">light · electricity</text>
+<path d="M 46 1150 L 36 1150 L 36 1590 L 46 1590" stroke="#5c6ac4" stroke-width="2.4" fill="none"/>
+<path d="M 46 1606 L 36 1606 L 36 1682 L 46 1682" stroke="#2d3748" stroke-width="3.5" fill="none"/>
+<rect x="24" y="1724" width="1500" height="390" rx="14" fill="#fafafa" stroke="#2d3748" stroke-width="2.6"/>
+<rect x="25.5" y="1725.5" width="1497" height="5" rx="3" fill="#2d3748"/>
+<circle cx="62" cy="1766" r="16" fill="none" stroke="#e8590c" stroke-width="3"/><path d="M 73 1777 L 86 1790" stroke="#e8590c" stroke-width="5" stroke-linecap="round"/>
+<text x="100" y="1774" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="19" fill="#1f2933" font-weight="bold" text-anchor="start">ZOOM INTO THE FIBER · L3 meets L1: the address, literally</text>
+<text x="230" y="1830" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="32" fill="#1f5f9e" font-weight="bold" text-anchor="middle">10</text>
+<text x="402" y="1830" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="32" fill="#1f5f9e" font-weight="bold" text-anchor="middle">.</text>
+<path d="M 64 1844 L 64 1852 L 396 1852 L 396 1844" stroke="#1f5f9e" stroke-width="2" fill="none"/>
+<text x="75" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">128</text>
+<text x="119" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">64</text>
+<text x="163" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">32</text>
+<text x="207" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">16</text>
+<text x="251" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">8</text>
+<text x="295" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">4</text>
+<text x="339" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">2</text>
+<text x="383" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">1</text>
+<text x="582" y="1830" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="32" fill="#1f5f9e" font-weight="bold" text-anchor="middle">20</text>
+<text x="754" y="1830" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="32" fill="#1f5f9e" font-weight="bold" text-anchor="middle">.</text>
+<path d="M 416 1844 L 416 1852 L 748 1852 L 748 1844" stroke="#1f5f9e" stroke-width="2" fill="none"/>
+<text x="427" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">128</text>
+<text x="471" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">64</text>
+<text x="515" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">32</text>
+<text x="559" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">16</text>
+<text x="603" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">8</text>
+<text x="647" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">4</text>
+<text x="691" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">2</text>
+<text x="735" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">1</text>
+<text x="934" y="1830" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="32" fill="#1f5f9e" font-weight="bold" text-anchor="middle">33</text>
+<text x="1106" y="1830" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="32" fill="#1f5f9e" font-weight="bold" text-anchor="middle">.</text>
+<path d="M 768 1844 L 768 1852 L 1100 1852 L 1100 1844" stroke="#1f5f9e" stroke-width="2" fill="none"/>
+<text x="779" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">128</text>
+<text x="823" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">64</text>
+<text x="867" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">32</text>
+<text x="911" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">16</text>
+<text x="955" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">8</text>
+<text x="999" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">4</text>
+<text x="1043" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">2</text>
+<text x="1087" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">1</text>
+<text x="1286" y="1830" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="32" fill="#1f5f9e" font-weight="bold" text-anchor="middle">10</text>
+<path d="M 1120 1844 L 1120 1852 L 1452 1852 L 1452 1844" stroke="#1f5f9e" stroke-width="2" fill="none"/>
+<text x="1131" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">128</text>
+<text x="1175" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">64</text>
+<text x="1219" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">32</text>
+<text x="1263" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">16</text>
+<text x="1307" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">8</text>
+<text x="1351" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">4</text>
+<text x="1395" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">2</text>
+<text x="1439" y="1874" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#7b8794" font-weight="normal" text-anchor="middle">1</text>
+<text x="75" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#adb5bd" font-weight="bold" text-anchor="middle">0</text>
+<text x="119" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#adb5bd" font-weight="bold" text-anchor="middle">0</text>
+<text x="163" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#adb5bd" font-weight="bold" text-anchor="middle">0</text>
+<text x="207" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#adb5bd" font-weight="bold" text-anchor="middle">0</text>
+<text x="251" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#e8590c" font-weight="bold" text-anchor="middle">1</text>
+<text x="295" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#adb5bd" font-weight="bold" text-anchor="middle">0</text>
+<text x="339" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#e8590c" font-weight="bold" text-anchor="middle">1</text>
+<text x="383" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#adb5bd" font-weight="bold" text-anchor="middle">0</text>
+<text x="427" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#adb5bd" font-weight="bold" text-anchor="middle">0</text>
+<text x="471" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#adb5bd" font-weight="bold" text-anchor="middle">0</text>
+<text x="515" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#adb5bd" font-weight="bold" text-anchor="middle">0</text>
+<text x="559" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#e8590c" font-weight="bold" text-anchor="middle">1</text>
+<text x="603" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#adb5bd" font-weight="bold" text-anchor="middle">0</text>
+<text x="647" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#e8590c" font-weight="bold" text-anchor="middle">1</text>
+<text x="691" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#adb5bd" font-weight="bold" text-anchor="middle">0</text>
+<text x="735" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#adb5bd" font-weight="bold" text-anchor="middle">0</text>
+<text x="779" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#adb5bd" font-weight="bold" text-anchor="middle">0</text>
+<text x="823" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#adb5bd" font-weight="bold" text-anchor="middle">0</text>
+<text x="867" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#e8590c" font-weight="bold" text-anchor="middle">1</text>
+<text x="911" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#adb5bd" font-weight="bold" text-anchor="middle">0</text>
+<text x="955" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#adb5bd" font-weight="bold" text-anchor="middle">0</text>
+<text x="999" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#adb5bd" font-weight="bold" text-anchor="middle">0</text>
+<text x="1043" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#adb5bd" font-weight="bold" text-anchor="middle">0</text>
+<text x="1087" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#e8590c" font-weight="bold" text-anchor="middle">1</text>
+<text x="1131" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#adb5bd" font-weight="bold" text-anchor="middle">0</text>
+<text x="1175" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#adb5bd" font-weight="bold" text-anchor="middle">0</text>
+<text x="1219" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#adb5bd" font-weight="bold" text-anchor="middle">0</text>
+<text x="1263" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#adb5bd" font-weight="bold" text-anchor="middle">0</text>
+<text x="1307" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#e8590c" font-weight="bold" text-anchor="middle">1</text>
+<text x="1351" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#adb5bd" font-weight="bold" text-anchor="middle">0</text>
+<text x="1395" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#e8590c" font-weight="bold" text-anchor="middle">1</text>
+<text x="1439" y="1904" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" fill="#adb5bd" font-weight="bold" text-anchor="middle">0</text>
+<rect x="52" y="1922" width="1412" height="50" rx="25" fill="#1a202c"/>
+<rect x="64" y="1935" width="24" height="24" rx="6.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="108" y="1935" width="24" height="24" rx="6.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="152" y="1935" width="24" height="24" rx="6.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="196" y="1935" width="24" height="24" rx="6.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="240" y="1935" width="24" height="24" rx="6.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="284" y="1935" width="24" height="24" rx="6.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="328" y="1935" width="24" height="24" rx="6.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="372" y="1935" width="24" height="24" rx="6.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="416" y="1935" width="24" height="24" rx="6.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="460" y="1935" width="24" height="24" rx="6.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="504" y="1935" width="24" height="24" rx="6.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="548" y="1935" width="24" height="24" rx="6.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="592" y="1935" width="24" height="24" rx="6.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="636" y="1935" width="24" height="24" rx="6.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="680" y="1935" width="24" height="24" rx="6.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="724" y="1935" width="24" height="24" rx="6.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="768" y="1935" width="24" height="24" rx="6.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="812" y="1935" width="24" height="24" rx="6.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="856" y="1935" width="24" height="24" rx="6.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="900" y="1935" width="24" height="24" rx="6.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="944" y="1935" width="24" height="24" rx="6.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="988" y="1935" width="24" height="24" rx="6.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="1032" y="1935" width="24" height="24" rx="6.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="1076" y="1935" width="24" height="24" rx="6.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1120" y="1935" width="24" height="24" rx="6.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="1164" y="1935" width="24" height="24" rx="6.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="1208" y="1935" width="24" height="24" rx="6.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="1252" y="1935" width="24" height="24" rx="6.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="1296" y="1935" width="24" height="24" rx="6.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1340" y="1935" width="24" height="24" rx="6.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<rect x="1384" y="1935" width="24" height="24" rx="6.0" fill="url(#flash)" filter="url(#glow)"/>
+<rect x="1428" y="1935" width="24" height="24" rx="6.0" fill="#111827" stroke="#374151" stroke-width="1"/>
+<text x="64" y="2014" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="16" fill="#1f2933" font-weight="600" text-anchor="start">Decimal is for humans. Machines see 32 bits. On the fiber, 1 = a flash of laser light, 0 = dark.</text>
+<text x="64" y="2040" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#52606d" font-weight="normal" text-anchor="start">At 100 Gb/s that's 100 billion flashes a second: a whole packet passes in ~0.12 µs.</text>
+<text x="64" y="2076" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" text-anchor="start" xml:space="preserve"><tspan fill="#1f2933" font-weight="bold">Don't mix them up: </tspan><tspan fill="#1f5f9e" font-weight="bold">IP address</tspan><tspan fill="#52606d" font-weight="normal"> (L3) picks the machine · </tspan><tspan fill="#0ca678" font-weight="bold">port</tspan><tspan fill="#52606d" font-weight="normal"> (L4) picks the program · </tspan><tspan fill="#e8590c" font-weight="bold">socket</tspan><tspan fill="#52606d" font-weight="normal"> (L1, a hole in metal) picks the cable</tspan></text>
+<rect x="1548" y="1724" width="828" height="390" rx="14" fill="#f3f0ff" stroke="#7048e8" stroke-width="2"/>
+<text x="1572" y="1770" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="21" fill="#7048e8" font-weight="bold" text-anchor="start">How the cloud pulls this off</text>
+<text x="1572" y="1820" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="17" fill="#1f2933" font-weight="bold" text-anchor="start">Shared hardware, private networks.</text>
+<text x="1572" y="1847" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#52606d" font-weight="normal" text-anchor="start">One server hosts many customers. The AWS envelope carries the</text>
+<text x="1572" y="1870" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#52606d" font-weight="normal" text-anchor="start">VPC ID, so two VMs with the same IP never get mixed up.</text>
+<text x="1572" y="1916" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="17" fill="#1f2933" font-weight="bold" text-anchor="start">Config up top, enforcement down below.</text>
+<text x="1572" y="1943" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#52606d" font-weight="normal" text-anchor="start">You edit config (the control plane). Nitro cards and Hyperplane</text>
+<text x="1572" y="1966" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#52606d" font-weight="normal" text-anchor="start">enforce it on every packet (the data plane). No cable moves.</text>
+<text x="1572" y="2012" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="17" fill="#1f2933" font-weight="bold" text-anchor="start">Nothing is one box.</text>
+<text x="1572" y="2039" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#52606d" font-weight="normal" text-anchor="start">NAT, IGW, the spine: all fleets of machines. They scale and</text>
+<text x="1572" y="2062" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#52606d" font-weight="normal" text-anchor="start">survive failures; a NAT and its subnet stay in one AZ.</text>
+<text x="40" y="2136" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#7b8794" font-weight="normal" text-anchor="start" font-style="italic">Simplified from public AWS material (Nitro, Hyperplane, the VPC mapping service). Hosts, sockets and node numbers are illustrative.</text>
+</svg>
